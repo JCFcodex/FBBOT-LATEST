@@ -100,9 +100,9 @@ function sendMessage(api, subject, time, messageType) {
 }
 
 function scheduleReminder(api, subject, originalTime, day, hour, minute) {
-  const reminderMinute = (parseInt(minute, 10) - 5 + 60) % 60;
+  const reminderMinute = (parseInt(minute, 10) - 10 /* minute */ + 60) % 60;
   const reminderHour =
-    (parseInt(hour, 10) + Math.floor((parseInt(minute, 10) - 5) / 60) + 24) %
+    (parseInt(hour, 10) + Math.floor((parseInt(minute, 10) - 10 /* minute */) / 60) + 24) %
     24;
 
   const cronExpressionReminder = `${reminderMinute} ${reminderHour} * * ${day.toUpperCase()}`;
