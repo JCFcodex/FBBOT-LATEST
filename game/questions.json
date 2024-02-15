@@ -1,0 +1,261 @@
+[
+  {
+    "category": "Science",
+    "question": "What is the chemical symbol for gold?",
+    "answer": "Au",
+    "points": 80,
+    "level": "Hard"
+  },
+  {
+    "category": "History",
+    "question": "Who was the first President of the United States?",
+    "answer": "Washington",
+    "points": 60,
+    "level": "Medium"
+  },
+  {
+    "category": "Geography",
+    "question": "What is the capital of Australia?",
+    "answer": "Canberra",
+    "points": 40,
+    "level": "Easy"
+  },
+  {
+    "category": "Movies",
+    "question": "Which actor played the character of Iron Man in the Marvel Cinematic Universe?",
+    "answer": "Downey",
+    "points": 100,
+    "level": "Very Hard"
+  },
+  {
+    "category": "Sports",
+    "question": "In which sport would you perform a slam dunk?",
+    "answer": "Basketball",
+    "points": 50,
+    "level": "Medium"
+  },
+  {
+    "category": "Music",
+    "question": "Who is known as the 'Queen of Pop'?",
+    "answer": "Madonna",
+    "points": 70,
+    "level": "Hard"
+  },
+  {
+    "category": "Technology",
+    "question": "What does CPU stand for?",
+    "answer": "Central Processing Unit",
+    "points": 90,
+    "level": "Very Hard"
+  },
+  {
+    "category": "General Knowledge",
+    "question": "What is the capital of Japan?",
+    "answer": "Tokyo",
+    "points": 30,
+    "level": "Easy"
+  },
+  {
+    "category": "Science",
+    "question": "What is the smallest prime number?",
+    "answer": "Two",
+    "points": 20,
+    "level": "Very Easy"
+  },
+  {
+    "category": "Movies",
+    "question": "Which movie won the Academy Award for Best Picture in 2020?",
+    "answer": "Parasite",
+    "points": 80,
+    "level": "Hard"
+  },
+  {
+    "category": "Sports",
+    "question": "In which country did the Olympic Games originate?",
+    "answer": "Greece",
+    "points": 60,
+    "level": "Medium"
+  },
+  {
+    "category": "Music",
+    "question": "Who is the lead vocalist of the band U2?",
+    "answer": "Bono",
+    "points": 40,
+    "level": "Easy"
+  },
+  {
+    "category": "General Knowledge",
+    "question": "What is the capital of Brazil?",
+    "answer": "Brasilia",
+    "points": 100,
+    "level": "Very Hard"
+  },
+  {
+    "category": "Technology",
+    "question": "What is the programming language developed by Microsoft?",
+    "answer": "C#",
+    "points": 50,
+    "level": "Medium"
+  },
+  {
+    "category": "History",
+    "question": "Who wrote 'Romeo and Juliet'?",
+    "answer": "Shakespeare",
+    "points": 70,
+    "level": "Hard"
+  },
+  {
+    "category": "Geography",
+    "question": "Which river is the longest in the world?",
+    "answer": "Nile",
+    "points": 90,
+    "level": "Very Hard"
+  },
+  {
+    "category": "Science",
+    "question": "What is the powerhouse of the cell?",
+    "answer": "Mitochondria",
+    "points": 30,
+    "level": "Easy"
+  },
+  {
+    "category": "Movies",
+    "question": "Who directed the movie 'Inception'?",
+    "answer": "Nolan",
+    "points": 20,
+    "level": "Very Easy"
+  },
+  {
+    "category": "Sports",
+    "question": "Which country hosted the FIFA World Cup in 2018?",
+    "answer": "Russia",
+    "points": 40,
+    "level": "Easy"
+  },
+  {
+    "category": "Music",
+    "question": "What instrument does Yo-Yo Ma play?",
+    "answer": "Cello",
+    "points": 80,
+    "level": "Hard"
+  },
+  {
+    "category": "Technology",
+    "question": "What does HTML stand for?",
+    "answer": "Hypertext Markup Language",
+    "points": 60,
+    "level": "Medium"
+  },
+  {
+    "category": "General Knowledge",
+    "question": "Which planet is known as the Red Planet?",
+    "answer": "Mars",
+    "points": 50,
+    "level": "Medium"
+  },
+  {
+    "category": "History",
+    "question": "Who was the famous nurse during the Crimean War?",
+    "answer": "Nightingale",
+    "points": 100,
+    "level": "Very Hard"
+  },
+  {
+    "category": "Geography",
+    "question": "What is the largest ocean on Earth?",
+    "answer": "Pacific",
+    "points": 70,
+    "level": "Hard"
+  },
+  {
+    "category": "Science",
+    "question": "What is the speed of light in a vacuum?",
+    "answer": "299,792 kilometers per second",
+    "points": 90,
+    "level": "Very Hard"
+  },
+  {
+    "category": "Movies",
+    "question": "Which animated movie features a character named Simba?",
+    "answer": "The Lion King",
+    "points": 30,
+    "level": "Easy"
+  },
+  {
+    "category": "Sports",
+    "question": "What is the term for a perfect score in bowling?",
+    "answer": "Strike",
+    "points": 20,
+    "level": "Very Easy"
+  },
+  {
+    "category": "Music",
+    "question": "Who is known as the 'King of Pop'?",
+    "answer": "Michael Jackson",
+    "points": 40,
+    "level": "Easy"
+  },
+  {
+    "category": "Technology",
+    "question": "What is the main component of a computer's motherboard?",
+    "answer": "CPU",
+    "points": 80,
+    "level": "Hard"
+  },
+  {
+    "category": "General Knowledge",
+    "question": "What is the currency of China?",
+    "answer": "Yuan",
+    "points": 50,
+    "level": "Medium"
+  },
+  {
+    "category": "History",
+    "question": "Who was the first woman to win a Nobel Prize?",
+    "answer": "Curie",
+    "points": 70,
+    "level": "Hard"
+  },
+  {
+    "category": "Geography",
+    "question": "Which mountain range is the longest in the world?",
+    "answer": "Andes",
+    "points": 100,
+    "level": "Very Hard"
+  },
+  {
+    "category": "Science",
+    "question": "What is the chemical symbol for water?",
+    "answer": "H2O",
+    "points": 60,
+    "level": "Medium"
+  },
+  {
+    "category": "Movies",
+    "question": "Who played the character of Jack Dawson in the movie 'Titanic'?",
+    "answer": "DiCaprio",
+    "points": 30,
+    "level": "Easy"
+  },
+  {
+    "category": "Sports",
+    "question": "Which country won the most gold medals in the 2016 Summer Olympics?",
+    "answer": "United States",
+    "points": 90,
+    "level": "Very Hard"
+  },
+  {
+    "category": "Music",
+    "question": "Who is the lead singer of the band Coldplay?",
+    "answer": "Martin",
+    "points": 40,
+    "level": "Easy"
+  },
+  {
+    "category": "Technology",
+    "question": "What is the name of Google's mobile operating system?",
+    "answer": "Android",
+    "points": 80,
+    "level": "Hard"
+  }
+]

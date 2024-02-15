@@ -2,13 +2,19 @@ const cron = require("node-cron");
 const axios = require("axios");
 const fs = require("fs-extra");
 const path = require("path");
-const pathFile = path.join(__dirname, "script", "cache", "restart.txt");
+
+const eveningGreetFile = path.join(
+  __dirname,
+  "script",
+  "cache",
+  "eveningGreet.txt"
+);
 
 module.exports = async ({ api }) => {
   const threadsToSendGreeting = [
     "5776059305779745",
     "7133477510012986",
-    "5450951238260571",
+    // "5450951238260571",
   ];
   const greetingMessages = [
     "✨The paths and ways may be different and may always change your views, but your ultimate goal should be firm. Good morning, have a productive day, ${threadName}! 🛤️🚀",
@@ -68,7 +74,7 @@ module.exports = async ({ api }) => {
     const attachment = fs.createReadStream(imagePath);
     api.sendMessage(
       {
-        body: `✨ -MORNING AUTOGREET- ✨\n\n${greetingMessage}`,
+        body: `-ＭＯＲＮＩＮＧ ＡＵＴＯＧＲＥＥＴ-\n\n${greetingMessage}`,
         attachment,
       },
       threadID,
@@ -78,33 +84,37 @@ module.exports = async ({ api }) => {
         }
         if (err) return console.error("Error sending message:", err);
         console.log("AUTOGREET SUCCESSFULLY SENT");
+        fs.writeFileSync(eveningGreetFile, "true");
       }
     );
   };
 
-  const task = cron.schedule(
-    "0 6 * * *",
+  const reset = cron.schedule(
+    "0-30 5 * * *",
     async () => {
-      await Promise.all(
-        threadsToSendGreeting.map((threadID) => greet(threadID))
-      );
+      fs.writeFileSync(eveningGreetFile, "false");
     },
     {
       timezone: "Asia/Manila",
     }
   );
 
-  console.log("MorningGreet is running");
+  const task = cron.schedule(
+    "0-30 6 * * *",
+    async () => {
+      if (
+        !fs.existsSync(eveningGreetFile) ||
+        fs.readFileSync(eveningGreetFile, "utf-8") === "false"
+      ) {
+        await Promise.all(
+          threadsToSendGreeting.map((threadID) => greet(threadID))
+        );
+      }
+    },
+    {
+      timezone: "Asia/Manila",
+    }
+  );
 
-  if (!fs.existsSync(pathFile)) fs.writeFileSync(pathFile, "false");
-  const isEnable = fs.readFileSync(pathFile, "utf-8");
-  if (isEnable == "true") {
-    threadsToSendGreeting.forEach((threadID) => {
-      api.sendMessage(
-        "🚀 𝗕𝗼𝘁 𝗿𝗲𝘀𝘁𝗮𝗿𝘁𝗲𝗱 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆! 𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝗯𝗮𝗰𝗸! 🎉",
-        threadID
-      );
-    });
-    fs.writeFileSync(pathFile, "false");
-  }
+  console.log("EveningGreet is running");
 };

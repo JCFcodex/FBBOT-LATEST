@@ -314,7 +314,9 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
         });
         global.custom = require("./morningGreet")({ api: api });
         global.custom = require("./eveningGreet")({ api: api });
-        global.schedule = require("./schedule")({ api: api });
+        global.custom = require("./schedule")({ api: api });
+        global.custom = require("./restartNoti")({ api: api });
+
         try {
           var listenEmitter = api.listenMqtt(async (error, event) => {
             if (error) {
@@ -676,7 +678,7 @@ function createConfig() {
         admin: ["100076613706558"],
         devMode: false,
         database: false,
-        restartTime: 40,
+        restartTime: 45,
       },
       fcaOption: {
         forceLogin: true,

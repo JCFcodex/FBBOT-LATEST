@@ -3,21 +3,30 @@ const schedule = require("./schedule.json"); // Your schedule file
 
 // latest
 
-const threadID = "7133477510012986"; // Your thread ID
+const threadID = "7133477510012986"; // Your thread ID 7133477510012986 / 5776059305779745
 const timezone = "Asia/Manila"; // Your timezone
 
 const motivationMsg = [
-  "🌟 Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle. You've got the power! 💪",
-  "💡 Mistakes are proof that you are trying. Embrace challenges as opportunities to grow and learn. Keep pushing forward with determination! 🚀",
-  "🌈 Your potential is endless. Don't limit your challenges; challenge your limits. Each hurdle is a chance to discover your capabilities! ✨",
-  "📚 Education is the passport to the future, and tomorrow belongs to those who prepare for it today. Keep investing in your future success! 🌟",
-  "🚀 Dream big, work hard, stay focused. Your efforts today are laying the foundation for the extraordinary achievements of tomorrow. Keep going! 💼",
-  "🔥 Remember, the only way to do great work is to love what you do. Find passion in your studies, and success will follow. You're on the right path! 🌟",
-  "🎓 Education is the key to unlock the golden door of freedom. Keep unlocking doors with your commitment to learning and growing! 🗝️",
-  "🌟 Success is not final, failure is not fatal: It is the courage to continue that counts. Your resilience in the face of challenges is shaping your success story! 📜",
-  "💪 Every small step you take today is a giant leap toward a brighter future. Keep moving forward, and you'll reach heights you never thought possible! 🌄",
-  "🚀 You are capable of more than you know. Push yourself beyond your limits, and you'll discover new heights of achievement. Believe in your potential! 🚁",
-  // Add more motivational messages
+  "- Good luck and enjoy the class! 🌟",
+  "- Embrace the challenges, they're stepping stones to success! 🚀",
+  "- Remember, every error is an opportunity to learn and grow! 💡",
+  "- You're not just coding, you're crafting solutions. Keep going! 👩‍💻👨‍💻",
+  "- Each line of code you write is a step closer to becoming a coding maestro! 🎶",
+  "- Mistakes are proof that you're trying. Keep coding fearlessly! 🛠️",
+  "- Your code may have bugs, but your determination should be bug-free! 🐜❌",
+  "- Celebrate small victories in your coding journey! They add up! 🎉",
+  "- Success is not just about the destination; enjoy the coding journey! 🗺️",
+  "- You're not just an IT student; you're a future tech wizard! 🔮",
+  "- Coffee, code, conquer! ☕💻🚀",
+  "- Stay curious and keep exploring the vast world of programming! 🌐",
+  "- Challenges are opportunities in disguise. Unleash your problem-solving skills! 🔍",
+  "- Debugging is like detective work; enjoy the thrill of solving the mystery! 🕵️‍♂️",
+  "- Code with passion, and success will follow suit! ❤️💻",
+  "- Learning to code is like leveling up in a game—each challenge makes you stronger! 🎮💪",
+  "- Your coding journey is uniquely yours; embrace it and make it legendary! 🏰✨",
+  "- Continuous improvement is the key. Keep coding, keep evolving! 🔄🚶‍♂️",
+  "- Programming is not just about syntax; it's about creating a digital masterpiece! 🎨👾",
+  "- Remember, the best coders are the best problem solvers. You're on the right path! 🤔💼",
 ];
 
 function logInfo(message) {
@@ -38,16 +47,14 @@ function formatMessage(subject, time, messageType) {
   if (messageType === "reminder") {
     message = `⏰ ＲＥＭＩＮＤＥＲ ⏰\n\n\n𝗦𝘂𝗯𝗷𝗲𝗰𝘁: ${subject} 📚\n\n𝗧𝗵𝗲 𝗰𝗹𝗮𝘀𝘀 𝘄𝗶𝗹𝗹 𝘀𝘁𝗮𝗿𝘁 𝗮𝘁: ${convertTo12Hour(
       time
-    )} ⏰\n\n`;
-    // message += `🌟 ${getRandomMotivationMessage()}\n\n`;
+    )} ⏰\n\n\n`;
+    message += `🌟 ${getRandomMotivationMessage()}\n\n`;
     console.log("REMINDER SENT");
   } else if (messageType === "start") {
     message = `🚀 ＣＬＡＳＳ ＳＴＡＲＴＥＤ 🚀\n\n\n𝗦𝘂𝗯𝗷𝗲𝗰𝘁: ${subject} 📚\n\n𝗖𝘂𝗿𝗿𝗲𝗻𝘁 𝗧𝗶𝗺𝗲: ${convertTo12Hour(
       time
-    )} ⏰\n\n\n\n\n`;
-
-    const goodLuckMessage = "-Good luck and enjoy the class! 🌟";
-    message += goodLuckMessage;
+    )} ⏰\n\n\n`;
+    message += `🌟 ${getRandomMotivationMessage()}\n\n`;
 
     console.log("CLASS STARTED SENT");
   }
@@ -64,8 +71,7 @@ function convertTo24Hour(time) {
       minutes = minutes.padStart(2, "0");
       return `${hours}:${minutes}`;
     } else {
-      console.error(`Invalid time format: ${time}`);
-      return null;
+      throw new Error(`Invalid time format: ${time}`);
     }
   }
 
