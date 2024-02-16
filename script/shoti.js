@@ -86,7 +86,7 @@ module.exports.config = {
   version: "1.0.0",
   aliases: ["eababs", "chix"],
   hasPrefix: true,
-  role: 1,
+  role: 0,
   credits: "Your Name",
   description: "Get random Wifey videos",
   usage: "wifeyvideos",

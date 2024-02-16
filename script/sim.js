@@ -19,7 +19,7 @@ module.exports.run = async ({ api, event, args }) => {
     const [word, ...teached] = args
       .slice(1)
       .join(" ")
-      .split("=>")
+      .split("-")
       .map((item) => item.trim());
     if (!word || !teached) {
       return api.sendMessage("enter valid word", event.threadID);
@@ -70,7 +70,7 @@ module.exports.run = async ({ api, event, args }) => {
     simResponse = highestMatch.split("@@")[1];
   } else {
     const apiResponse = await axios.get(
-      `https://simsimi.fun/api/v2/?mode=talk&lang=en&filter=true&message=${encodeURIComponent(
+      `https://simsimi.fun/api/v2/?mode=talk&lang=ph&filter=false&message=${encodeURIComponent(
         prompt
       )}`
     );

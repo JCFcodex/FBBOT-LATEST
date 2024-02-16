@@ -1,13 +1,30 @@
+const fs = require("fs");
+
 const getRandomMember = (groupMembers) =>
   groupMembers[Math.floor(Math.random() * groupMembers.length)];
 
+const getRandomNonFacebookUser = async (api, participantIDs) => {
+  let randomParticipantID;
+  let participantName;
+
+  do {
+    randomParticipantID = getRandomMember(participantIDs);
+    participantName = await getFirstName(api, randomParticipantID);
+    console.log(participantName);
+  } while (
+    participantName === null ||
+    participantName.toLowerCase() === "facebook user"
+  );
+
+  return participantName;
+};
 module.exports.config = {
   name: "autoreply",
   version: "1.1.1",
-  role: 0,
+  role: 2,
   credits: "JC FAUSTINO",
   description: "Bot Reply",
-  hasPrefix: false,
+  usePrefix: false,
   commandCategory: "No Prefix",
   cooldowns: 0,
 };
@@ -45,8 +62,6 @@ module.exports.handleEvent = async function({ api, event }) {
       "ingat par baka ma rape ka",
       "gago bilisan mo",
       "tagal mo",
-      "on the way!",
-      "ready na me!",
       "otw, ingat ka din!",
     ],
 
@@ -69,90 +84,56 @@ module.exports.handleEvent = async function({ api, event }) {
     // School Related Messages
     "may pasok ba bukas": "nagtanong yung tamad pumasok oh HAHAHA",
     "may pasok ba": async () => {
-      const groupMembers = await api.getThreadInfo(threadID);
-      return groupMembers.participantIDs.length
-        ? `${await getFirstName(
+      try {
+        const groupMembers = await api.getThreadInfo(threadID);
+
+        if (groupMembers && groupMembers.participantIDs.length > 0) {
+          const participantName = await getRandomNonFacebookUser(
             api,
-            getRandomMember(groupMembers.participantIDs)
-          )} may pasok daw ba?`
-        : "";
+            groupMembers.participantIDs
+          );
+
+          return participantName ? `${participantName} may pasok daw ba?` : "";
+        } else {
+          return "";
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        return "Error checking if there's class today.";
+      }
     },
 
     // Random Room Messages
     "anong room": async () => {
-      const groupMembers = await api.getThreadInfo(threadID);
-      if (groupMembers.participantIDs.length > 0) {
-        const randomReply =
-          groupMembers.participantIDs.length > 1
-            ? [
-                `di ko alam, tanong mo kay papi ${await getFirstName(
-                  api,
-                  getRandomMember(groupMembers.participantIDs)
-                )}`,
-                `tanong mo kay ${await getFirstName(
-                  api,
-                  getRandomMember(groupMembers.participantIDs)
-                )}`,
-                `tanong mo rin kay ${await getFirstName(
-                  api,
-                  getRandomMember(groupMembers.participantIDs)
-                )}`,
-              ]
-            : [
-                `tanong mo kay ${await getFirstName(
-                  api,
-                  getRandomMember(groupMembers.participantIDs)
-                )}`,
-              ];
-        return randomReply[Math.floor(Math.random() * randomReply.length)];
+      try {
+        const groupMembers = await api.getThreadInfo(threadID);
+
+        if (groupMembers && groupMembers.participantIDs.length > 0) {
+          const randomReply = [
+            `tanong mo kay ${await getRandomNonFacebookUser(
+              api,
+              groupMembers.participantIDs
+            )}`,
+            `${await getRandomNonFacebookUser(
+              api,
+              groupMembers.participantIDs
+            )} anong room daw!`,
+            // Add more responses as needed
+          ];
+
+          return randomReply[Math.floor(Math.random() * randomReply.length)];
+        } else {
+          return "";
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        return "Error checking the room.";
       }
-      return "";
     },
 
     // Miscellaneous Messages
     "ano ginawa": "tanong mo kay kuya will",
     "nays wan": "nays wan ka jan",
-
-    // Kagaguhan (Nonsense) Messages
-    "lakas trip": "Lakas ng trip mo, ano ba yan!",
-    "tara inom": "Shot na, walwalan na!",
-    "ang daming alam": "Ang dami mong alam, pakamatay ka na lang!",
-    "ewan ko sayo": "Ewan ko sayo, bahala ka diyan!",
-    "magbago ka na": "Uy, magbago ka na, bawasan mo ang kagaguhan mo!",
-    nakakabwiset: "Nakakabwiset ka na, tigilan mo yan!",
-    "taena mo": [
-      "Taena mo din",
-      "Seryoso ka ba?",
-      "Luh, ano bang problema mo?",
-      "Hala, sige daldal pa.",
-    ],
-    "corny mo": "mas corny kang putangina ka gago",
-    "gago ka":
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29", //"Gago ka ba talaga o nagpapakabobo ka lang?",
-    gago:
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29",
-    "tangina mo":
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29", //"tangina mo din gago",
-    tanginamo:
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29",
-    tangina:
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29",
-    bobo:
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29", //"mas bobo ka",
-    angas: "mas maangas ka par",
-    "patay tayo dyan": "Patay tayo dyan, lagot ka!",
-    yuck: "Yuck, anong kagaguhan yan?",
-    "putangina mo":
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29", //"Putangina mo din!",
-    "wala ka kwenta": "Wala kang kwenta, tigilan mo na yan!",
-    shet: "ughh shett!",
-    pota:
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29", //"Pota ka din",
-    pakyu:
-      "Tunay na kasalanan ang pagmumura, pagsumpa at panunungayaw. Malinaw na itinuturo ng Bibliya na ito ay kasalanan. Sinasabi sa atin sa EFESO 4:29", //"Pakyu ka",
-    bwisit: "mas bwisite ka!",
-    "ewan ko sayo": "Ewan ko sayo, bahala ka diyan sa kagaguhan mo!",
-    "may klase ba": "sipag parang papasok",
   };
 
   for (const [keyword, reply] of Object.entries(messages)) {
@@ -173,24 +154,25 @@ module.exports.handleEvent = async function({ api, event }) {
 
 // module.exports.run = function() {};
 
-async function getFirstName(api, userID) {
+async function getFirstName(api, uid) {
   try {
-    const userInfo = await api.getUserInfo(userID);
+    const userInfo = await api.getUserInfo(uid);
 
-    // Check if isMessengerUser is true and name is not "Facebook user"
+    // Check if gender is not null and name is not "Facebook user"
     if (
       userInfo &&
-      userInfo[userID] &&
-      userInfo[userID].isMessengerUser === true &&
-      userInfo[userID].name &&
-      userInfo[userID].name.toLowerCase() !== "facebook user"
+      userInfo[uid] &&
+      userInfo[uid].vanity !== undefined &&
+      userInfo[uid].name.toLowerCase() !== "facebook user"
     ) {
-      return userInfo[userID].firstName || "";
+      return userInfo[uid].firstName;
     }
 
+    console.log(userInfo[uid].name);
+
     return null; // Filter out disabled accounts
-  } catch (error) {
-    console.error("Error getting user info:", error);
-    return "";
+  } catch (getUserInfoError) {
+    console.error(`Error getting user info for UID ${uid}:`, getUserInfoError);
+    return `User${uid}`;
   }
 }

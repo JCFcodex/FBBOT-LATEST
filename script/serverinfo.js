@@ -55,11 +55,11 @@ module.exports.run = async function({ api, event }) {
     .format("dddd, MMMM D, YYYY h:mm:ss A");
 
   const link = [
-    "https://imgur.com/e69RmcC.png",
-    "https://imgur.com/IwCRlYD.png",
-    "https://imgur.com/qaT9zw6.png",
+    // "https://imgur.com/e69RmcC.png",
+    // "https://imgur.com/IwCRlYD.png",
+    // "https://imgur.com/qaT9zw6.png",
     "https://imgur.com/acocFI4.png",
-    "https://imgur.com/sqLwqww.png",
+    // "https://imgur.com/sqLwqww.png",
   ];
 
   const randomLink = link[Math.floor(Math.random() * link.length)];
