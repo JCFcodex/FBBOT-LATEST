@@ -38,7 +38,7 @@ function levenshtein(a, b) {
 module.exports.config = {
   name: "quiz",
   version: "1.0.0",
-  aliases: ["", ""],
+  // aliases: ["", ""],
   hasPrefix: false,
   role: 0,
   credits: "JC FAUSTINO",
