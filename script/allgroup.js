@@ -3,7 +3,7 @@ module.exports.config = {
   version: "1.0.0",
   credits: "manhIT",
   role: 0,
-  aliases: ["boxlist", "grouplist"],
+  aliases: ["boxlist", "grouplist", "listbox"],
   description: "Sends a list of all groups the bot has joined.",
   hasPrefix: true,
   usage: "[allgroup]",

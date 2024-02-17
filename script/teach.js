@@ -15,7 +15,7 @@ module.exports.run = async function({ api, event, args }) {
   let { messageID, threadID, senderID, body } = event;
   let tid = threadID,
     mid = messageID;
-  const input = args.join(" ").split("|");
+  const input = args.join(" ").split("-");
 
   if (input.length < 2) {
     if (args.length == 0) {

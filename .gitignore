@@ -2,3 +2,7 @@ node_modules
 data
 package-lock.json
 CLIFF-AUTO.txt
+backUpAUTO.txt
+cmdTemplate.js
+customTemplate.txt
+backup.js

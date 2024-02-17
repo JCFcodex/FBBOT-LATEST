@@ -38,23 +38,23 @@ module.exports.config = {
   hasPrefix: false,
   usages: "talk <reply to user message>, talk @mention, talk me, talk stop",
   cooldown: 1,
-  aliases: [
-    "pre",
-    "tol",
-    "bai",
-    "gar",
-    "boi",
-    "pare",
-    "kapatid",
-    "tsong",
-    "kaibigan",
-    "kabarkada",
-    "bro",
-    "kuya",
-    "tolits",
-    "amigo",
-    "kabayan",
-  ],
+  // aliases: [
+  //   "pre",
+  //   "tol",
+  //   "bai",
+  //   "gar",
+  //   "boi",
+  //   "pare",
+  //   "kapatid",
+  //   "tsong",
+  //   "kaibigan",
+  //   "kabarkada",
+  //   "bro",
+  //   "kuya",
+  //   "tolits",
+  //   "amigo",
+  //   "kabayan",
+  // ],
 };
 
 module.exports.run = async function({ api, event, args }) {
@@ -175,7 +175,7 @@ async function getFirstName(api, uid) {
 module.exports.handleEvent = async function({ api, event }) {
   // Check if the event is a message and it's from the target user
   if (
-    event.type === "message" &&
+    (event.type === "message" || event.type === "message_reply") &&
     ongoingTalks.has(event.threadID) &&
     ongoingTalks.get(event.threadID).isOngoing &&
     event.senderID === ongoingTalks.get(event.threadID).targetUserID

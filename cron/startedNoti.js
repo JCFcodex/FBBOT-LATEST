@@ -1,7 +1,5 @@
 const cron = require("node-cron");
-const schedule = require("./schedule.json"); // Your schedule file
-
-// latest
+const schedule = require("./src/schedule.json"); // Your schedule file
 
 const threadID = "7133477510012986"; // Your thread ID 7133477510012986 / 5776059305779745
 const timezone = "Asia/Manila"; // Your timezone
@@ -44,13 +42,7 @@ function getRandomMotivationMessage() {
 function formatMessage(subject, time, messageType) {
   let message;
 
-  if (messageType === "reminder") {
-    message = `⏰ ＲＥＭＩＮＤＥＲ ⏰\n\n\n𝗦𝘂𝗯𝗷𝗲𝗰𝘁: ${subject} 📚\n\n𝗧𝗵𝗲 𝗰𝗹𝗮𝘀𝘀 𝘄𝗶𝗹𝗹 𝘀𝘁𝗮𝗿𝘁 𝗮𝘁: ${convertTo12Hour(
-      time
-    )} ⏰\n\n\n`;
-    message += `🌟 ${getRandomMotivationMessage()}\n\n`;
-    console.log("REMINDER SENT");
-  } else if (messageType === "start") {
+  if (messageType === "start") {
     message = `🚀 ＣＬＡＳＳ ＳＴＡＲＴＥＤ 🚀\n\n\n𝗦𝘂𝗯𝗷𝗲𝗰𝘁: ${subject} 📚\n\n𝗖𝘂𝗿𝗿𝗲𝗻𝘁 𝗧𝗶𝗺𝗲: ${convertTo12Hour(
       time
     )} ⏰\n\n\n`;
@@ -105,23 +97,6 @@ function sendMessage(api, subject, time, messageType) {
   api.sendMessage(message, threadID);
 }
 
-function scheduleReminder(api, subject, originalTime, day, hour, minute) {
-  const reminderMinute = (parseInt(minute, 10) - 10 + 60) % 60;
-  const reminderHour =
-    (parseInt(hour, 10) + Math.floor((parseInt(minute, 10) - 10 ) / 60) + 24) %
-    24;
-
-  const cronExpressionReminder = `${reminderMinute} ${reminderHour} * * ${day.toUpperCase()}`;
-
-  cron.schedule(
-    cronExpressionReminder,
-    () => {
-      sendMessage(api, subject, originalTime, "reminder");
-    },
-    { timezone }
-  );
-}
-
 function scheduleOriginalReminder(
   api,
   subject,
@@ -141,29 +116,28 @@ function scheduleOriginalReminder(
   );
 }
 
-function scheduleReminders(api) {
+function scheduleClassStarted(api) {
   for (const day in schedule) {
     for (let time in schedule[day]) {
-      logInfo(`Scheduling reminder for time: ${time}`);
+      logInfo(`Scheduling class started for time: ${time}`);
       const subject = schedule[day][time];
       const originalTime = time;
 
       time = convertTo24Hour(time);
 
       if (time === null) {
-        logError(`Invalid time format for reminder: ${time}`);
+        logError(`Invalid time format for class started: ${time}`);
         continue;
       }
 
       const [hour, minute] = time.split(":");
 
-      scheduleReminder(api, subject, originalTime, day, hour, minute);
       scheduleOriginalReminder(api, subject, originalTime, day, hour, minute);
     }
   }
 }
 
 module.exports = async ({ api }) => {
-  logInfo("Schedule job is running");
-  scheduleReminders(api);
+  logInfo("Class Started job is running");
+  scheduleClassStarted(api);
 };
