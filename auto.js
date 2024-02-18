@@ -972,4 +972,91 @@ const Currencies = {
     }
   },
 };
-main();
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+const { Octokit } = require("@octokit/rest");
+const chokidar = require("chokidar"); // Install this package
+
+const octokit = new Octokit({
+  auth: "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", // Replace with your GitHub token
+});
+
+let changesDetected = false;
+
+async function commitChanges() {
+  const fs = require("fs").promises;
+  try {
+    // Read the existing database.json file
+    const existingData = await fs.readFile("./data/database.json", "utf-8");
+    const database = JSON.parse(existingData);
+
+    // Make your changes to the database
+    // For example, let's increment the exp of the first user
+    if (database[1]?.Users && database[1].Users.length > 0) {
+      database[1].Users[0].exp += 1;
+    }
+
+    // Write the updated database.json file
+    await fs.writeFile(
+      "./data/database.json",
+      JSON.stringify(database, null, 2),
+      "utf-8"
+    );
+
+    // Fetch the latest content of the file from GitHub
+    const repoContent = await octokit.repos.getContent({
+      owner: "JCFcodex",
+      repo: "FBBOT-LATEST",
+      path: "data/database.json",
+    });
+
+    // Commit the changes to GitHub
+    const commitMessage = "Update database.json";
+    await octokit.repos.createOrUpdateFileContents({
+      owner: "JCFcodex",
+      repo: "FBBOT-LATEST",
+      path: "data/database.json",
+      message: commitMessage,
+      content: Buffer.from(JSON.stringify(database, null, 2)).toString(
+        "base64"
+      ),
+      sha: repoContent.data.sha, // Use the latest SHA key
+    });
+
+    console.log("Changes committed to GitHub.");
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+}
+
+// Watch for changes in the database.json file
+chokidar.watch("./data/database.json").on("change", () => {
+  changesDetected = true;
+});
+
+// Commit changes every hour if there were any changes detected
+cron.schedule(
+  "0-2 * * * *",
+  () => {
+    if (changesDetected) {
+      commitChanges();
+      changesDetected = false;
+    }
+  },
+  {
+    scheduled: true,
+    timezone: "Asia/Manila",
+  }
+);
+
+main(); // Call main() after committing changes
