@@ -84,7 +84,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 0,
+        "exp": 1,
         "level": 1
       },
       {
@@ -140,7 +140,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 0,
-        "exp": 13,
+        "exp": 16,
         "level": 2
       },
       {
@@ -154,7 +154,7 @@
         "id": "100080460532201",
         "name": "Bots Aint Simp",
         "money": 0,
-        "exp": 12,
+        "exp": 19,
         "level": 2
       },
       {
