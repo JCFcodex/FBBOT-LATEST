@@ -721,6 +721,7 @@ async function main() {
         "./data/history.json",
         JSON.stringify(history, null, 2)
       );
+      //api.sendMessage("restarting", "5776059305779745");
       process.exit(1);
     }
   );

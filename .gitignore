@@ -1,5 +1,7 @@
 node_modules
-data
+data/session
+data/config.json
+data/history.json
 package-lock.json
 CLIFF-AUTO.txt
 backUpAUTO.txt

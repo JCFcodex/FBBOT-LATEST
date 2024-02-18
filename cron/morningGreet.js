@@ -3,12 +3,7 @@ const axios = require("axios");
 const fs = require("fs-extra");
 const path = require("path");
 
-const eveningGreetFile = path.join(
-  __dirname,
-  "script",
-  "cache",
-  "eveningGreet.txt"
-);
+const morningGreetFile = path.join(__dirname, "cache", "morningGreet.txt");
 
 module.exports = async ({ api }) => {
   const threadsToSendGreeting = [
@@ -84,7 +79,7 @@ module.exports = async ({ api }) => {
         }
         if (err) return console.error("Error sending message:", err);
         console.log("AUTOGREET SUCCESSFULLY SENT");
-        fs.writeFileSync(eveningGreetFile, "true");
+        fs.writeFileSync(morningGreetFile, "true");
       }
     );
   };
@@ -92,7 +87,7 @@ module.exports = async ({ api }) => {
   const reset = cron.schedule(
     "0-30 5 * * *",
     async () => {
-      fs.writeFileSync(eveningGreetFile, "false");
+      fs.writeFileSync(morningGreetFile, "false");
     },
     {
       timezone: "Asia/Manila",
@@ -103,8 +98,8 @@ module.exports = async ({ api }) => {
     "0-30 6 * * *",
     async () => {
       if (
-        !fs.existsSync(eveningGreetFile) ||
-        fs.readFileSync(eveningGreetFile, "utf-8") === "false"
+        !fs.existsSync(morningGreetFile) ||
+        fs.readFileSync(morningGreetFile, "utf-8") === "false"
       ) {
         await Promise.all(
           threadsToSendGreeting.map((threadID) => greet(threadID))
