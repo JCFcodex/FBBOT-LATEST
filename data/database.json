@@ -84,7 +84,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 54,
+        "exp": 55,
         "level": 1
       },
       {
@@ -175,7 +175,7 @@
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 17,
+        "exp": 18,
         "level": 2
       },
       {
@@ -224,8 +224,8 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 0,
-        "exp": 7,
-        "level": 1
+        "exp": 10,
+        "level": 2
       },
       {
         "id": "100015328485151",
