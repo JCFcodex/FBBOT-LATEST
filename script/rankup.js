@@ -36,7 +36,8 @@ module.exports.handleEvent = async function({ api, event, Experience }) {
       await levelUp(event?.senderID);
 
       api.sendMessage(
-        `Congratulations ${name}! You have reached level ${level + 1}!`,
+        `🎉 Congratulations ${name}! \n\n 🚀 You've just soared to level ${level +
+          1}! Keep it up!`,
         event.threadID
       );
     }

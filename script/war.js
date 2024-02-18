@@ -89,7 +89,7 @@ module.exports.config = {
   version: "1.0.0",
   aliases: ["war stop"], // Adding "war stop" as an alias
   hasPrefix: false,
-  role: 2,
+  role: 0,
   credits: "JC FAUSTINO",
   description: "Initiate a war with a targeted user or stop the ongoing battle",
   usage: ["war <reply to user message>", "war @mention", "war me", "war stop"], // Updated usage
@@ -206,7 +206,7 @@ function stopWar(api, threadID) {
 module.exports.handleEvent = async function({ api, event }) {
   // Check if the event is a message and it's from the target user
   if (
-    event.type === "message" &&
+   ( event.type === "message" ||  event.type === "message_reply") &&
     ongoingWars.has(event.threadID) &&
     ongoingWars.get(event.threadID).isOngoing &&
     event.senderID === ongoingWars.get(event.threadID).targetUserID
