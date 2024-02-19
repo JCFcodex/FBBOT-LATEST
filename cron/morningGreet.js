@@ -152,7 +152,7 @@ module.exports = async ({ api }) => {
   );
 
   const task = cron.schedule(
-    "*/1 * * * *",
+    "0-30 6 * * *",
     async () => {
       if (
         !fs.existsSync(morningGreetFile) ||
