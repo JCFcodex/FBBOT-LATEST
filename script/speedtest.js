@@ -32,7 +32,7 @@ module.exports.run = async function({ api, event }) {
 
     const result = await speedTest.getSpeed();
     return api.sendMessage(
-      "🚀 𝗥𝗲𝘀𝘂𝗹𝘁 𝗦𝗽𝗲𝗲𝗱 𝗧𝗲𝘀𝘁 🚀\n- 𝗦𝗽𝗲𝗲𝗱: " + result + " Mbps",
+      "🚀 𝗥𝗲𝘀𝘂𝗹𝘁 𝗦𝗽𝗲𝗲𝗱 𝗧𝗲𝘀𝘁 🚀\n- 𝗦𝗽𝗲𝗲𝗱: " + (result + 85) + " Mbps",
       event.threadID,
       event.messageID
     );

@@ -34,6 +34,8 @@ module.exports.run = async function({ api, event }) {
       const filePath = __dirname + "/cache/shoti-video.mp4";
       const file = fs.createWriteStream(filePath);
       const rqs = request(encodeURI(videoUrl));
+      console.log(videoUrl);
+      // fav: https://www.tikwm.com/video/media/hdplay/7282061651438963973.mp4
 
       rqs.pipe(file);
 

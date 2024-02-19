@@ -22,6 +22,7 @@ module.exports.run = async function({
 }) {
   const input = args.join(" ");
   try {
+    api.setMessageReaction("⌛", event.messageID, () => {}, true);
     const eventCommands = enableCommands[1].handleEvent;
     const commands = enableCommands[0].commands;
     if (!input) {

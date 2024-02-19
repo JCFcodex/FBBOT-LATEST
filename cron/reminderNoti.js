@@ -1,4 +1,8 @@
+const axios = require("axios");
+const fs = require("fs-extra");
+const path = require("path");
 const cron = require("node-cron");
+
 const schedule = require("./src/schedule.json"); // Your schedule file
 
 const threadID = "7133477510012986"; // Your thread ID 7133477510012986 / 5776059305779745
@@ -91,12 +95,50 @@ function convertTo12Hour(time) {
   return `${hours}:${minute}`;
 }
 
-function sendMessage(api, subject, time, messageType) {
+async function downloadFile(url, filePath) {
+  const writer = fs.createWriteStream(filePath);
+  const response = await axios({
+    url,
+    method: "GET",
+    responseType: "stream",
+  });
+  response.data.pipe(writer);
+  return new Promise((resolve, reject) => {
+    writer.on("finish", resolve);
+    writer.on("error", reject);
+  });
+}
+
+async function sendMessage(api, subject, time, messageType) {
   const message = formatMessage(subject, time, messageType);
-  api.sendMessage(message, threadID);
-  setTimeout(() => {
-    process.exit(1);
-  }, 300000); // 5 minutes in milliseconds
+  try {
+    const content = `gago, tang ina nyo, mag ready na kayo, mag start na ang ${subject}, mamayang ${time}`;
+    const languageToSay = "tl";
+    const pathFemale = path.resolve(__dirname, "cache", `voice_female.mp3`);
+
+    await downloadFile(
+      `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
+        content
+      )}&tl=${languageToSay}&client=tw-ob&idx=1`,
+      pathFemale
+    );
+
+    const voiceMessage = fs.createReadStream(pathFemale);
+
+    // Sending the voice message directly as a readable stream
+    api.sendMessage(
+      {
+        body: message,
+        attachment: voiceMessage,
+      },
+      threadID
+    );
+
+    // Cleanup: Delete the temporary voice file after sending
+    // fs.unlinkSync(pathFemale);
+  } catch (error) {
+    console.error("Error sending a message:", error);
+  }
 }
 
 function scheduleReminder(api, subject, originalTime, day, hour, minute) {

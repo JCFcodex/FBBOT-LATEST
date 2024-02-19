@@ -22,6 +22,10 @@ module.exports.handleEvent = async function({
     const facebookLinkRegex = /https:\/\/www\.facebook\.com\/\S+/;
     if (facebookLinkRegex.test(event.body)) {
       try {
+        api.sendMessage(
+          "𝗣𝗹𝗲𝗮𝘀𝗲 𝘄𝗮𝗶𝘁 𝘄𝗵𝗶𝗹𝗲 𝘄𝗲 𝗱𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝘁𝗵𝗲 𝗙𝗮𝗰𝗲𝗯𝗼𝗼𝗸 𝘃𝗶𝗱𝗲𝗼. 🕒",
+          event.threadID
+        );
         const fbInfo = await getFBInfo(event.body);
         let fbResponse = await axios.get(encodeURI(fbInfo.sd), {
           responseType: "arraybuffer",

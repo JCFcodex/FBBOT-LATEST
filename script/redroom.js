@@ -24,7 +24,7 @@ module.exports.config = {
   commandCategory: "nsfw",
   usages: "[redroom]",
   hasPrefix: false,
-  cooldown: 10,
+  cooldown: 20,
 };
 
 module.exports.handleEvent = async function({ api, event }) {

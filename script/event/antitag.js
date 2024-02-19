@@ -17,6 +17,7 @@ module.exports.handleEvent = function({ api, event }) {
     for (const id of aid) {
       if (event.mentions && event.mentions[id]) {
         var msg = [
+          "Babe nalang iatawag mo sakanya",
           "Stop mentioning my creator, he's busy 😗",
           "My Creator is currently offline 😢",
           "Tag him again and 𝗂 𝗐𝗂𝗅𝗅 𝗉𝗎𝗇𝖼𝗁 𝗒𝗈𝗎 🙂",

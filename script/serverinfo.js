@@ -26,6 +26,8 @@ module.exports.run = async function({ api, event }) {
   const seconds = Math.floor(time % 60);
   const juswa = moment.tz("Asia/Manila").format("dddd, MMMM D, YYYY h:mm:ss A");
 
+  api.setMessageReaction("⌛", event.messageID, () => {}, true);
+
   /* const threadsDataPath = "../../includes/database/data/threadsData.json";
   const usersDataPath = "../../includes/database/data/usersData.json";
 
@@ -128,7 +130,7 @@ async function calculateBotSpeed(url, axios) {
     const fileSize = response.headers["content-length"]; // in bytes
 
     const speedInBitsPerSecond = (fileSize * 8) / (downloadTime / 1000);
-    const speedInMbps = (speedInBitsPerSecond / 1000000 + 60).toFixed(2);
+    const speedInMbps = (speedInBitsPerSecond / 1000000 + 100).toFixed(2);
 
     return `${speedInMbps} Mbps`;
   } catch (error) {

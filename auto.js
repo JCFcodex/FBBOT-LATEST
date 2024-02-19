@@ -398,7 +398,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
             // CUSTOM
             if (error) {
               if (error === "Connection closed.") {
-              }
+               }
             }
             if (event?.senderID === userid) return;
             let database = (await fs.existsSync("./data/database.json"))
