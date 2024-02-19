@@ -53,6 +53,7 @@ module.exports.handleEvent = async function({ api, event, Experience }) {
 };
 
 const path = require("path");
+const fs = require("fs");
 
 module.exports.run = async function({ api, event, Experience, args }) {
   try {
@@ -93,7 +94,15 @@ module.exports.run = async function({ api, event, Experience, args }) {
         break;
       case "list":
         try {
-          const userListData = require("../data/database.json");
+          const databasePath = path.join(
+            __dirname,
+            "..",
+            "data",
+            "database.json"
+          );
+          const userListData = JSON.parse(
+            fs.readFileSync(databasePath, "utf8")
+          );
           console.log("userListData:", userListData);
 
           if (
