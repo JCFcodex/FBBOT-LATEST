@@ -24,7 +24,7 @@ module.exports.run = async function({ api, event, args }) {
       await api.sendMessage(
         `𝙉𝙊𝙏𝙄𝘾𝙀 𝙁𝙍𝙊𝙈 𝘿𝙀𝙑𝙀𝙇𝙊𝙋𝙀𝙍 
  ---------------- 
- Developer Name :𝗝𝗖 𝗙𝗔𝗨𝗦𝗧𝗜𝗡𝗢
+ Admin :𝗝𝗖 𝗙𝗔𝗨𝗦𝗧𝗜𝗡𝗢
  --------------- 
  『𝗡𝗼𝘁𝗶𝗰𝗲』${custom}`,
         thread.threadID
@@ -32,7 +32,7 @@ module.exports.run = async function({ api, event, args }) {
       sentCount++;
 
       const content = `${custom}`;
-      const languageToSay = "tl";
+      const languageToSay = "id";
       const pathFemale = path.resolve(
         __dirname,
         "cache",

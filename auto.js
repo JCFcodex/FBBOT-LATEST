@@ -261,6 +261,10 @@ app.post("/login", async (req, res) => {
 app.listen(3000, () => {
   console.log(`Server is running at http://localhost:3000`);
 });
+process.on("uncaughtException", (error) => {
+  console.error("Uncaught Exception:", error.message);
+  // Respond to the user with an error message if applicable
+});
 process.on("unhandledRejection", (reason) => {
   console.error("Unhandled Promise Rejection:", reason);
 });
@@ -398,7 +402,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
             // CUSTOM
             if (error) {
               if (error === "Connection closed.") {
-               }
+              }
             }
             if (event?.senderID === userid) return;
             let database = (await fs.existsSync("./data/database.json"))
@@ -750,7 +754,7 @@ function createConfig() {
         admin: ["100076613706558"],
         devMode: false,
         database: false,
-        restartTime: 55,
+        restartTime: 999999999,
       },
       fcaOption: {
         forceLogin: true,
@@ -1046,7 +1050,7 @@ chokidar.watch("./data/database.json").on("change", () => {
 
 // Commit changes every hour if there were any changes detected
 cron.schedule(
-  "0-2 * * * *",
+  "0,15,30,45 * * * *",
   () => {
     if (changesDetected) {
       commitChanges();

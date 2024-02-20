@@ -112,7 +112,7 @@ async function downloadFile(url, filePath) {
 
 async function sendMessage(api, subject, time, messageType) {
   try {
-    const content = "pumasok na kayo mga bugok";
+    const content = `tang ina nyo, pumasok na kayo!, nag start na ang ${subject}`;
     const languageToSay = "tl";
     const pathFemale = path.resolve(__dirname, "cache", `voice_female.mp3`);
 
@@ -150,7 +150,10 @@ function scheduleOriginalReminder(
   hour,
   minute
 ) {
-  const cronExpressionOriginal = `${minute} ${hour} * * ${day.toUpperCase()}`;
+  const reminderMinute = (parseInt(minute, 10) + 1) % 60;
+  const reminderHour =
+    (parseInt(hour, 10) + Math.floor((parseInt(minute, 10) + 1) / 60)) % 24;
+  const cronExpressionOriginal = `${reminderMinute} ${reminderHour} * * ${day.toUpperCase()}`;
 
   cron.schedule(
     cronExpressionOriginal,

@@ -7,7 +7,7 @@ const eveningGreetFile = path.join(__dirname, "cache", "eveningGreet.txt");
 
 module.exports = async ({ api }) => {
   const threadsToSendGreeting = [
-    "5776059305779745",
+    // "5776059305779745",
     "7133477510012986",
     // "5450951238260571",
   ];

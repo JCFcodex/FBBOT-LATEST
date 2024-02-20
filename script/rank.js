@@ -81,10 +81,10 @@ module.exports.run = async function({ api, event, Experience, args }) {
           return;
         }
 
-        const { name, exp, level } = rankInfo;
+        const { name, exp, level, money } = rankInfo;
 
         api.sendMessage(
-          `Hi ${name}\n\nLevel: ${level}\nExperience Points: ${exp}\n\nTo advance to the next level, you need ${10 *
+          `Hi ${name}\n\n - Level: ${level}\n - Experience Points: ${exp}\n - Money: ${money}\n\nTo advance to the next level, you need ${10 *
             Math.pow(2, level) -
             exp} more experience points.`,
           event.threadID,
@@ -130,7 +130,11 @@ module.exports.run = async function({ api, event, Experience, args }) {
           );
 
           const filteredUserList = userList
-            .filter((user) => user.name.toLowerCase() !== "facebook user")
+            .filter(
+              (user) =>
+                user.name.toLowerCase() !== "facebook user" &&
+                user.name.toLowerCase() !== "john carl faustino"
+            )
             .sort((a, b) => b.exp - a.exp);
 
           let rankListMessage = "🏆 𝗥𝗮𝗻𝗸 𝗟𝗶𝘀𝘁 🏆\n\n";
@@ -139,7 +143,7 @@ module.exports.run = async function({ api, event, Experience, args }) {
               filteredUserList[i].name
             }\n - Level: ${filteredUserList[i].level}\n - Exp: ${
               filteredUserList[i].exp
-            }\n\n`;
+            }\n - Money: ${filteredUserList[i].money}\n\n`;
           }
 
           api.sendMessage(rankListMessage, event.threadID, event.messageID);
