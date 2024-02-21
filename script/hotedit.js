@@ -14,7 +14,7 @@ module.exports.config = {
   description: "Admin and Bot info.",
   commandCategory: "nsfw",
   usePrefix: false,
-  cooldown: 15,
+  cooldown: 20,
 };
 
 // Function to load NSFW data from file

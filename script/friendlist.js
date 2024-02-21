@@ -8,7 +8,7 @@ module.exports.config = {
   hasPrefix: false,
   credits: "ManhG",
   description: "View friends information/Delete friends by replying",
-  usages: "",
+  usages: "[friendlist]",
   cooldown: 5,
 };
 

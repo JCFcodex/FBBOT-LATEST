@@ -9,7 +9,7 @@ module.exports.config = {
   description: 'Get a random anime image',
   usage: "Anime [category-type]",
   credits: 'Develeoper',
-  cooldown: 5,
+  cooldown: 60,
 };
 module.exports.run = async function({
   api,

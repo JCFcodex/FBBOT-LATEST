@@ -5,7 +5,7 @@ const moment = require("moment");
 module.exports.config = {
   name: "subject", // Command name
   version: "1.0.0", // Command version
-  aliases: ["", ""],
+  aliases: ["sched", "schedule"],
   hasPrefix: false, // Whether to use the bot's prefix or not
   role: 2, // Permission level required (adjust as needed)
   credits: "Your Name", // Command author
@@ -71,7 +71,7 @@ module.exports.run = async function({ api, event, args }) {
       );
     } else {
       // If there are subjects, create a message with the subjects
-      let message = `✨ Subjects for ${day}:\n\n\n\n`;
+      let message = `✨ Schedules for ${day}:\n\n\n\n`;
       for (const time in subjects) {
         message += `-Time:   ${time}\n-Subject:   ${subjects[time]}\n\n`;
       }

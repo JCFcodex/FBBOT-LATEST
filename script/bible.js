@@ -7,7 +7,7 @@ module.exports.config = {
   hasPrefix: false,
   commandCategory: "random",
   usage: "[John 3:16]",
-  cooldown: 3,
+  cooldown: 5,
 };
 
 module.exports.run = async function({ api, event, args }) {

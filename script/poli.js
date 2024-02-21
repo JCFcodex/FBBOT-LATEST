@@ -6,7 +6,7 @@ module.exports.config = {
   credits: "Developer",
   description: "generate image from polination.",
   usage: "poli [prompt]",
-  cooldown: 5,
+  cooldown: 30,
 };
 
 module.exports.run = async ({ api, event, args }) => {

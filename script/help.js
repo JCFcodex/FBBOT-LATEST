@@ -10,7 +10,7 @@ module.exports.config = {
   description: "Beginner's guide",
   usage: "Help [page] or [command]",
   credits: "Developer",
-  cooldown: 5,
+  cooldown: 20,
 };
 module.exports.run = async function({
   api,

@@ -25,7 +25,7 @@ module.exports.config = {
   commandCategory: "nsfw",
   usages: ["[phub]"],
   hasPrefix: false,
-  cooldown: 10,
+  cooldown: 60,
 };
 
 module.exports.handleEvent = async function({ api, event }) {
@@ -115,21 +115,26 @@ module.exports.handleEvent = async function({ api, event }) {
 
   // Send the video
   const message = {
-    body: `🎥 𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝗣𝗵𝘂𝗯 𝘃𝗶𝗱𝗲𝗼, 𝘄𝗮𝘁𝗰𝗵 𝗶𝘁 𝘄𝗲𝗹𝗹.`,
+    body: `🎥 𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝗣𝗵𝘂𝗯 𝘃𝗶𝗱𝗲𝗼, 𝘄𝗮𝘁𝗰𝗵 𝗶𝘁 𝘄𝗲𝗹𝗹.\n\nVideo will unsend in 20 seconds.`,
     attachment: fs.createReadStream(filePath),
   };
 
-  api.sendMessage(message, threadID, (err) => {
+  try {
+    const result = await api.sendMessage(message, threadID);
     fs.unlinkSync(filePath);
-    if (err) {
-      console.error("Error sending video...", err);
-      api.sendMessage(
-        "🐱 Error sending video.",
-        event.threadID,
-        event.messageID
-      );
-    }
-  });
+
+    // Unsend the message after 20 seconds
+    setTimeout(async () => {
+      try {
+        await api.unsendMessage(result.messageID);
+      } catch (unsendError) {
+        console.error("Error while unsending message:", unsendError);
+      }
+    }, 20000); // 20 seconds
+  } catch (sendError) {
+    console.error("Error sending video...", sendError);
+    api.sendMessage("🐱 Error sending video.", event.threadID, event.messageID);
+  }
 };
 
 module.exports.run = async function({ api, event }) {};

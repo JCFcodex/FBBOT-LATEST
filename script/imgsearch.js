@@ -7,7 +7,7 @@ module.exports.config = {
   usePrefix: false,
   commandCategory: "image",
   usages: "imgsearch [text]",
-  cooldowns: 10,
+  cooldowns: 60,
   dependencies: {
     axios: "",
     "fs-extra": "",

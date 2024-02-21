@@ -43,7 +43,7 @@ module.exports.run = async function({ api, event, args }) {
   }
   try {
     const resp = await axios.get(
-      `http://eu4.diresnode.com:3588/stalk?uid=${id}`
+      `https://useless-apis.replit.app/stalk?uid=${id}`
     );
     var name = resp.data.name;
     var link_profile = resp.data.link;

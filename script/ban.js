@@ -10,7 +10,7 @@ module.exports.config = {
   commandCategory: "Moderation",
   usages: ["ban add uid", "ban list", "ban remove uid"],
   hasPrefix: true,
-  cooldown: 5,
+  cooldown: 2,
 };
 
 async function getUserName(api, uid) {

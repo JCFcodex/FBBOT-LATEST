@@ -6,10 +6,10 @@ module.exports.config = {
   role: 0,
   credits: "cliff",
   description: "uptime",
-  aliases: ["ping"],
+  aliases: ["ping", "latency"],
   cooldown: 0,
   hasPrefix: false,
-  usage: "",
+  usage: "[ping]",
 };
 
 function byte2mb(bytes) {

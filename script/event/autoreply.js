@@ -134,6 +134,7 @@ module.exports.handleEvent = async function({ api, event }) {
     // Miscellaneous Messages
     "ano ginawa": "tanong mo kay kuya will",
     "nays wan": "nays wan ka jan",
+    "palo ka": "omsim palo talaga yan",
   };
 
   for (const [keyword, reply] of Object.entries(messages)) {

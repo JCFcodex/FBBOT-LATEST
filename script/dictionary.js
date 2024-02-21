@@ -7,7 +7,7 @@ module.exports.config = {
   description: "Search words dictionary",
   usage: "Ai [promot]",
   credits: "Develeoper",
-  cooldown: 5,
+  cooldown: 10,
 };
 module.exports.run = async function({ api, event, args }) {
   const input = args.join(" ");

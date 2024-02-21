@@ -27,7 +27,7 @@ module.exports.config = {
   commandCategory: "Moderation",
   usages: ["deleteuser <uid>"],
   usePrefix: false,
-  cooldowns: 5,
+  cooldowns: 2,
 };
 
 module.exports.run = async function({ api, event, args }) {
