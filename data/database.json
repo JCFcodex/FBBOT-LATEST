@@ -114,15 +114,15 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 44,
+        "exp": 47,
         "level": 1
       },
       {
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 4,
-        "level": 1
+        "exp": 15,
+        "level": 2
       },
       {
         "id": "61555500735152",
@@ -142,15 +142,15 @@
         "id": "100000607087170",
         "name": "Grant Santos Caisip",
         "money": 0,
-        "exp": 39,
-        "level": 3
+        "exp": 41,
+        "level": 4
       },
       {
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 22,
-        "level": 3
+        "exp": 43,
+        "level": 4
       },
       {
         "id": "100003882298392",
@@ -184,8 +184,8 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 500,
-        "exp": 154,
-        "level": 5
+        "exp": 163,
+        "level": 6
       },
       {
         "id": "100015328485151",
@@ -219,7 +219,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 0,
-        "exp": 427,
+        "exp": 447,
         "level": 7
       },
       {
