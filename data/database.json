@@ -114,7 +114,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 39,
+        "exp": 42,
         "level": 1
       },
       {
@@ -142,21 +142,21 @@
         "id": "100000607087170",
         "name": "Grant Santos Caisip",
         "money": 0,
-        "exp": 30,
+        "exp": 37,
         "level": 3
       },
       {
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 10,
-        "level": 2
+        "exp": 22,
+        "level": 3
       },
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 1000,
-        "exp": 124,
+        "exp": 126,
         "level": 5
       },
       {
@@ -170,8 +170,8 @@
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 0,
-        "exp": 14,
-        "level": 2
+        "exp": 41,
+        "level": 4
       },
       {
         "id": "100009874807148",
@@ -184,7 +184,7 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 500,
-        "exp": 138,
+        "exp": 154,
         "level": 5
       },
       {
@@ -219,7 +219,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 0,
-        "exp": 414,
+        "exp": 424,
         "level": 7
       },
       {
