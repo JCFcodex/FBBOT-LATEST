@@ -2,30 +2,26 @@
   {
     "Threads": {
       "Threads": {
-        "7133477510012986": {
-          "threadName": "FRONT-END | DEV",
+        "5776059305779745": {
+          "threadName": "CHAT BOT",
           "participantIDs": [
             "61554632045320",
-            "61554657360115",
             "61555500735152",
+            "61555666363589",
+            "61555723482098",
             "61555759105851",
-            "100000607087170",
-            "100002435702688",
-            "100003882298392",
-            "100006147737169",
-            "100006879459800",
-            "100009874807148",
-            "100012152731893",
-            "100015328485151",
-            "100029104783468",
-            "100041507925422",
-            "100050618333804",
+            "100042301892102",
+            "100045940459721",
+            "100072700295993",
             "100076613706558",
-            "100080460532201"
+            "100077651656829",
+            "100080460532201",
+            "100080671240614",
+            "100085917644687"
           ],
           "adminIDs": [
             {
-              "id": "100002435702688"
+              "id": "100076613706558"
             }
           ]
         }
@@ -76,51 +72,19 @@
         ],
         "adminIDs": [
           {
-            "id": "100002435702688"
-          }
-        ]
-      },
-      "7771480189546690": {
-        "threadName": "🖱️❤️🤖❤️💻",
-        "participantIDs": [
-          "61555500735152",
-          "61555759105851",
-          "100004255542788",
-          "100004565676382",
-          "100070850685696",
-          "100076613706558",
-          "100080460532201",
-          "100091253614305"
-        ],
-        "adminIDs": [
+            "id": "100006147737169"
+          },
           {
-            "id": "100080460532201"
-          }
-        ]
-      },
-      "100012152731893": {
-        "threadName": null,
-        "participantIDs": [
-          "100012152731893",
-          "61555759105851"
-        ],
-        "adminIDs": []
-      },
-      "6728396230578931": {
-        "threadName": "Samahan ng mga halata 💅",
-        "participantIDs": [
-          "61555759105851",
-          "100000382871503",
-          "100001017471850",
-          "100002119552428",
-          "100009315475787",
-          "100009363800381",
-          "100010608033175",
-          "100065615322569"
-        ],
-        "adminIDs": [
+            "id": "100006879459800"
+          },
           {
-            "id": "100010608033175"
+            "id": "100012152731893"
+          },
+          {
+            "id": "100041507925422"
+          },
+          {
+            "id": "100050618333804"
           }
         ]
       }
@@ -132,116 +96,11 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 68,
+        "exp": 1,
         "level": 1
-      },
-      {
-        "id": "61554657360115",
-        "name": "Marc Crisostomo",
-        "money": 0,
-        "exp": 27,
-        "level": 3
       },
       {
         "id": "61555500735152",
-        "name": "Facebook user",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "61555759105851",
-        "name": "Bobong Bot",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "100000607087170",
-        "name": "Grant Santos Caisip",
-        "money": 0,
-        "exp": 50,
-        "level": 4
-      },
-      {
-        "id": "100002435702688",
-        "name": "Yuri Dale Faustino",
-        "money": 0,
-        "exp": 65,
-        "level": 4
-      },
-      {
-        "id": "100003882298392",
-        "name": "Kimi Brent Mendoza",
-        "money": 1000,
-        "exp": 146,
-        "level": 5
-      },
-      {
-        "id": "100006147737169",
-        "name": "John Michael Aguilar",
-        "money": 0,
-        "exp": 11,
-        "level": 2
-      },
-      {
-        "id": "100006879459800",
-        "name": "Francis Fajardo",
-        "money": 0,
-        "exp": 50,
-        "level": 4
-      },
-      {
-        "id": "100009874807148",
-        "name": "Marc Crisostomo",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "100012152731893",
-        "name": "William Sabino",
-        "money": 500,
-        "exp": 164,
-        "level": 6
-      },
-      {
-        "id": "100015328485151",
-        "name": "Zymon DeLeon",
-        "money": 0,
-        "exp": 2,
-        "level": 1
-      },
-      {
-        "id": "100029104783468",
-        "name": "Rei Andrew Bariata",
-        "money": 0,
-        "exp": 4,
-        "level": 1
-      },
-      {
-        "id": "100041507925422",
-        "name": "Albert Cruz",
-        "money": 0,
-        "exp": 18,
-        "level": 2
-      },
-      {
-        "id": "100050618333804",
-        "name": "Yuan Ortega",
-        "money": 0,
-        "exp": 6,
-        "level": 1
-      },
-      {
-        "id": "100076613706558",
-        "name": "John Carl Faustino",
-        "money": 0,
-        "exp": 348,
-        "level": 7
-      },
-      {
-        "id": "100080460532201",
         "name": "Facebook user",
         "money": 0,
         "exp": 0,
@@ -257,6 +116,13 @@
       {
         "id": "61555723482098",
         "name": "Facebook user",
+        "money": 0,
+        "exp": 0,
+        "level": 1
+      },
+      {
+        "id": "61555759105851",
+        "name": "Bobong Bot",
         "money": 0,
         "exp": 0,
         "level": 1
@@ -279,12 +145,26 @@
         "id": "100072700295993",
         "name": "JohnCarl Faustino",
         "money": 0,
-        "exp": 13,
-        "level": 2
+        "exp": 0,
+        "level": 1
+      },
+      {
+        "id": "100076613706558",
+        "name": "John Carl Faustino",
+        "money": 0,
+        "exp": 0,
+        "level": 1
       },
       {
         "id": "100077651656829",
         "name": "Shane Buenaventura",
+        "money": 0,
+        "exp": 0,
+        "level": 1
+      },
+      {
+        "id": "100080460532201",
+        "name": "Bots Aint Simp",
         "money": 0,
         "exp": 0,
         "level": 1
@@ -304,81 +184,88 @@
         "level": 1
       },
       {
-        "id": "100004255542788",
-        "name": "Jerome Macabenta",
+        "id": "61554657360115",
+        "name": "Marc Crisostomo",
         "money": 0,
         "exp": 0,
         "level": 1
       },
       {
-        "id": "100004565676382",
-        "name": "Rodel Baisa Santos",
+        "id": "100000607087170",
+        "name": "Grant Santos Caisip",
         "money": 0,
         "exp": 0,
         "level": 1
       },
       {
-        "id": "100070850685696",
-        "name": "Lenard Macabenta",
+        "id": "100002435702688",
+        "name": "Yuri Dale Faustino",
         "money": 0,
         "exp": 0,
         "level": 1
       },
       {
-        "id": "100091253614305",
-        "name": "Khian Ivan Faustino",
+        "id": "100003882298392",
+        "name": "Kimi Brent Mendoza",
         "money": 0,
         "exp": 0,
         "level": 1
       },
       {
-        "id": "100000382871503",
-        "name": "Chen Victoria",
+        "id": "100006147737169",
+        "name": "John Michael Aguilar",
         "money": 0,
         "exp": 0,
         "level": 1
       },
       {
-        "id": "100001017471850",
-        "name": "Angelo Castro",
-        "money": 0,
-        "exp": 4,
-        "level": 1
-      },
-      {
-        "id": "100002119552428",
-        "name": "Rhed Alvarado",
+        "id": "100006879459800",
+        "name": "Francis Fajardo",
         "money": 0,
         "exp": 0,
         "level": 1
       },
       {
-        "id": "100009315475787",
-        "name": "Robin Francisco",
+        "id": "100009874807148",
+        "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 10,
-        "level": 2
+        "exp": 0,
+        "level": 1
       },
       {
-        "id": "100009363800381",
-        "name": "Resty Paguia",
+        "id": "100012152731893",
+        "name": "William Sabino",
         "money": 0,
-        "exp": 26,
-        "level": 3
+        "exp": 0,
+        "level": 1
       },
       {
-        "id": "100010608033175",
-        "name": "Francia Justine",
+        "id": "100015328485151",
+        "name": "Zymon DeLeon",
         "money": 0,
-        "exp": 25,
-        "level": 3
+        "exp": 0,
+        "level": 1
       },
       {
-        "id": "100065615322569",
-        "name": "Joshua Inocencio",
+        "id": "100029104783468",
+        "name": "Rei Andrew Bariata",
         "money": 0,
-        "exp": 27,
-        "level": 3
+        "exp": 0,
+        "level": 1
+      },
+      {
+        "id": "100041507925422",
+        "name": "Albert Cruz",
+        "money": 0,
+        "exp": 0,
+        "level": 1
+      },
+      {
+        "id": "100050618333804",
+        "name": "Yuan Ortega",
+        "money": 0,
+        "exp": 0,
+        "level": 1
       }
     ]
   }
