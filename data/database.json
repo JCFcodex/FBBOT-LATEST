@@ -71,7 +71,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 3,
+        "exp": 4,
         "level": 1
       },
       {
@@ -126,8 +126,8 @@
       {
         "id": "100076613706558",
         "name": "John Carl Faustino",
-        "money": 0,
-        "exp": 4,
+        "money": 500,
+        "exp": 9,
         "level": 1
       },
       {
@@ -176,7 +176,7 @@
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 0,
+        "exp": 2,
         "level": 1
       },
       {
@@ -197,7 +197,7 @@
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 0,
-        "exp": 0,
+        "exp": 4,
         "level": 1
       },
       {
