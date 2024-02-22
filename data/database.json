@@ -89,7 +89,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 7,
+        "exp": 9,
         "level": 1
       },
       {
@@ -145,8 +145,8 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 22,
-        "level": 3
+        "exp": 41,
+        "level": 4
       },
       {
         "id": "100077651656829",
@@ -194,7 +194,7 @@
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 14,
+        "exp": 17,
         "level": 2
       },
       {
@@ -243,7 +243,7 @@
         "id": "100029104783468",
         "name": "Rei Andrew Bariata",
         "money": 0,
-        "exp": 0,
+        "exp": 1,
         "level": 1
       },
       {
