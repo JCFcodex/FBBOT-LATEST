@@ -114,15 +114,15 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 52,
+        "exp": 54,
         "level": 1
       },
       {
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 19,
-        "level": 2
+        "exp": 22,
+        "level": 3
       },
       {
         "id": "61555500735152",
@@ -170,7 +170,7 @@
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 0,
-        "exp": 41,
+        "exp": 48,
         "level": 4
       },
       {
@@ -219,7 +219,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 0,
-        "exp": 308,
+        "exp": 314,
         "level": 6
       },
       {
