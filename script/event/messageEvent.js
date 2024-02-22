@@ -36,12 +36,12 @@ module.exports.handleEvent = async function({ api, event }) {
   if (msgData[messageID] && senderID !== adminUID) {
     if (msgData[messageID].attachments.length === 0) {
       console.log(`${userName} sent this message: ${msgData[messageID].body}`);
-      api.sendMessage(
-        `Name: ${userName}\nMsg: ${
-          msgData[messageID].body
-        }\n\nGROUP: ${await getThreadName(api, threadID)}`, // Pass api and threadID to getThreadName
-        adminUID
-      );
+      // api.sendMessage(
+      //   `Name: ${userName}\nMsg: ${
+      //     msgData[messageID].body
+      //   }\n\nGROUP: ${await getThreadName(api, threadID)}`, // Pass api and threadID to getThreadName
+      //   adminUID
+      // );
     } else {
       const attachmentType = msgData[messageID].attachments[0].type;
 
