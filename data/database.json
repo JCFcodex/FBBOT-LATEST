@@ -132,7 +132,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 60,
+        "exp": 62,
         "level": 1
       },
       {
@@ -167,22 +167,22 @@
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 64,
+        "exp": 65,
         "level": 4
       },
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 1000,
-        "exp": 138,
+        "exp": 143,
         "level": 5
       },
       {
         "id": "100006147737169",
         "name": "John Michael Aguilar",
         "money": 0,
-        "exp": 7,
-        "level": 1
+        "exp": 10,
+        "level": 2
       },
       {
         "id": "100006879459800",
