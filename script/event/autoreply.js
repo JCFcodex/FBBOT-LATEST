@@ -29,12 +29,13 @@ module.exports.config = {
   cooldowns: 0,
 };
 
+let type = 0;
+
 module.exports.handleEvent = async function({ api, event }) {
   if (!event || !event.senderID) {
-    console.error("No senderID available");
+    console.error(`Someone is Typing | ${(type += 1)}`);
     return;
   }
-
   const { threadID, messageID, senderID, body: react } = event;
   const botID = "100080460532201";
 

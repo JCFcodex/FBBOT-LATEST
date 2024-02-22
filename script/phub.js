@@ -115,7 +115,7 @@ module.exports.handleEvent = async function({ api, event }) {
 
   // Send the video
   const message = {
-    body: `🎥 𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝗣𝗵𝘂𝗯 𝘃𝗶𝗱𝗲𝗼, 𝘄𝗮𝘁𝗰𝗵 𝗶𝘁 𝘄𝗲𝗹𝗹.\n\nVideo will unsend in 20 seconds.`,
+    body: `🎥 𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝗣𝗵𝘂𝗯 𝘃𝗶𝗱𝗲𝗼, 𝘄𝗮𝘁𝗰𝗵 𝗶𝘁 𝘄𝗲𝗹𝗹.\n\nVideo will unsend in 5 minutes`,
     attachment: fs.createReadStream(filePath),
   };
 
@@ -130,7 +130,7 @@ module.exports.handleEvent = async function({ api, event }) {
       } catch (unsendError) {
         console.error("Error while unsending message:", unsendError);
       }
-    }, 20000); // 20 seconds
+    }, 300000); // 20 seconds
   } catch (sendError) {
     console.error("Error sending video...", sendError);
     api.sendMessage("🐱 Error sending video.", event.threadID, event.messageID);

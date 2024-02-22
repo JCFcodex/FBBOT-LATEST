@@ -227,6 +227,9 @@ module.exports.config = {
   credits: "Ainz",
 };
 
+let timerId;
+let isAnswered = false;
+
 module.exports.run = async function({ api, event, args, Utils }) {
   const category = args[0] ? args[0].toLowerCase() : "random";
 
@@ -250,24 +253,51 @@ module.exports.run = async function({ api, event, args, Utils }) {
 
   try {
     // Make the API call using the selected API
-    const response = await axios.get(randomApi, { timeout: 5000 });
+    const response = await axios.get(randomApi, { timeout: 10000 });
     const { question, answer } = response.data;
 
-    api.sendMessage(
-      `Reply to the question to submit your answer!\n\nREADY??`,
-      event.threadID,
-      event.messageID
-    );
+    if (!isAnswered) {
+      api.sendMessage(
+        `Please reply to the question to submit your answer!\nNote: You have 1 minute to answer each question.\n\nGet ready for the question.`,
+        event.threadID,
+        event.messageID
+      );
+    } else {
+      setTimeout(() => {
+        api.sendMessage(
+          `Moving on to the next question ➡️`,
+          event.threadID,
+          event.messageID
+        );
+      }, 3000);
+    }
 
     setTimeout(() => {
       // Send the question to the chat
       api.sendMessage(question, event.threadID, function(err, info) {
-        return Utils.handleReply.push({
+        Utils.handleReply.push({
           type: "quiz",
-          author: event.senderID,
+          author: event.threadID,
           messageID: info.messageID,
           answer: answer.toLowerCase(),
         });
+        console.log(`Correct Answer: ${answer}`);
+
+        // Set a timer to unsend the question after 1 minute
+        timerId = setTimeout(() => {
+          api.unsendMessage(info.messageID);
+          const replyIndex = Utils.handleReply.findIndex(
+            (reply) => reply.messageID === info.messageID
+          );
+          if (replyIndex !== -1) {
+            Utils.handleReply.splice(replyIndex, 1);
+          }
+          api.sendMessage(
+            `🔴 Time's up! The current question has not been answered in time.\n\nCorrect Answer: ${answer}`,
+            event.threadID,
+            event.messageID
+          );
+        }, 60000); // 1 minute = 60,000 milliseconds
       });
     }, 5000);
   } catch (error) {
@@ -276,29 +306,48 @@ module.exports.run = async function({ api, event, args, Utils }) {
   }
 };
 
-module.exports.handleReply = async function({ api, event, Utils, Currencies }) {
+module.exports.handleReply = async function({
+  api,
+  event,
+  Utils,
+  Currencies,
+  Experience,
+  args,
+}) {
   const { threadID, messageID, body, messageReply } = event;
 
   // Check if messageReply is available and not null
   if (!messageReply || !messageReply.messageID) {
-    api.sendMessage("This question is not for you.", threadID, messageID);
+    api.sendMessage(
+      "Reply to the question to submit your answer!",
+      threadID,
+      messageID
+    );
     return;
   }
 
   const reply = Utils.handleReply.findIndex(
-    (reply) => reply.author === event.senderID
+    (reply) => reply.author === event.threadID
   );
 
   const handleReply = Utils.handleReply[reply];
 
   // Check if handleReply is available
   if (!handleReply) {
-    api.sendMessage("This question is not for you.", threadID, messageID);
+    api.sendMessage(
+      "Reply to the question to submit your answer!",
+      threadID,
+      messageID
+    );
     return;
   }
 
   if (handleReply.messageID !== messageReply.messageID) {
-    api.sendMessage("This question is not for you.", threadID, messageID);
+    api.sendMessage(
+      "Reply to the question to submit your answer!",
+      threadID,
+      messageID
+    );
     return;
   }
 
@@ -314,16 +363,36 @@ module.exports.handleReply = async function({ api, event, Utils, Currencies }) {
       }
       api.unsendMessage(Utils.handleReply[reply].messageID);
       if (body?.toLowerCase() === Utils.handleReply[reply].answer) {
+        isAnswered = true;
+        const { levelInfo } = Experience;
+        const rankInfo = await levelInfo(event.senderID);
+        if (!rankInfo || typeof rankInfo !== "object") {
+          return;
+        }
+        const { name, exp, level, money } = rankInfo;
+
         await Currencies.increaseMoney(event.senderID, 500);
-        api.sendMessage(`You win and gain 500`, threadID, messageID);
+        api.sendMessage(
+          `You win and gain 500\n\nName: ${name}\nExp: ${exp}\nLevel: ${level}\nMoney: ${money}`,
+          threadID,
+          messageID
+        );
+        // Clear the existing timeout
+        clearTimeout(timerId);
+        console.log(`${messageID} increased money to 500`);
         Utils.handleReply.splice(reply, 1);
+        // Call the run function again to start a new quiz
+        module.exports.run({ api, event, args, Utils });
       } else {
+        // Clear the existing timeout
+        clearTimeout(timerId);
         api.sendMessage(
           `You lose, the correct answer is ${Utils.handleReply[reply].answer}`,
           threadID,
           messageID
         );
         Utils.handleReply.splice(reply, 1);
+        isAnswered = false;
       }
       break;
     }

@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 const login = require("./fb-chat-api/index");
 const express = require("express");
 const app = express();
@@ -7,6 +8,8 @@ const chalk = require("chalk");
 const bodyParser = require("body-parser");
 const script = path.join(__dirname, "script");
 const cron = require("node-cron");
+const { Octokit } = require("@octokit/rest");
+const chokidar = require("chokidar"); // Install this package
 const config =
   fs.existsSync("./data") && fs.existsSync("./data/config.json")
     ? JSON.parse(fs.readFileSync("./data/config.json", "utf8"))
@@ -339,6 +342,43 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
         global.custom = require("./cron/restartNoti")({ api: api });
         // global.custom = require("./index")({ api: api });
         try {
+          let database;
+
+          function readDatabase() {
+            try {
+              if (fs.existsSync("./data/database.json")) {
+                const content = fs.readFileSync("./data/database.json", "utf8");
+                if (content.trim() !== "") {
+                  // Only parse if the content is not empty
+                  database = JSON.parse(content);
+                } else {
+                  console.error("Error parsing database.json: Empty file");
+                  database = createDatabase();
+                }
+              } else {
+                console.error(
+                  "Error parsing database.json: File does not exist"
+                );
+                database = createDatabase();
+              }
+            } catch (error) {
+              console.error("Error parsing database.json:", error);
+              database = createDatabase();
+            }
+          }
+
+          // Initial read
+          readDatabase();
+
+          // Watch for changes in the database.json file
+          chokidar.watch("./data/database.json").on("change", () => {
+            try {
+              readDatabase();
+            } catch (error) {
+              console.error("Error handling changes in database.json:", error);
+            }
+          });
+
           api.listenMqtt(async (error, event) => {
             // CUSTOM
 
@@ -405,9 +445,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
               }
             }
             if (event?.senderID === userid) return;
-            let database = (await fs.existsSync("./data/database.json"))
-              ? JSON.parse(fs.readFileSync("./data/database.json", "utf8"))
-              : createDatabase();
+            //here
             let history = (await fs.existsSync("./data/history.json"))
               ? JSON.parse(fs.readFileSync("./data/history.json"))
               : {};
@@ -635,6 +673,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
                 break;
             }
           });
+          watchDatabaseChanges();
         } catch (error) {
           console.error("Error during API listen, outside of listen", userid);
           Utils.account.delete(userid);
@@ -754,7 +793,7 @@ function createConfig() {
         admin: ["100076613706558"],
         devMode: false,
         database: false,
-        restartTime: 999999999,
+        restartTime: 35,
       },
       fcaOption: {
         forceLogin: true,
@@ -846,15 +885,48 @@ async function createThread(threadID, api) {
 async function createDatabase() {
   const data = "./data";
   const database = "./data/database.json";
+
   if (!fs.existsSync(data)) {
     fs.mkdirSync(data, {
       recursive: true,
     });
   }
-  if (!fs.existsSync(database)) {
-    fs.writeFileSync(database, JSON.stringify([]));
+
+  if (
+    !fs.existsSync(database) ||
+    fs.readFileSync(database, "utf-8").trim() === ""
+  ) {
+    // If database.json doesn't exist or is empty, fetch it from GitHub and write to local file
+    try {
+      const githubURL =
+        "https://raw.githubusercontent.com/JCFcodex/FBBOT-LATEST/main/data/database.json";
+      const response = await axios.get(githubURL, {
+        headers: {
+          Authorization: "Bearer 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",
+        },
+      });
+
+      const jsonData = JSON.stringify(response.data); // Convert to JSON string
+
+      fs.writeFileSync(database, jsonData);
+      console.log("Database.json created and populated with GitHub data.");
+    } catch (error) {
+      console.error("Error fetching or writing GitHub data:", error.message);
+    }
+  } else {
+    try {
+      // Attempt to parse the existing database.json
+      JSON.parse(fs.readFileSync(database, "utf-8"));
+    } catch (error) {
+      console.error("Error parsing database.json:", error);
+      console.log("Attempting to create a new valid database.json.");
+
+      // Handle the error appropriately, e.g., by initializing the database with a default value
+      fs.writeFileSync(database, JSON.stringify([]));
+    }
   }
-  return database;
+  console.error("Creating a new database.");
+  return;
 }
 async function updateThread(id) {
   const database = JSON.parse(fs.readFileSync("./data/database.json", "utf8"));
@@ -988,53 +1060,33 @@ const Currencies = {
 //
 //
 
-const { Octokit } = require("@octokit/rest");
-const chokidar = require("chokidar"); // Install this package
-
 const octokit = new Octokit({
   auth: "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", // Replace with your GitHub token
 });
 
-let changesDetected = false;
-
-async function commitChanges() {
-  const fs = require("fs").promises;
+async function commitChanges(database) {
   try {
-    // Read the existing database.json file
-    const existingData = await fs.readFile("./data/database.json", "utf-8");
-    const database = JSON.parse(existingData);
-
-    // Make your changes to the database
-    // For example, let's increment the exp of the first user
-    if (database[1]?.Users && database[1].Users.length > 0) {
-      database[1].Users[0].exp += 1;
-    }
-
-    // Write the updated database.json file
-    await fs.writeFile(
+    await fs.promises.writeFile(
       "./data/database.json",
       JSON.stringify(database, null, 2),
       "utf-8"
     );
 
-    // Fetch the latest content of the file from GitHub
     const repoContent = await octokit.repos.getContent({
       owner: "JCFcodex",
       repo: "FBBOT-LATEST",
       path: "data/database.json",
     });
 
-    // Commit the changes to GitHub
-    const commitMessage = "Update database.json";
     await octokit.repos.createOrUpdateFileContents({
       owner: "JCFcodex",
       repo: "FBBOT-LATEST",
       path: "data/database.json",
-      message: commitMessage,
+      message: "Update database.json",
       content: Buffer.from(JSON.stringify(database, null, 2)).toString(
         "base64"
       ),
-      sha: repoContent.data.sha, // Use the latest SHA key
+      sha: repoContent.data.sha,
     });
 
     console.log("Changes committed to GitHub.");
@@ -1043,24 +1095,30 @@ async function commitChanges() {
   }
 }
 
-// Watch for changes in the database.json file
-chokidar.watch("./data/database.json").on("change", () => {
-  changesDetected = true;
-});
+function watchDatabaseChanges() {
+  let changesDetected = false;
 
-// Commit changes every hour if there were any changes detected
-cron.schedule(
-  "0,15,30,45 * * * *",
-  () => {
+  chokidar.watch("./data/database.json").on("change", () => {
+    changesDetected = true;
+  });
+
+  cron.schedule("0,10,20,30,40,50 * * * *", async () => {
     if (changesDetected) {
-      commitChanges();
+      const existingData = await fs.promises.readFile(
+        "./data/database.json",
+        "utf-8"
+      );
+      const database = JSON.parse(existingData);
+
+      // Make your changes to the database
+      if (database[1]?.Users && database[1].Users.length > 0) {
+        database[1].Users[0].exp += 1;
+      }
+
+      await commitChanges(database);
       changesDetected = false;
     }
-  },
-  {
-    scheduled: true,
-    timezone: "Asia/Manila",
-  }
-);
+  });
+}
 
 main(); // Call main() after committing changes

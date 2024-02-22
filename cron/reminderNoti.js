@@ -58,7 +58,7 @@ function formatMessage(subject, time, messageType) {
 }
 
 function convertTo24Hour(time) {
-  console.log(`Converting time: ${time}`);
+  // console.log(`Converting time: ${time}`);
   if (!time.includes("am") && !time.includes("pm")) {
     if (time.includes(":")) {
       let [hours, minutes] = time.split(":");
@@ -161,7 +161,7 @@ function scheduleReminder(api, subject, originalTime, day, hour, minute) {
 function scheduleReminders(api) {
   for (const day in schedule) {
     for (let time in schedule[day]) {
-      logInfo(`Scheduling reminder for time: ${time}`);
+      // logInfo(`Scheduling reminder for time: ${time}`);
       const subject = schedule[day][time];
       const originalTime = time;
 
@@ -180,6 +180,6 @@ function scheduleReminders(api) {
 }
 
 module.exports = async ({ api }) => {
-  logInfo("Schedule job is running");
+  logInfo("Class Reminder job is running");
   scheduleReminders(api);
 };

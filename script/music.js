@@ -53,6 +53,8 @@ module.exports.run = async ({ api, event }) => {
     const fileName = `${event.senderID}.mp3`;
     const filePath = __dirname + `/cache/${fileName}`;
 
+    let subsCount = 0;
+
     stream.pipe(fs.createWriteStream(filePath));
 
     stream.on("response", () => {
@@ -64,6 +66,8 @@ module.exports.run = async ({ api, event }) => {
         "[DOWNLOADER]",
         `Downloading ${info.videoDetails.title} by ${info.videoDetails.author.name}`
       );
+      subsCount = info.videoDetails.author.subscriber_count;
+      // console.log(info.videoDetails);
     });
 
     stream.on("end", () => {
@@ -92,11 +96,11 @@ module.exports.run = async ({ api, event }) => {
           return views.toString();
         }
       }
-
       // Example usage:
       const formattedViews = formatViews(video.views);
+      const formattedSubs = formatViews(subsCount);
       const message = {
-        body: `Here's your music, enjoy!🥰\n\nTitle: ${video.title}\nArtist: ${video.author.name}\nDuration: ${video.timestamp}\nViews: ${formattedViews}`,
+        body: `Here's your music, enjoy!🥰\n\nTitle: ${video.title}\nArtist: ${video.author.name}\nDuration: ${video.timestamp}\nViews: ${formattedViews}\n\nSubs Count: ${formattedSubs}`,
         attachment: fs.createReadStream(filePath),
       };
 

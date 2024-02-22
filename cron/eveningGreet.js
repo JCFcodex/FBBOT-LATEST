@@ -110,5 +110,5 @@ module.exports = async ({ api }) => {
     }
   );
 
-  console.log("EveningGreet is running");
+  console.log("EveningGreet is running\n");
 };

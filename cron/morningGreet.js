@@ -168,5 +168,5 @@ module.exports = async ({ api }) => {
     }
   );
 
-  console.log("MorningGreet is running");
+  console.log("\nMorningGreet is running");
 };
