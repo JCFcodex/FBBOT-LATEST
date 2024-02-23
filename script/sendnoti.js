@@ -32,7 +32,7 @@ module.exports.run = async function({ api, event, args }) {
       sentCount++;
 
       const content = `${custom}`;
-      const languageToSay = "id";
+      const languageToSay = "it";
       const pathFemale = path.resolve(
         __dirname,
         "cache",

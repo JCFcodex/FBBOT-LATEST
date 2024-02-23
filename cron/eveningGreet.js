@@ -54,6 +54,59 @@ module.exports = async ({ api }) => {
     }
   };
 
+  async function downloadFile(url, filePath) {
+    const writer = fs.createWriteStream(filePath);
+    const response = await axios({
+      url,
+      method: "GET",
+      responseType: "stream",
+    });
+    response.data.pipe(writer);
+    return new Promise((resolve, reject) => {
+      writer.on("finish", resolve);
+      writer.on("error", reject);
+    });
+  }
+
+  async function voiceGreet(threadID) {
+    const msg = [
+      "Goodevening mga bugok",
+      // "Hoy, mga bugok! Kapit lang, magkasama tayo sa struggle bus papuntang academic excellence!",
+      // "Tara na mga ka-bugok, ipakita natin ang full support sa subject na 'How to be a Certified Bugok 101'!",
+      // "Attention mga ka-bugok, it's time to shine! Show your virtual presence para di kayo mabansagan na 'invisible pero present sa GC'!",
+      // "Pssst! Mga bugok, time to switch from 'online gamer' mode to 'responsible student' mode. Game on sa klase!",
+      // "Alerto, mga ka-bugok! Magtago na kayo sa Zoom screen para kunwari attentive tayo sa klase. Charot!",
+    ];
+
+    function getContentRandom() {
+      const randomIndex = Math.floor(Math.random() * msg.length);
+      return msg[randomIndex];
+    }
+
+    // Example usage:
+    const randomMessage = getContentRandom();
+    console.log(randomMessage);
+
+    try {
+      const content = `pumasok na kayo mga bu gok`;
+      const languageToSay = "tl";
+      const pathFemale = path.resolve(__dirname, "cache", `voice_female.mp3`);
+
+      await downloadFile(
+        `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
+          randomMessage
+        )}&tl=${languageToSay}&client=tw-ob&idx=2`,
+        pathFemale
+      );
+      api.sendMessage(
+        { attachment: fs.createReadStream(pathFemale) },
+        threadID
+      );
+    } catch (error) {
+      console.error("Error sending a message:", error);
+    }
+  }
+
   const greet = async (threadID) => {
     const threadName = await getThreadName(threadID);
     const greetingMessage = getRandomMessage().replace(
@@ -81,6 +134,9 @@ module.exports = async ({ api }) => {
         fs.writeFileSync(eveningGreetFile, "true");
       }
     );
+    setTimeout(() => {
+      voiceGreet(threadID);
+    }, 5000);
   };
 
   const reset = cron.schedule(

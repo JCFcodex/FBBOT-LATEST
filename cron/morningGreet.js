@@ -84,6 +84,12 @@ module.exports = async ({ api }) => {
       return msg[randomIndex];
     }
 
+    const threadName = await getThreadName(threadID);
+    // const greetingMessage = getRandomMessage().replace(
+    //   "${threadName}",
+    //   threadName
+    // );
+
     // Example usage:
     const randomMessage = getContentRandom();
     console.log(randomMessage);
@@ -96,7 +102,7 @@ module.exports = async ({ api }) => {
       await downloadFile(
         `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
           randomMessage
-        )}&tl=${languageToSay}&client=tw-ob&idx=1`,
+        )}&tl=${languageToSay}&client=tw-ob&idx=2`,
         pathFemale
       );
       api.sendMessage(

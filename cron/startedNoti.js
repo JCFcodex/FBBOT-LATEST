@@ -110,21 +110,31 @@ async function downloadFile(url, filePath) {
   });
 }
 
-async function sendMessage(api, subject, time, messageType) {
+const numberToWords = require("number-to-words");
+
+async function sendMessage(api, subject, time, messageType, threadID) {
   try {
-    const content = `tang ina nyo, pumasok na kayo!, nag start na ang ${subject}`;
+    // Function to replace all numbers in the text with Tagalog words
+    const replaceNumbersWithTagalog = (text) => {
+      return text.replace(/\d+/g, (match) => numberToWords.toWords(match));
+    };
+
+    const replacedSubject = replaceNumbersWithTagalog(subject);
+    const replacedTime = replaceNumbersWithTagalog(time);
+
+    const content = `tang ina nyo, pumasok na kayo!, nag start na ang ${replacedSubject}, mamayang ${time}`;
     const languageToSay = "tl";
     const pathFemale = path.resolve(__dirname, "cache", `voice_female.mp3`);
 
     await downloadFile(
       `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
         content
-      )}&tl=${languageToSay}&client=tw-ob&idx=1`,
+      )}&tl=${languageToSay}&client=tw-ob&idx=2`,
       pathFemale
     );
 
     const voiceMessage = fs.createReadStream(pathFemale);
-    const message = formatMessage(subject, time, messageType);
+    const message = formatMessage(replacedSubject, replacedTime, messageType);
 
     // Sending the voice message directly as a readable stream
     api.sendMessage(

@@ -109,17 +109,26 @@ async function downloadFile(url, filePath) {
   });
 }
 
+const numberToWords = require("number-to-words");
+
 async function sendMessage(api, subject, time, messageType) {
   const message = formatMessage(subject, time, messageType);
   try {
-    const content = `gago, tang ina nyo, mag ready na kayo, mag start na ang ${subject}, mamayang ${time}`;
+    // Function to replace all numbers in the text with Tagalog words
+    const replaceNumbersWithTagalog = (text) => {
+      return text.replace(/\d+/g, (match) => numberToWords.toWords(match));
+    };
+
+    const content = `gago, tang ina nyo, mag ready na kayo, mag start na ang ${replaceNumbersWithTagalog(
+      subject
+    )}, mamayang ${time}`;
     const languageToSay = "tl";
     const pathFemale = path.resolve(__dirname, "cache", `voice_female.mp3`);
 
     await downloadFile(
       `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(
         content
-      )}&tl=${languageToSay}&client=tw-ob&idx=1`,
+      )}&tl=${languageToSay}&client=tw-ob&idx=2`,
       pathFemale
     );
 
