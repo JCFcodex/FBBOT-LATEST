@@ -98,7 +98,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 43,
+        "exp": 45,
         "level": 1
       },
       {
@@ -224,7 +224,7 @@
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 0,
-        "exp": 31,
+        "exp": 33,
         "level": 3
       },
       {
@@ -245,7 +245,7 @@
         "id": "100015328485151",
         "name": "Zymon DeLeon",
         "money": 0,
-        "exp": 0,
+        "exp": 4,
         "level": 1
       },
       {
@@ -259,14 +259,14 @@
         "id": "100041507925422",
         "name": "Albert Cruz",
         "money": 0,
-        "exp": 0,
+        "exp": 1,
         "level": 1
       },
       {
         "id": "100050618333804",
         "name": "Yuan Ortega",
         "money": 0,
-        "exp": 0,
+        "exp": 3,
         "level": 1
       },
       {
