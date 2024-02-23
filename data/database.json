@@ -99,7 +99,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 53,
+        "exp": 54,
         "level": 1
       },
       {
@@ -134,7 +134,7 @@
         "id": "100042301892102",
         "name": "Facebook user",
         "money": 0,
-        "exp": 0,
+        "exp": 8,
         "level": 1
       },
       {
@@ -155,7 +155,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 175,
+        "exp": 181,
         "level": 6
       },
       {
@@ -197,14 +197,14 @@
         "id": "100000607087170",
         "name": "Grant Santos Caisip",
         "money": 0,
-        "exp": 43,
+        "exp": 44,
         "level": 4
       },
       {
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 45,
+        "exp": 47,
         "level": 4
       },
       {
