@@ -99,7 +99,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 64,
+        "exp": 65,
         "level": 1
       },
       {
@@ -204,14 +204,14 @@
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 50,
+        "exp": 51,
         "level": 4
       },
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 22,
+        "exp": 25,
         "level": 3
       },
       {
@@ -253,8 +253,8 @@
         "id": "100029104783468",
         "name": "Rei Andrew Bariata",
         "money": 0,
-        "exp": 7,
-        "level": 1
+        "exp": 10,
+        "level": 2
       },
       {
         "id": "100041507925422",
