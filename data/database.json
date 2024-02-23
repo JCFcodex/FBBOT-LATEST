@@ -98,7 +98,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 42,
+        "exp": 43,
         "level": 1
       },
       {
@@ -154,7 +154,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 172,
+        "exp": 174,
         "level": 6
       },
       {
@@ -217,14 +217,14 @@
         "id": "100006147737169",
         "name": "John Michael Aguilar",
         "money": 1500,
-        "exp": 24,
+        "exp": 25,
         "level": 3
       },
       {
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 0,
-        "exp": 26,
+        "exp": 31,
         "level": 3
       },
       {
@@ -238,7 +238,7 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 0,
-        "exp": 10,
+        "exp": 11,
         "level": 2
       },
       {
