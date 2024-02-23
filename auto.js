@@ -902,7 +902,7 @@ async function createDatabase() {
         "https://raw.githubusercontent.com/JCFcodex/FBBOT-LATEST/main/data/database.json";
       const response = await axios.get(githubURL, {
         headers: {
-          Authorization: "Bearer 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",
+          Authorization: "Bearer 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",
         },
       });
 
@@ -1061,7 +1061,7 @@ const Currencies = {
 //
 
 const octokit = new Octokit({
-  auth: "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", // Replace with your GitHub token
+  auth: "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", // Replace with your GitHub token
 });
 
 async function commitChanges(database) {
