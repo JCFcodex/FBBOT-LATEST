@@ -44,7 +44,6 @@ module.exports.run = async ({ api, event }) => {
         event.messageID
       );
     }
-    const MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024; // 25 MB in bytes
     const video = searchResults.videos[0];
     const videoUrl = video.url;
 
@@ -73,12 +72,10 @@ module.exports.run = async ({ api, event }) => {
     videoStream.on("end", () => {
       console.info("[DOWNLOADER] Downloaded");
 
-      const fileSize = fs.statSync(filePath).size;
-
-      if (fileSize > MAX_FILE_SIZE_BYTES) {
+      if (fs.statSync(filePath).size > 104857600 ) {
         fs.unlinkSync(filePath);
         return api.sendMessage(
-          "[ERR] The file could not be sent because it is larger than 100mb.",
+          "[ERR] The file could not be sent because it is larger than 25MB.",
           event.threadID
         );
       }
