@@ -99,7 +99,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 76,
+        "exp": 77,
         "level": 1
       },
       {
@@ -190,14 +190,14 @@
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 6,
-        "level": 1
+        "exp": 10,
+        "level": 2
       },
       {
         "id": "100000607087170",
         "name": "Grant Santos Caisip",
         "money": 0,
-        "exp": 44,
+        "exp": 49,
         "level": 4
       },
       {
