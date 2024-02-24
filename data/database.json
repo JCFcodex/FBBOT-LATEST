@@ -99,7 +99,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 71,
+        "exp": 72,
         "level": 1
       },
       {
@@ -217,9 +217,9 @@
       {
         "id": "100006147737169",
         "name": "John Michael Aguilar",
-        "money": 1500,
-        "exp": 34,
-        "level": 3
+        "money": 2000,
+        "exp": 43,
+        "level": 4
       },
       {
         "id": "100006879459800",
@@ -253,14 +253,14 @@
         "id": "100029104783468",
         "name": "Rei Andrew Bariata",
         "money": 0,
-        "exp": 11,
+        "exp": 16,
         "level": 2
       },
       {
         "id": "100041507925422",
         "name": "Albert Cruz",
         "money": 0,
-        "exp": 12,
+        "exp": 13,
         "level": 2
       },
       {
