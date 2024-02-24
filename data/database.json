@@ -21,6 +21,9 @@
         ],
         "adminIDs": [
           {
+            "id": "100072700295993"
+          },
+          {
             "id": "100076613706558"
           }
         ]
@@ -99,7 +102,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 48,
+        "exp": 98,
         "level": 1
       },
       {
@@ -134,7 +137,7 @@
         "id": "100042301892102",
         "name": "Facebook user",
         "money": 0,
-        "exp": 0,
+        "exp": 8,
         "level": 1
       },
       {
@@ -148,14 +151,14 @@
         "id": "100072700295993",
         "name": "JohnCarl Faustino",
         "money": 0,
-        "exp": 3,
+        "exp": 7,
         "level": 1
       },
       {
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 174,
+        "exp": 264,
         "level": 6
       },
       {
@@ -190,43 +193,43 @@
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 6,
-        "level": 1
+        "exp": 35,
+        "level": 3
       },
       {
         "id": "100000607087170",
         "name": "Grant Santos Caisip",
         "money": 0,
-        "exp": 0,
-        "level": 1
+        "exp": 56,
+        "level": 4
       },
       {
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 32,
-        "level": 3
+        "exp": 54,
+        "level": 4
       },
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 11,
-        "level": 2
+        "exp": 38,
+        "level": 3
       },
       {
         "id": "100006147737169",
         "name": "John Michael Aguilar",
-        "money": 1500,
-        "exp": 25,
-        "level": 3
+        "money": 2000,
+        "exp": 45,
+        "level": 4
       },
       {
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 0,
-        "exp": 33,
-        "level": 3
+        "exp": 117,
+        "level": 5
       },
       {
         "id": "100009874807148",
@@ -239,36 +242,36 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 0,
-        "exp": 11,
-        "level": 2
+        "exp": 86,
+        "level": 4
       },
       {
         "id": "100015328485151",
         "name": "Zymon DeLeon",
         "money": 0,
-        "exp": 4,
-        "level": 1
+        "exp": 10,
+        "level": 2
       },
       {
         "id": "100029104783468",
         "name": "Rei Andrew Bariata",
         "money": 0,
-        "exp": 1,
-        "level": 1
+        "exp": 18,
+        "level": 2
       },
       {
         "id": "100041507925422",
         "name": "Albert Cruz",
         "money": 0,
-        "exp": 1,
-        "level": 1
+        "exp": 14,
+        "level": 2
       },
       {
         "id": "100050618333804",
         "name": "Yuan Ortega",
         "money": 0,
-        "exp": 3,
-        "level": 1
+        "exp": 19,
+        "level": 2
       },
       {
         "id": "100004255542788",
@@ -302,7 +305,7 @@
         "id": "100090506487692",
         "name": "Alysa Hshsh",
         "money": 0,
-        "exp": 0,
+        "exp": 5,
         "level": 1
       }
     ]

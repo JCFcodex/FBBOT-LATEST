@@ -10,6 +10,17 @@ const script = path.join(__dirname, "script");
 const cron = require("node-cron");
 const { Octokit } = require("@octokit/rest");
 const chokidar = require("chokidar"); // Install this package
+let token = fs.readFileSync("token.txt", "utf8").trim();
+const getToken = () => token;
+const setToken = (newToken) => {
+  token = newToken;
+  fs.writeFileSync("token.txt", newToken, "utf8");
+};
+
+module.exports = {
+  getToken,
+  setToken,
+};
 const config =
   fs.existsSync("./data") && fs.existsSync("./data/config.json")
     ? JSON.parse(fs.readFileSync("./data/config.json", "utf8"))
@@ -902,7 +913,9 @@ async function createDatabase() {
         "https://raw.githubusercontent.com/JCFcodex/FBBOT-LATEST/main/data/database.json";
       const response = await axios.get(githubURL, {
         headers: {
-          Authorization: "Bearer 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",
+          Authorization: `Bearer ${fs
+            .readFileSync("token.txt", "utf8")
+            .trim()}`,
         },
       });
 
@@ -1061,7 +1074,7 @@ const Currencies = {
 //
 
 const octokit = new Octokit({
-  auth: "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", // Replace with your GitHub token
+  auth: fs.readFileSync("token.txt", "utf8").trim(), // Replace with your GitHub token
 });
 
 async function commitChanges(database) {
