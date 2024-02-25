@@ -102,7 +102,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 113,
+        "exp": 114,
         "level": 1
       },
       {
@@ -137,8 +137,8 @@
         "id": "100042301892102",
         "name": "Facebook user",
         "money": 0,
-        "exp": 64,
-        "level": 4
+        "exp": 8,
+        "level": 1
       },
       {
         "id": "100045940459721",
@@ -158,7 +158,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 216,
+        "exp": 217,
         "level": 6
       },
       {
@@ -228,7 +228,7 @@
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 0,
-        "exp": 122,
+        "exp": 120,
         "level": 5
       },
       {
@@ -256,7 +256,7 @@
         "id": "100029104783468",
         "name": "Rei Andrew Bariata",
         "money": 0,
-        "exp": 22,
+        "exp": 20,
         "level": 3
       },
       {
@@ -305,7 +305,7 @@
         "id": "100090506487692",
         "name": "Alysa Hshsh",
         "money": 0,
-        "exp": 0,
+        "exp": 47,
         "level": 1
       }
     ]
