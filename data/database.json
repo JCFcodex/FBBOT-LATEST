@@ -102,7 +102,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 124,
+        "exp": 125,
         "level": 1
       },
       {
@@ -130,8 +130,8 @@
         "id": "61555759105851",
         "name": "Bobong Bot",
         "money": 0,
-        "exp": 18,
-        "level": 2
+        "exp": 22,
+        "level": 3
       },
       {
         "id": "100042301892102",
@@ -158,7 +158,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 201,
+        "exp": 205,
         "level": 6
       },
       {
