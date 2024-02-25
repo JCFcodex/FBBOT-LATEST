@@ -11,7 +11,7 @@ module.exports.config = {
   commandCategory: "fun",
   hasPrefix: true,
   usages: "[shoti]",
-  cooldown: 10,
+  cooldown: 15,
 };
 
 module.exports.run = async function({ api, event }) {
@@ -52,7 +52,7 @@ module.exports.run = async function({ api, event }) {
         await api.sendMessage(
           {
             attachment: fs.createReadStream(filePath),
-            body: `🌸|•ᴛɪᴛʟᴇ: ${title}\n🌸|•ᴜsᴇʀɴᴀᴍᴇ: @${username}\n🌸|•ɴɪᴄᴋɴᴀᴍᴇ: ${nickname}\n🌸|•ᴅᴜʀᴀᴛɪᴏɴ: ${durations}\n🌸|•ʀᴇɢɪᴏɴ: ${region}\n\n😊 Thank you for using KULU BOT - CHATBOT MESSENGER! 🤖`,
+            body: `🌸|•ᴛɪᴛʟᴇ: ${title}\n\n🌸|•ᴜsᴇʀɴᴀᴍᴇ: @${username}\n🌸|•ɴɪᴄᴋɴᴀᴍᴇ: ${nickname}\n🌸|•ᴅᴜʀᴀᴛɪᴏɴ: ${durations}\n🌸|•ʀᴇɢɪᴏɴ: ${region}\n\n😊 Thank you for using KULU BOT - CHATBOT MESSENGER! 🤖`,
           },
           event.threadID,
           () => {

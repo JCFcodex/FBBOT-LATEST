@@ -37,7 +37,7 @@ module.exports.run = async function({ api, event, args }) {
   }
 
   try {
-    api.sendMessage("Answering your question...", threadID, messageID);
+    api.sendMessage("🔍 Answering your question...", threadID, messageID);
     let url = `https://mixtral.aliestercrowley.com/api?prompt=${encodeURIComponent(
       prompt
     )}&username=${event.senderID}`;

@@ -12,7 +12,7 @@ module.exports = {
     description: "Generate image in emi",
     commandCategory: "AI",
     usages: "emi [prompt]",
-    cooldowns: 5,
+    cooldowns: 15,
   },
   run: async function({ api, event, args }) {
     function r(msg) {

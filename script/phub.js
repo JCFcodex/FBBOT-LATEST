@@ -115,7 +115,7 @@ module.exports.handleEvent = async function({ api, event }) {
 
   // Send the video
   const message = {
-    body: `🎥 𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝗣𝗵𝘂𝗯 𝘃𝗶𝗱𝗲𝗼, 𝘄𝗮𝘁𝗰𝗵 𝗶𝘁 𝘄𝗲𝗹𝗹.\n\nVideo will unsend in 5 minutes`,
+    body: `🎥 𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝗣𝗵𝘂𝗯 𝘃𝗶𝗱𝗲𝗼, 𝘄𝗮𝘁𝗰𝗵 𝗶𝘁 𝘄𝗲𝗹𝗹.\n\nThe video will be unsent in 5 minutes.`,
     attachment: fs.createReadStream(filePath),
   };
 

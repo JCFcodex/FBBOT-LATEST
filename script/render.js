@@ -13,7 +13,7 @@ module.exports.config = {
   description: "Generate image on Render 3D",
   commandCategory: "AI",
   usage: "[prompt]",
-  cooldown: 10,
+  cooldown: 15,
 };
 
 module.exports.run = async function({ api, event, args }) {
@@ -56,7 +56,5 @@ module.exports.run = async function({ api, event, args }) {
     ]);
   } catch (e) {
     return r(e.message);
-
-    
   }
 };

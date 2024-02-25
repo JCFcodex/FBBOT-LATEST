@@ -20,12 +20,19 @@ module.exports.run = async function({ api, event, args }) {
     );
     return;
   }
-  api.sendMessage(`🔍 "${input}"`, event.threadID, event.messageID);
+  api.sendMessage(
+    `🔍 Answering your question...`,
+    event.threadID,
+    event.messageID
+  );
+  // api.sendMessage(`🔍 "${input}"`, event.threadID, event.messageID);
   try {
     const { data } = await axios.get(
-      `https://openaikey.onrender.com/api?prompt=${encodeURIComponent(input)}`
+      `https://hiro-api.replit.app/ai/hiro?ask=${encodeURIComponent(input)}`
+      // `https://openaikey.onrender.com/api?prompt=${encodeURIComponent(input)}`
     );
     const response = data.response;
+    // const response = data.response;
     api.sendMessage(response, event.threadID, event.messageID);
   } catch (error) {
     api.sendMessage(

@@ -20,7 +20,7 @@ module.exports = async ({ api }) => {
         // Delay before unsending the message (adjust the delay time as needed)
         setTimeout(async () => {
           await api.unsendMessage(restartMsg.messageID);
-        }, 60000);
+        }, 300000); // 5mins
       });
 
       await Promise.all(promises);

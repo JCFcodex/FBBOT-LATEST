@@ -7,7 +7,7 @@ module.exports.config = {
   credits: "Grey | convert to video by JC FAUSTINO",
   description: "Play a video from youtube",
   aliases: ["watch", "playvideo", "yt", "youtube"],
-  cooldown: 60,
+  cooldown: 120,
   hasPrefix: false,
   usage: "video [Title]",
 };
@@ -72,7 +72,7 @@ module.exports.run = async ({ api, event }) => {
     videoStream.on("end", () => {
       console.info("[DOWNLOADER] Downloaded");
 
-      if (fs.statSync(filePath).size > 104857600 ) {
+      if (fs.statSync(filePath).size > 104857600) {
         fs.unlinkSync(filePath);
         return api.sendMessage(
           "[ERR] The file could not be sent because it is larger than 25MB.",

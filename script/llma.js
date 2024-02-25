@@ -31,7 +31,7 @@ module.exports.run = async function({ api, event, args }) {
   }
 
   try {
-    api.sendMessage("Answering your question...", threadID, messageID);
+    api.sendMessage("🔍 Answering your question...", threadID, messageID);
     let url = `https://llama.aliestercrowley.com/api?prompt=${prompt}&username=${event.senderID}`;
     const response = await axios.get(url);
     let result = response.data.response;

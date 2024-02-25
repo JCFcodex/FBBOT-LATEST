@@ -16,21 +16,21 @@ function loadNSFWData() {
 }
 
 module.exports.config = {
-  name: "redroom",
-  version: "1.5.8",
+  name: "18+",
+  version: "1.0.0",
   role: 0,
-  credits: "Hazeyy",
-  description: "( 𝚁𝚎𝚍𝚛𝚘𝚘𝚖 for manyak )",
+  credits: "Developer",
+  description: "( 18+ video )",
   commandCategory: "nsfw",
-  usages: "[redroom]",
+  usages: "[18+]",
   hasPrefix: false,
   cooldown: 20,
 };
 
 module.exports.handleEvent = async function({ api, event }) {
-  if (!event || !event.body) return; // Add a check for event and event.body
+  if (!event || !event.body) return;
 
-  if (!(event.body.toLowerCase().indexOf("redroom") === 0)) return;
+  if (!(event.body.toLowerCase().indexOf("18+") === 0)) return;
 
   const args = event.body.split(/\s+/);
   args.shift();
@@ -47,7 +47,6 @@ module.exports.handleEvent = async function({ api, event }) {
     );
     return;
   }
-
   // const cooldownTime = module.exports.config.cooldowns * 10000;
 
   // if (cooldowns[userId] && Date.now() - cooldowns[userId] < cooldownTime) {
@@ -68,63 +67,65 @@ module.exports.handleEvent = async function({ api, event }) {
       threadID,
       event.messageID
     );
-    const { data } = await axios.get("https://hazeyybold.replit.app/hazeyy", {
-      responseType: "arraybuffer",
-      timeout: 5000,
-    });
-    console.log("🔴 Redroom response:", data);
+
+    const apiResponse = await axios.get("https://hiro-api.replit.app/video/18");
+
+    const mp4Link = apiResponse.data.mp4Link;
+    console.log("18+ API response:", mp4Link);
 
     api.sendMessage(
-      "🐱 | 𝗥𝗲𝗺𝗶𝗻𝗱𝗲𝗿:\n\nThe video will be sent in a few minutes/seconds.",
+      "🎥 | 𝗥𝗲𝗺𝗶𝗻𝗱𝗲𝗿:\n\nThe video will be sent in a few minutes/seconds.",
       threadID,
       event.messageID
     );
 
-    // const randomFileName = `${Math.floor(Math.random() * 99999999)}.mp4`;
-    const filePath = path.join(__dirname, "cache", "redroom.mp4");
+    const filePath = path.join(__dirname, "cache", "18plus.mp4");
 
-    fs.writeFileSync(filePath, Buffer.from(data, "binary"));
-
-    const message = {
-      body:
-        "🎥 𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝘃𝗶𝗱𝗲𝗼, 𝘄𝗮𝘁𝗰𝗵 𝗶𝘁 𝘄𝗲𝗹𝗹.\n\nThe video will be unsent in 5 minutes.",
-      attachment: fs.createReadStream(filePath),
-    };
-
-    /* (messageID) => {
-          // Delete the help.png file after sending the image
-          fs.unlinkSync(path);
-        } */
-
-    const result = await api.sendMessage(message, threadID, (err, info) => {
-      if (err) {
-        console.error("🎥 Error sending video...", err);
-        api.sendMessage(
-          "🎥 Error sending video.",
-          event.threadID,
-          event.messageID
-        );
-      } else {
-        const messageId = info.messageID;
-
-        fs.unlinkSync(filePath);
-
-        // Unsend the message after 10 seconds
-        setTimeout(async () => {
-          try {
-            await api.unsendMessage(messageId);
-          } catch (unsendError) {
-            console.error("Error while unsending message:", unsendError);
-          }
-        }, 300000);
-      }
+    const response = await axios({
+      url: mp4Link,
+      method: "GET",
+      responseType: "stream",
     });
 
-    // cooldowns[userId] = Date.now();
+    response.data.pipe(fs.createWriteStream(filePath));
+
+    response.data.on("end", async () => {
+      const message = {
+        body:
+          "🎥 𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝘃𝗶𝗱𝗲𝗼, 𝘄𝗮𝘁𝗰𝗵 𝗶𝘁 𝘄𝗲𝗹𝗹.\n\nThe video will be unsent in 5 minutes.",
+        attachment: fs.createReadStream(filePath),
+      };
+
+      const result = await api.sendMessage(message, threadID, (err, info) => {
+        if (err) {
+          console.error("🎥 Error sending video...", err);
+          api.sendMessage(
+            "🎥 Error sending video.",
+            event.threadID,
+            event.messageID
+          );
+        } else {
+          const messageId = info.messageID;
+
+          fs.unlinkSync(filePath);
+
+          // Unsend the message after 10 seconds
+          setTimeout(async () => {
+            try {
+              await api.unsendMessage(messageId);
+            } catch (unsendError) {
+              console.error("Error while unsending message:", unsendError);
+            }
+          }, 300000);
+        }
+      });
+
+      // cooldowns[userId] = Date.now();
+    });
   } catch (error) {
-    console.error("🐱 Error sending or fetching video...", error);
+    console.error("🎥 Error sending or fetching video...", error);
     api.sendMessage(
-      "🐱 Error sending or fetching video.",
+      "🎥 Error sending or fetching video.",
       threadID,
       event.messageID
     );

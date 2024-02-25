@@ -5,7 +5,7 @@ module.exports.config = {
   credits: "Grey",
   description: "Play a song",
   aliases: ["sing", "play"],
-  cooldown: 30,
+  cooldown: 60,
   hasPrefix: false,
   usage: "",
 };
