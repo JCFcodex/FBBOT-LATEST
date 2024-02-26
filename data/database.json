@@ -93,23 +93,6 @@
           "61555759105851"
         ],
         "adminIDs": []
-      },
-      "8008534282495421": {
-        "threadName": "CHATBOT TEST",
-        "participantIDs": [
-          "61555759105851",
-          "61555875827657",
-          "61556187938659",
-          "100072700295993",
-          "100076613706558",
-          "100077651656829",
-          "100080460532201"
-        ],
-        "adminIDs": [
-          {
-            "id": "100076613706558"
-          }
-        ]
       }
     }
   },
@@ -119,7 +102,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 163,
+        "exp": 166,
         "level": 1
       },
       {
@@ -147,8 +130,8 @@
         "id": "61555759105851",
         "name": "Bobong Bot",
         "money": 0,
-        "exp": 30,
-        "level": 3
+        "exp": 66,
+        "level": 4
       },
       {
         "id": "100042301892102",
@@ -175,7 +158,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 246,
+        "exp": 234,
         "level": 6
       },
       {
@@ -210,7 +193,7 @@
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 61,
+        "exp": 62,
         "level": 4
       },
       {
@@ -231,14 +214,14 @@
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 65,
+        "exp": 63,
         "level": 4
       },
       {
         "id": "100006147737169",
         "name": "John Michael Aguilar",
         "money": 2000,
-        "exp": 54,
+        "exp": 53,
         "level": 4
       },
       {
@@ -322,21 +305,7 @@
         "id": "100090506487692",
         "name": "Alysa Hshsh",
         "money": 0,
-        "exp": 86,
-        "level": 1
-      },
-      {
-        "id": "61555875827657",
-        "name": "Sakura Sinuntok",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "61556187938659",
-        "name": "Cevasa Fbbot",
-        "money": 0,
-        "exp": 0,
+        "exp": 47,
         "level": 1
       }
     ]
