@@ -419,6 +419,206 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
 
             // CUSTOM
 
+            if (event.body !== null) {
+              // Check if the message type is log:subscribe
+              if (event.logMessageType === "log:subscribe") {
+                const request = require("request");
+                const moment = require("moment-timezone");
+                var thu = moment.tz("Asia/Manila").format("dddd");
+                if (thu == "Sunday") thu = "Sunday";
+                if (thu == "Monday") thu = "Monday";
+                if (thu == "Tuesday") thu = "Tuesday";
+                if (thu == "Wednesday") thu = "Wednesday";
+                if (thu == "Thursday") thu = "Thursday";
+                if (thu == "Friday") thu = "Friday";
+                if (thu == "Saturday") thu = "Saturday";
+                const time = moment
+                  .tz("Asia/Manila")
+                  .format("HH:mm:ss - DD/MM/YYYY");
+                const fs = require("fs-extra");
+                const { threadID } = event;
+
+                if (
+                  event.logMessageData.addedParticipants &&
+                  Array.isArray(event.logMessageData.addedParticipants) &&
+                  event.logMessageData.addedParticipants.some(
+                    (i) => i.userFbId == userid
+                  )
+                ) {
+                  api.changeNickname(`》 KULUBOT 《`, threadID, userid);
+
+                  let gifUrl = "https://i.imgur.com/gBYZHdw.mp4";
+                  let gifPath = __dirname + "/cache/connected.jpeg";
+
+                  axios
+                    .get(gifUrl, { responseType: "arraybuffer" })
+                    .then((response) => {
+                      fs.writeFileSync(gifPath, response.data);
+                      return api.sendMessage(
+                        `🔴🟢🟡\n\n✅ 𝗚𝗥𝗢𝗨𝗣 𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗢𝗡 𝗦𝗨𝗖𝗖𝗘𝗦! \n➭ Bot Prefix: ${prefix}\n➭ Admin: ‹${admin}›\n➭ Facebook: ‹https://www.facebook.com/${admin}›\n➭ Use ${prefix}help to view command details\n➭ Added bot at: ⟨ ${time} ⟩〈 ${thu} 〉`,
+                        event.threadID
+                      );
+                    })
+                    .catch((error) => {
+                      console.error("Error fetching GIF:", error);
+                    });
+                } else {
+                  try {
+                    const fs = require("fs-extra");
+                    let {
+                      threadName,
+                      participantIDs,
+                    } = await api.getThreadInfo(threadID);
+
+                    var mentions = [],
+                      nameArray = [],
+                      memLength = [],
+                      i = 0;
+
+                    let addedParticipants1 =
+                      event.logMessageData.addedParticipants;
+                    for (let newParticipant of addedParticipants1) {
+                      let userID = newParticipant.userFbId;
+                      api.getUserInfo(parseInt(userID), (err, data) => {
+                        if (err) {
+                          return console.log(err);
+                        }
+                        var obj = Object.keys(data);
+                        var userName = data[obj].name.replace("@", "");
+                        if (userID !== api.getCurrentUserID()) {
+                          nameArray.push(userName);
+                          mentions.push({
+                            tag: userName,
+                            id: userID,
+                            fromIndex: 0,
+                          });
+
+                          memLength.push(participantIDs.length - i++);
+                          memLength.sort((a, b) => a - b);
+
+                          typeof threadID.customJoin == "undefined"
+                            ? (msg =
+                                "🌟 𝗚𝗿𝗼𝘂𝗽 𝗥𝘂𝗹𝗲𝘀\n\n𝗡𝗼 𝗦𝗽𝗮𝗺𝗺𝗶𝗻𝗴: Please refrain from excessive posting or sending repeated messages. Respect others' space in the group.\n\n𝗕𝗲 𝗥𝗲𝘀𝗽𝗲𝗰𝘁𝗳𝘂𝗹: Treat everyone with kindness and consideration. Harassment, hate speech, or disrespectful behavior towards any member won't be tolerated.\n𝖵i𝗈𝗅𝖺𝗍i𝗇𝗀 𝗍𝗁𝖾𝗌𝖾 𝗋𝗎𝗅𝖾𝗌 𝗆𝖺𝗒 𝗋𝖾𝗌𝗎𝗅𝗍 𝗂𝗇 𝗐𝖺𝗋𝗇𝗂𝗇𝗀𝗌 𝗈𝗋 𝗋𝖾𝗆𝗈𝗏𝖺𝗅 𝖿𝗋𝗈𝗆 𝗍𝗁𝖾 𝗀𝗋𝗈𝗎𝗉 𝗐𝖨𝗍𝗁𝗈𝗎𝗍 𝗉𝗋𝗈𝗋𝗇𝗈𝗍𝗂𝖼𝖾. 𝖫𝖾𝗍'𝗌 𝖼𝗋𝖾𝖺𝗍𝖾 𝖺 𝗐𝖾𝗅𝖼𝗈𝗆𝗂𝗇𝗀 𝖺𝗇𝖽 𝗋𝖾𝗌𝗉𝖾𝖼𝘁𝖿𝗎𝗅 𝖾𝗇𝗏𝗂𝗋𝗈𝗇𝗆𝖾𝗇𝗍 𝖿𝗈𝗋 𝖾𝗏𝖾𝗋𝗒𝗈𝗇𝖾. 𝖳𝗁𝖺𝗇𝗄 𝗒𝗈𝗎 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝖼𝗈𝗈𝗉𝖾𝗋𝖺𝗍𝗂𝗈𝗇!\n\n\n\nHELLO!, {uName}\n┌────── ～●～ ──────┐\n----- Welcome to {threadName} -----\n└────── ～●～ ──────┘\nYou're the {soThanhVien} member of this group, please enjoy! 🥳♥")
+                            : (msg = threadID.customJoin);
+                          msg = msg
+                            .replace(/\{uName}/g, nameArray.join(", "))
+                            .replace(
+                              /\{type}/g,
+                              memLength.length > 1 ? "you" : "Friend"
+                            )
+                            .replace(/\{soThanhVien}/g, memLength.join(", "))
+                            .replace(/\{threadName}/g, threadName);
+
+                          let callback = function() {
+                            return api.sendMessage(
+                              {
+                                body: msg,
+                                attachment: fs.createReadStream(
+                                  __dirname + `/cache/come.jpg`
+                                ),
+                                mentions,
+                              },
+                              event.threadID,
+                              () => fs.unlinkSync(__dirname + `/cache/come.jpg`)
+                            );
+                          };
+                          const avatarImg = [
+                            "https://imgur.com/cQr1H9K.png",
+                            "https://imgur.com/AM2GcVW.png",
+                            "https://imgur.com/mzLlNRU.png",
+                            "https://imgur.com/At9Ue26.png",
+                            "https://imgur.com/oFobpnX.png",
+                            "https://imgur.com/nNF2cIC.png",
+                            "https://imgur.com/c8Wg0c5.png",
+                            "https://imgur.com/Gu57rQc.png",
+                            "https://imgur.com/i7Sdmde.png",
+                          ];
+
+                          // Generate a random index
+                          const randomIndex = Math.floor(
+                            Math.random() * avatarImg.length
+                          );
+
+                          const profilePicUrl = `https://graph.facebook.com/${userID}/picture?width=1500&height=1500&access_token=1174099472704185|0722a7d5b5a4ac06b11450f7114eb2e9`;
+
+                          // Get the selected avatar
+                          const selectedAvatar = avatarImg[randomIndex];
+                          request(
+                            encodeURI(
+                              `https://api.popcat.xyz/welcomecard?background=https://i.ibb.co/SPntrcb/Picsart-24-02-21-11-31-58-712.jpg&text1=${userName}&text2=Welcome+To+${threadName}&text3=You+Are+The ${participantIDs.length}th+Member&avatar=${selectedAvatar}`
+                            )
+                          )
+                            .pipe(
+                              fs.createWriteStream(
+                                __dirname + `/cache/come.jpg`
+                              )
+                            )
+                            .on("close", callback);
+                        }
+                      });
+                    }
+                  } catch (err) {
+                    return console.log("ERROR: " + err);
+                  }
+                }
+              }
+            }
+            if (event.body !== null) {
+              if (event.logMessageType === "log:unsubscribe") {
+                api.getThreadInfo(event.threadID).then(({ participantIDs }) => {
+                  let leaverID = event.logMessageData.leftParticipantFbId;
+                  api.getUserInfo(leaverID, (err, userInfo) => {
+                    if (err) {
+                      return console.error("Failed to get user info:", err);
+                    }
+                    const name = userInfo[leaverID].name;
+                    const type =
+                      event.author == event.logMessageData.leftParticipantFbId
+                        ? "left the group."
+                        : "kicked by Admin of the group";
+                    api.sendMessage(
+                      `${name} has ${type} the group.`,
+                      event.threadID
+                    );
+                  });
+                });
+              }
+            }
+
+            // if (event.body) {
+            //   const emojis = [
+            //     "😀",
+            //     "😳",
+            //     "♥️",
+            //     "😪",
+            //     "🥲",
+            //     "🙀",
+            //     "😘",
+            //     "🥺",
+            //     "🚀",
+            //     "😝",
+            //     "🥴",
+            //     "😐",
+            //     "😆",
+            //     "😊",
+            //     "🤩",
+            //     "😼",
+            //     "😽",
+            //     "🤭",
+            //     "🐱",
+            //     "😹",
+            //   ];
+            //   const randomEmoji =
+            //     emojis[Math.floor(Math.random() * emojis.length)];
+
+            //   api.setMessageReaction(
+            //     randomEmoji,
+            //     event.messageID,
+            //     () => {},
+            //     true
+            //   );
+            // }
+
             // Check the autoseen setting from config and apply accordingly
             if (event.body !== null) {
               api.markAsReadAll(() => {});

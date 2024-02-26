@@ -162,11 +162,13 @@ module.exports.run = async function({ api, event, args }) {
             "🌸 𝗛𝗲𝗿𝗲 𝗶𝘀 𝘆𝗼𝘂𝗿 𝗿𝗮𝗻𝗱𝗼𝗺 𝗻𝘂𝗱𝗲 𝗴𝗶𝗿𝗹 𝗽𝗶𝗰𝘁𝘂𝗿𝗲\n\n😊 𝗧𝗵𝗮𝗻𝗸 𝘆𝗼𝘂 𝗳𝗼𝗿 𝘂𝘀𝗶𝗻𝗴 𝗞𝗨𝗟𝗨 𝗕𝗢𝗧 - 𝗖𝗛𝗔𝗧𝗕𝗢𝗧 𝗠𝗘𝗦𝗦𝗘𝗡𝗚𝗘𝗥! 🤖\n\nPicture will unsend in 1 minute.",
           attachment,
         },
-        event.threadID
+        event.threadID,
+        () => {
+          fs.unlinkSync(imagePath);
+        }
       );
 
       // Delete the help.png file after sending the image
-      fs.unlinkSync(imagePath);
 
       // Unsend the message after 20 seconds
       setTimeout(async () => {

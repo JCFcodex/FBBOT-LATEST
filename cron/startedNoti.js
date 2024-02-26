@@ -42,11 +42,10 @@ function logError(message) {
 function getRandomMotivationMessage() {
   return motivationMsg[Math.floor(Math.random() * motivationMsg.length)];
 }
-
 function formatMessage(subject, time, messageType) {
   let message;
 
-  if (messageType === "start") {
+  if (messageType === "reminder") {
     message = `🚀 ＣＬＡＳＳ ＳＴＡＲＴＥＤ 🚀\n\n\n𝗦𝘂𝗯𝗷𝗲𝗰𝘁: ${subject} 📚\n\n𝗖𝘂𝗿𝗿𝗲𝗻𝘁 𝗧𝗶𝗺𝗲: ${convertTo12Hour(
       time
     )} ⏰\n\n\n`;
@@ -112,17 +111,17 @@ async function downloadFile(url, filePath) {
 
 const numberToWords = require("number-to-words");
 
-async function sendMessage(api, subject, time, messageType, threadID) {
+async function sendMessage(api, subject, time, messageType) {
+  const message = formatMessage(subject, time, messageType);
   try {
     // Function to replace all numbers in the text with Tagalog words
     const replaceNumbersWithTagalog = (text) => {
       return text.replace(/\d+/g, (match) => numberToWords.toWords(match));
     };
 
-    const replacedSubject = replaceNumbersWithTagalog(subject);
-    const replacedTime = replaceNumbersWithTagalog(time);
-
-    const content = `tang ina nyo, pumasok na kayo!, nag start na ang ${replacedSubject}, mamayang ${time}`;
+    const content = `mga gago, pumasok na kayo!, nag start na ang ${replaceNumbersWithTagalog(
+      subject
+    )}`;
     const languageToSay = "tl";
     const pathFemale = path.resolve(__dirname, "cache", `voice_female.mp3`);
 
@@ -134,7 +133,6 @@ async function sendMessage(api, subject, time, messageType, threadID) {
     );
 
     const voiceMessage = fs.createReadStream(pathFemale);
-    const message = formatMessage(replacedSubject, replacedTime, messageType);
 
     // Sending the voice message directly as a readable stream
     api.sendMessage(
@@ -152,50 +150,45 @@ async function sendMessage(api, subject, time, messageType, threadID) {
   }
 }
 
-function scheduleOriginalReminder(
-  api,
-  subject,
-  originalTime,
-  day,
-  hour,
-  minute
-) {
-  const reminderMinute = (parseInt(minute, 10) + 1) % 60;
+function scheduleReminder(api, subject, originalTime, day, hour, minute) {
+  const reminderMinute = (parseInt(minute, 10) + 1 + 60) % 60;
   const reminderHour =
-    (parseInt(hour, 10) + Math.floor((parseInt(minute, 10) + 1) / 60)) % 24;
-  const cronExpressionOriginal = `${reminderMinute} ${reminderHour} * * ${day.toUpperCase()}`;
+    (parseInt(hour, 10) + Math.floor((parseInt(minute, 10) + 1) / 60) + 24) %
+    24;
+
+  const cronExpressionReminder = `${reminderMinute} ${reminderHour} * * ${day.toUpperCase()}`;
 
   cron.schedule(
-    cronExpressionOriginal,
+    cronExpressionReminder,
     () => {
-      sendMessage(api, subject, originalTime, "start");
+      sendMessage(api, subject, originalTime, "reminder");
     },
     { timezone }
   );
 }
 
-function scheduleClassStarted(api) {
+function scheduleReminders(api) {
   for (const day in schedule) {
     for (let time in schedule[day]) {
-      // logInfo(`Scheduling class started for time: ${time}`);
+      // logInfo(`Scheduling reminder for time: ${time}`);
       const subject = schedule[day][time];
       const originalTime = time;
 
       time = convertTo24Hour(time);
 
       if (time === null) {
-        logError(`Invalid time format for class started: ${time}`);
+        logError(`Invalid time format for reminder: ${time}`);
         continue;
       }
 
       const [hour, minute] = time.split(":");
 
-      scheduleOriginalReminder(api, subject, originalTime, day, hour, minute);
+      scheduleReminder(api, subject, originalTime, day, hour, minute);
     }
   }
 }
 
 module.exports = async ({ api }) => {
-  logInfo("Class Started job is running\n");
-  scheduleClassStarted(api);
+  logInfo("Class Started job is running");
+  scheduleReminders(api);
 };

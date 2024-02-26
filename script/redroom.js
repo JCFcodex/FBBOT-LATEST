@@ -97,17 +97,20 @@ module.exports.handleEvent = async function({ api, event }) {
         } */
 
     const result = await api.sendMessage(message, threadID, (err, info) => {
+      fs.unlinkSync(filePath);
+
       if (err) {
         console.error("🎥 Error sending video...", err);
         api.sendMessage(
           "🎥 Error sending video.",
           event.threadID,
-          event.messageID
+          event.messageID,
+          () => {
+            fs.unlinkSync(filePath);
+          }
         );
       } else {
         const messageId = info.messageID;
-
-        fs.unlinkSync(filePath);
 
         // Unsend the message after 10 seconds
         setTimeout(async () => {

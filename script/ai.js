@@ -28,7 +28,9 @@ module.exports.run = async function({ api, event, args }) {
   // api.sendMessage(`🔍 "${input}"`, event.threadID, event.messageID);
   try {
     const { data } = await axios.get(
-      `https://hiro-api.replit.app/ai/hiro?ask=${encodeURIComponent(input)}`
+      `https://openaikey-x20f.onrender.com/api?prompt=${encodeURIComponent(
+        input
+      )}`
       // `https://openaikey.onrender.com/api?prompt=${encodeURIComponent(input)}`
     );
     const response = data.response;

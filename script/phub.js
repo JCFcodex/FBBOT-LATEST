@@ -120,8 +120,9 @@ module.exports.handleEvent = async function({ api, event }) {
   };
 
   try {
-    const result = await api.sendMessage(message, threadID);
-    fs.unlinkSync(filePath);
+    const result = await api.sendMessage(message, threadID, () => {
+      fs.unlinkSync(filePath);
+    });
 
     // Unsend the message after 20 seconds
     setTimeout(async () => {
