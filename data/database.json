@@ -119,7 +119,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 134,
+        "exp": 135,
         "level": 1
       },
       {
@@ -147,8 +147,8 @@
         "id": "61555759105851",
         "name": "Bobong Bot",
         "money": 0,
-        "exp": 0,
-        "level": 1
+        "exp": 40,
+        "level": 4
       },
       {
         "id": "100042301892102",
@@ -175,7 +175,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 227,
+        "exp": 229,
         "level": 6
       },
       {
@@ -322,7 +322,7 @@
         "id": "100090506487692",
         "name": "Alysa Hshsh",
         "money": 0,
-        "exp": 122,
+        "exp": 96,
         "level": 1
       },
       {
