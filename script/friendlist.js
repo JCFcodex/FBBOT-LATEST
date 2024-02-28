@@ -4,7 +4,7 @@ module.exports.config = {
   name: "listfriend",
   version: "1.0.0",
   aliases: ["flist", "friendlist", "allfriend"],
-  role: 2,
+  role: 3,
   hasPrefix: false,
   credits: "ManhG",
   description: "View friends information/Delete friends by replying",

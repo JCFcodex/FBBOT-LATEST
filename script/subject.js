@@ -7,7 +7,7 @@ module.exports.config = {
   version: "1.0.0", // Command version
   aliases: ["sched", "schedule"],
   hasPrefix: false, // Whether to use the bot's prefix or not
-  role: 2, // Permission level required (adjust as needed)
+  role: 0, // Permission level required (adjust as needed)
   credits: "Your Name", // Command author
   description:
     "Returns all subjects for the specified day with time and subject name", // Brief description of what the command does

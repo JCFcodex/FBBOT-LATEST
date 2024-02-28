@@ -119,7 +119,7 @@ async function sendMessage(api, subject, time, messageType) {
       return text.replace(/\d+/g, (match) => numberToWords.toWords(match));
     };
 
-    const content = `gago, tang ina nyo, mag ready na kayo, mag start na ang ${replaceNumbersWithTagalog(
+    const content = `gagu, tang ina nyo, mag ready na kayo, mag start na ang ${replaceNumbersWithTagalog(
       subject
     )}, mamayang ${time}`;
     const languageToSay = "tl";

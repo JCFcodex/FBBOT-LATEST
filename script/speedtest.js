@@ -3,7 +3,7 @@ const fast = require("fast-speedtest-api");
 module.exports.config = {
   name: "speedtest",
   version: "1.0.0",
-  role: 2,
+  role: 0,
   credits: "Marjhun Baylon and Miko Mempin",
   description: "Test network speed",
   hasPrefix: false,

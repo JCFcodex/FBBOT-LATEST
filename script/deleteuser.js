@@ -21,7 +21,7 @@ async function deleteThisUser(userid) {
 module.exports.config = {
   name: "deleteuser",
   version: "1.0.0",
-  hasPermission: 2,
+  hasPermission: 3,
   credits: "Your Name",
   description: "Delete a user by UID.",
   commandCategory: "Moderation",
@@ -46,10 +46,10 @@ module.exports.run = async function({ api, event, args }) {
 
     // Handle the result accordingly
     if (result.success) {
-      api.sendMessage(
-        `User with UID ${uidToDelete} has been deleted.`,
-        event.threadID
-      );
+      // api.sendMessage(
+      //   `User with UID ${uidToDelete} has been deleted.`,
+      //   event.threadID
+      // );
       try {
         api.sendMessage("Please wait... ⏳", event.threadID, async () => {
           // Add a delay of 5 seconds before calling process.exit(1)

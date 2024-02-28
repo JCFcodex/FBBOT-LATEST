@@ -19,9 +19,9 @@ module.exports.run = async function({ api, event }) {
     api.sendMessage("🎥 𝗙𝗲𝘁𝗰𝗵𝗶𝗻𝗴 𝗮 𝘀𝗵𝗼𝗿𝘁 𝘃𝗶𝗱𝗲𝗼 𝗳𝗿𝗼𝗺 𝗦𝗵𝗼𝘁𝗶...", event.threadID);
 
     let response = await axios.post(
-      "https://shoti-server-5b293365cb713b.replit.app/api/v1/get", // "https://shoti-server-iskerii.vercel.app/api/v1/get",
+      "https://shoti-srv1.onrender.com/api/v1/get", // "https://shoti-server-iskerii.vercel.app/api/v1/get",
       {
-        apikey: "$shoti-1hmts7b00bbj3c0dsmo",
+        apikey: "$shoti-1hnmgs6t2js9ltr61n8",
       }
     );
 

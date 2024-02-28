@@ -10,7 +10,7 @@ module.exports.config = {
   name: "serverinfo",
   aliases: ["info", "status"],
   version: "1.0.3",
-  role: 3,
+  role: 0,
   credits: "Joshua Sy (modified by Siegfried Sama)",
   description: "Admin and Bot info.",
   commandCategory: "system",

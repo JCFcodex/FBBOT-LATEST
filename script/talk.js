@@ -31,7 +31,7 @@ let ongoingTalks = loadOngoingTalks();
 module.exports.config = {
   name: "talk",
   version: "1.0.0",
-  hasPermssion: 0,
+  role: 0,
   credits: "KENLIEPLAYS",
   description: "Talk to par",
   commandCategory: "chat",
