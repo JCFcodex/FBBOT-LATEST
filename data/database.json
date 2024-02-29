@@ -153,7 +153,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 156,
+        "exp": 158,
         "level": 1
       },
       {
@@ -209,7 +209,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 188,
+        "exp": 195,
         "level": 6
       },
       {
@@ -258,14 +258,14 @@
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 120,
+        "exp": 126,
         "level": 5
       },
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 83,
+        "exp": 97,
         "level": 5
       },
       {
@@ -293,7 +293,7 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 0,
-        "exp": 126,
+        "exp": 128,
         "level": 4
       },
       {
