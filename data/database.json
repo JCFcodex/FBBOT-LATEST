@@ -209,7 +209,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 180,
+        "exp": 179,
         "level": 6
       },
       {
@@ -244,14 +244,14 @@
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 80,
+        "exp": 82,
         "level": 5
       },
       {
         "id": "100000607087170",
         "name": "Grant Santos Caisip",
         "money": 0,
-        "exp": 78,
+        "exp": 74,
         "level": 4
       },
       {
@@ -265,7 +265,7 @@
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 69,
+        "exp": 63,
         "level": 4
       },
       {
