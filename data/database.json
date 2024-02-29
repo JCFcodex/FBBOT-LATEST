@@ -153,7 +153,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 116,
+        "exp": 134,
         "level": 1
       },
       {
@@ -209,7 +209,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 3000,
-        "exp": 174,
+        "exp": 209,
         "level": 6
       },
       {
@@ -244,43 +244,43 @@
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 35,
-        "level": 3
+        "exp": 80,
+        "level": 5
       },
       {
         "id": "100000607087170",
         "name": "Grant Santos Caisip",
         "money": 0,
-        "exp": 69,
+        "exp": 73,
         "level": 4
       },
       {
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 96,
+        "exp": 100,
         "level": 5
       },
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 55,
+        "exp": 59,
         "level": 4
       },
       {
         "id": "100006147737169",
         "name": "John Michael Aguilar",
         "money": 2000,
-        "exp": 58,
+        "exp": 59,
         "level": 4
       },
       {
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 0,
-        "exp": 150,
-        "level": 5
+        "exp": 183,
+        "level": 6
       },
       {
         "id": "100009874807148",
@@ -293,7 +293,7 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 0,
-        "exp": 121,
+        "exp": 124,
         "level": 4
       },
       {
@@ -314,14 +314,14 @@
         "id": "100041507925422",
         "name": "Albert Cruz",
         "money": 0,
-        "exp": 19,
-        "level": 2
+        "exp": 26,
+        "level": 3
       },
       {
         "id": "100050618333804",
         "name": "Yuan Ortega",
         "money": 0,
-        "exp": 26,
+        "exp": 31,
         "level": 3
       },
       {

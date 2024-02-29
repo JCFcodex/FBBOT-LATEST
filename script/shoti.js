@@ -21,7 +21,7 @@ module.exports.run = async function({ api, event }) {
     let response = await axios.post(
       "https://shoti-srv1.onrender.com/api/v1/get", // "https://shoti-server-iskerii.vercel.app/api/v1/get",
       {
-        apikey: "$shoti-1hnmgs6t2js9ltr61n8",
+        apikey: "$shoti-1hnpju5n8chtm6tl5ug",
       }
     );
 
