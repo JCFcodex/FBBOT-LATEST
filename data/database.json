@@ -153,7 +153,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 147,
+        "exp": 149,
         "level": 1
       },
       {
@@ -251,21 +251,21 @@
         "id": "100000607087170",
         "name": "Grant Santos Caisip",
         "money": 0,
-        "exp": 77,
+        "exp": 78,
         "level": 4
       },
       {
         "id": "100002435702688",
         "name": "Yuri Dale Faustino",
         "money": 0,
-        "exp": 106,
+        "exp": 113,
         "level": 5
       },
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 70,
+        "exp": 75,
         "level": 4
       },
       {
@@ -300,8 +300,8 @@
         "id": "100015328485151",
         "name": "Zymon DeLeon",
         "money": 0,
-        "exp": 19,
-        "level": 2
+        "exp": 24,
+        "level": 3
       },
       {
         "id": "100029104783468",
