@@ -1,3 +1,10 @@
+const axios = require("axios");
+const fs = require("fs-extra");
+process.env.YTDL_NO_UPDATE = true;
+const ytdl = require("@distube/ytdl-core");
+const request = require("request");
+const yts = require("yt-search");
+
 module.exports.config = {
   name: "music",
   version: "2.0.4",
@@ -11,12 +18,6 @@ module.exports.config = {
 };
 
 module.exports.run = async ({ api, event }) => {
-  const axios = require("axios");
-  const fs = require("fs-extra");
-  const ytdl = require("@distube/ytdl-core");
-  const request = require("request");
-  const yts = require("yt-search");
-
   const input = event.body;
   const text = input.substring(12);
   const data = input.split(" ");

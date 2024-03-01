@@ -1,103 +1,104 @@
-// const axios = require("axios");
-// const fs = require("fs-extra");
-// const ytdl = require("ytdl-core");
-// const request = require("request");
-// const yts = require("yt-search");
+const axios = require("axios");
+const fs = require("fs-extra");
+const path = require("path");
+const ytdl = require("@neoxr/ytdl-core");
+const yts = require("yt-search");
 
-// module.exports.config = {
-//   name: "lyrics", // Command name
-//   version: "2.0.4", // Command version
-//   // aliases: ["example", "example"],
-//   hasPrefix: true, // Whether to use the bot's prefix or not
-//   role: 0, // Permission level required (adjust as needed)
-//   credits: "Kyouya", // Command author
-//   description: "Play a song with lyrics", // Brief description of what the command does
-//   usage: "lyrics [title]", // Array of command usages
-//   cooldown: 10, // Cooldown period in seconds
-// };
+// Define a function to get a readable stream from a URL
+async function getStreamFromURL(url) {
+  const response = await axios.get(url, { responseType: "stream" });
+  return response.data;
+}
 
-// module.exports.run = async ({ api, event }) => {
-//   const input = event.body;
-//   const text = input.substring(12);
-//   const data = input.split(" ");
+module.exports.config = {
+  name: "lyrics",
+  version: "1.0",
+  credits: "Aryan Chauhan",
+  cooldown: 0,
+  role: 0,
+  description: "Get lyrics for a song",
+  category: "music",
+  usages: "lyrics [title]",
+};
 
-//   if (data.length < 2) {
-//     return api.sendMessage("Please put a song", event.threadID);
-//   }
+module.exports.run = async function({ api, event, args }) {
+  const songName = args.join(" ");
+  if (!songName) {
+    api.sendMessage(
+      "⛔ 𝗜𝗡𝗩𝗔𝗟𝗜𝗗 𝗧𝗜𝗧𝗟𝗘\n\n❁ Please provide a song name!",
+      event.threadID,
+      event.messageID
+    );
+    return;
+  }
 
-//   data.shift();
-//   const song = data.join(" ");
+  try {
+    api.sendMessage(
+      `𝗦𝗲𝗮𝗿𝗰𝗵𝗶𝗻𝗴 𝗳𝗼𝗿 "${songName}". Please wait...`,
+      event.threadID,
+      event.messageID
+    );
+    // Fetch lyrics
+    const lyricsResponse = await axios.get(
+      `https://lyrics-api.replit.app/aryan?songName=${encodeURIComponent(
+        songName
+      )}`
+    );
+    const { lyrics, title, artist, image } = lyricsResponse.data;
 
-//   try {
-//     api.sendMessage(
-//       `Finding lyrics for "${song}". Please wait...`,
-//       event.threadID
-//     );
+    // Fetch song
+    const searchResults = await yts(songName);
+    if (!searchResults.videos.length) {
+      api.sendMessage(
+        "❌ 𝗦𝗢𝗡𝗚 𝗡𝗢𝗧 𝗙𝗢𝗨𝗡𝗗\n\n❁ Sorry, song not found!",
+        event.threadID,
+        event.messageID
+      );
+      return;
+    }
 
-//     const res = await axios.get(
-//       `https://api.heckerman06.repl.co/api/other/lyrics2?song=${encodeURIComponent(
-//         song
-//       )}`
-//     );
-//     const lyrics = res.data.lyrics || "Not found!";
-//     const title = res.data.title || "Not found!";
-//     const artist = res.data.artist || "Not found!";
+    const video = searchResults.videos[0];
+    const videoUrl = video.url;
+    const stream = ytdl(videoUrl, { filter: "audioonly" });
+    const fileName = `lyrics.mp3`;
+    const filePath = path.join(__dirname, "cache", fileName);
 
-//     const searchResults = await yts(song);
-//     if (!searchResults.videos.length) {
-//       return api.sendMessage(
-//         "Error: Invalid request.",
-//         event.threadID,
-//         event.messageID
-//       );
-//     }
+    stream.pipe(fs.createWriteStream(filePath));
 
-//     const video = searchResults.videos[0];
-//     const videoUrl = video.url;
+    stream.on("response", () => {
+      console.info("[DOWNLOADER]", "Starting download now!");
+    });
 
-//     const stream = ytdl(videoUrl, { filter: "audioonly" });
+    stream.on("info", (info) => {
+      console.info(
+        "[DOWNLOADER]",
+        `Downloading ${info.videoDetails.title} by ${info.videoDetails.author.name}`
+      );
+    });
 
-//     const fileName = `${event.senderID}.mp3`;
-//     const filePath = __dirname + `/cache/${fileName}`;
+    stream.on("end", async () => {
+      const audioStream = fs.createReadStream(filePath);
+      let message = `📌 𝗛𝗘𝗥𝗘 𝗜𝗦 𝗟𝗬𝗥𝗜𝗖𝗦\n\n🎧 𝗧𝗜𝗧𝗟𝗘\n➪ ${title}\n👑 𝗔𝗥𝗧𝗜𝗦𝗧 \n➪ ${artist} \n\n🎶 𝗟𝗬𝗥𝗜𝗖𝗦\n➪ ${lyrics}`;
+      let attachment = await getStreamFromURL(image);
 
-//     stream.pipe(fs.createWriteStream(filePath));
-
-//     stream.on("response", () => {
-//       console.info("[DOWNLOADER]", "Starting download now!");
-//     });
-
-//     stream.on("info", (info) => {
-//       console.info(
-//         "[DOWNLOADER]",
-//         `Downloading ${info.videoDetails.title} by ${info.videoDetails.author.name}`
-//       );
-//     });
-
-//     stream.on("end", () => {
-//       console.info("[DOWNLOADER] Downloaded");
-
-//       if (fs.statSync(filePath).size > 26214400) {
-//         fs.unlinkSync(filePath);
-//         return api.sendMessage(
-//           "[ERR] The file could not be sent because it is larger than 25MB.",
-//           event.threadID
-//         );
-//       }
-
-//       const message = {
-//         body: `Here's your music, enjoy!🥰\n\nTitle: ${title}\nArtist: ${artist}\n\nLyrics: ${lyrics}`,
-//         attachment: fs.createReadStream(filePath),
-//       };
-
-//       api.sendMessage(message, event.threadID, () => {
-//         fs.unlinkSync(filePath);
-//       });
-//     });
-//   } catch (error) {
-//     console.error("[ERROR]", error);
-//     api.sendMessage(
-//       "An error occurred while processing the command.",
-//       event.threadID
-//     );
-//   }
-// };
+      api.sendMessage(
+        { body: message, attachment },
+        event.threadID,
+        (err, info) => {
+          let id = info.messageID;
+          api.sendMessage({ attachment: audioStream }, event.threadID, () => {
+            fs.unlinkSync(filePath);
+            api.setMessageReaction("✅", id, () => {}, true);
+          });
+        }
+      );
+    });
+  } catch (error) {
+    console.error(error);
+    api.sendMessage(
+      "Sorry, there was an error getting the lyrics and song!",
+      event.threadID,
+      event.messageID
+    );
+  }
+};

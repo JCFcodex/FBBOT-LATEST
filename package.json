@@ -33,6 +33,7 @@
     "googlethis": "^1.8.0",
     "https-proxy-agent": "^4.0.0",
     "knights-canvas": "^1.3.7-a",
+    "lyrics-finder": "^21.7.0",
     "moment-timezone": "^0.5.45",
     "mqtt": "^3.0.0",
     "node-cron": "^3.0.3",
