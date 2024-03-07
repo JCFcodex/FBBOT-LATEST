@@ -1,3 +1,199 @@
+const axios = require('axios');
+const he = require('he');
+
+module.exports.config = {
+  name: 'quiz',
+  version: '1.0.0',
+  cooldown: 5,
+  role: 0,
+  hasPrefix: true,
+  aliases: ['game', 'system'],
+  description: "Quiz's game earn money in quiz",
+  usage: '{pref}quiz',
+  credits: 'Ainz',
+};
+
+let timerId;
+let isAnswered = false;
+
+module.exports.run = async function({ api, event, Utils }) {
+  const categories = Array.from({ length: 24 }, (_, index) => index + 9);
+  const selectedCategory =
+    categories[Math.floor(Math.random() * categories.length)];
+
+  const difficulties = ['easy', 'medium', 'hard'];
+
+  // Generate a random index
+  const randomIndex = Math.floor(Math.random() * difficulties.length);
+
+  // Get the difficulty at the random index
+  const randomDifficulty = difficulties[randomIndex];
+
+  const apiUrl = `https://opentdb.com/api.php?amount=1&category=${selectedCategory}&difficulty=${randomDifficulty}&type=boolean`;
+
+  try {
+    // Make the API call using the selected API
+    const response = await axios.get(apiUrl, { timeout: 10000 });
+    const {
+      difficulty,
+      category,
+      question,
+      correct_answer: answer,
+    } = response.data.results[0];
+
+    // Decode HTML entities in the question and answer
+    const decodedQuestion = he.decode(question);
+    const decodedAnswer = he.decode(answer);
+    const decodedCategory = he.decode(category);
+
+    if (!isAnswered) {
+      api.sendMessage(
+        `Please reply to the question with either "𝗧𝗿𝘂𝗲" or "𝗙𝗮𝗹𝘀𝗲" to submit your answer!\n\n𝗡𝗼𝘁𝗲: You have 1 minute to answer each question.\n\n𝗖𝗮𝘁𝗲𝗴𝗼𝗿𝘆: ${decodedCategory}.\n𝗗𝗶𝗳𝗳𝗶𝗰𝘂𝗹𝘁𝘆: ${difficulty}`,
+        event.threadID,
+        event.messageID
+      );
+    } else {
+      setTimeout(() => {
+        api.sendMessage(
+          `Moving on to the next question ➡️\n\n𝗖𝗮𝘁𝗲𝗴𝗼𝗿𝘆: ${decodedCategory}.\n𝗗𝗶𝗳𝗳𝗶𝗰𝘂𝗹𝘁𝘆: ${difficulty}`,
+          event.threadID,
+          event.messageID
+        );
+      }, 3000);
+    }
+    console.log(question);
+    console.log(decodedQuestion);
+    setTimeout(() => {
+      // Send the question to the chat
+      api.sendMessage(
+        `- 𝗤 𝗨 𝗘 𝗦 𝗧 𝗜 𝗢 𝗡 -\n\n${decodedQuestion}`,
+        event.threadID,
+        function(err, info) {
+          Utils.handleReply.push({
+            type: 'quiz',
+            author: event.threadID,
+            messageID: info.messageID,
+            answer: decodedAnswer.toLowerCase(),
+          });
+          console.log(`Correct Answer: ${decodedAnswer}`);
+
+          // Set a timer to unsend the question after 1 minute
+          timerId = setTimeout(() => {
+            api.unsendMessage(info.messageID);
+            const replyIndex = Utils.handleReply.findIndex(
+              (reply) => reply.messageID === info.messageID
+            );
+            if (replyIndex !== -1) {
+              Utils.handleReply.splice(replyIndex, 1);
+            }
+            api.sendMessage(
+              `🔴 𝗧𝗶𝗺𝗲'𝘀 𝘂𝗽! The current question has not been answered in time.\n\n𝗖𝗼𝗿𝗿𝗲𝗰𝘁 𝗔𝗻𝘀𝘄𝗲𝗿: ${decodedAnswer}`,
+              event.threadID,
+              event.messageID
+            );
+          }, 60000); // 1 minute = 60,000 milliseconds
+        }
+      );
+    }, 5000);
+  } catch (error) {
+    console.error(`Error fetching data from API: ${error}`);
+    api.sendMessage('Error fetching data from API', event.threadID);
+  }
+};
+
+module.exports.handleReply = async function({
+  api,
+  event,
+  Utils,
+  Currencies,
+  Experience,
+  args,
+}) {
+  const { threadID, messageID, body, messageReply } = event;
+
+  // Check if messageReply is available and not null
+  if (!messageReply || !messageReply.messageID) {
+    api.sendMessage(
+      'Reply to the question with either "𝗧𝗿𝘂𝗲" or "𝗙𝗮𝗹𝘀𝗲" to submit your answer!',
+      threadID,
+      messageID
+    );
+    return;
+  }
+
+  const reply = Utils.handleReply.findIndex(
+    (reply) => reply.author === event.threadID
+  );
+
+  const handleReply = Utils.handleReply[reply];
+
+  // Check if handleReply is available
+  if (!handleReply) {
+    api.sendMessage(
+      'Reply to the question with either "𝗧𝗿𝘂𝗲" or "𝗙𝗮𝗹𝘀𝗲" to submit your answer!',
+      threadID,
+      messageID
+    );
+    return;
+  }
+
+  if (handleReply.messageID !== messageReply.messageID) {
+    api.sendMessage(
+      'Reply to the question with either "𝗧𝗿𝘂𝗲" or "𝗙𝗮𝗹𝘀𝗲" to submit your answer!',
+      threadID,
+      messageID
+    );
+    return;
+  }
+
+  switch (handleReply.type) {
+    case 'quiz': {
+      const choices = ['true', 'false'];
+      if (!choices.includes(body.toLowerCase())) {
+        return api.sendMessage(
+          'Invalid choice. Please reply with either "𝗧𝗿𝘂𝗲" or "𝗙𝗮𝗹𝘀𝗲".',
+          threadID,
+          messageID
+        );
+      }
+      api.unsendMessage(Utils.handleReply[reply].messageID);
+      if (body?.toLowerCase() === Utils.handleReply[reply].answer) {
+        isAnswered = true;
+        const { levelInfo } = Experience;
+        const rankInfo = await levelInfo(event.senderID);
+        if (!rankInfo || typeof rankInfo !== 'object') {
+          return;
+        }
+        const { name, exp, level, money } = rankInfo;
+
+        await Currencies.increaseMoney(event.senderID, 500);
+        api.sendMessage(
+          `🟢 You win and gain 𝟓𝟎𝟎\n\n𝗡𝗮𝗺𝗲: ${name}\n𝗘𝘅𝗽: ${exp}\n𝗟𝗲𝘃𝗲𝗹: ${level}\n𝗠𝗼𝗻𝗲𝘆: ${money}`,
+          threadID,
+          messageID
+        );
+        // Clear the existing timeout
+        clearTimeout(timerId);
+        console.log(`${messageID} increased money to 𝟓𝟎𝟎`);
+        Utils.handleReply.splice(reply, 1);
+        // Call the run function again to start a new quiz
+        module.exports.run({ api, event, args, Utils });
+      } else {
+        // Clear the existing timeout
+        clearTimeout(timerId);
+        api.sendMessage(
+          `You lose, the correct answer is ${Utils.handleReply[reply].answer}`,
+          threadID,
+          messageID
+        );
+        Utils.handleReply.splice(reply, 1);
+        isAnswered = false;
+      }
+      break;
+    }
+  }
+};
+
 // // Import necessary modules
 // const fs = require("fs");
 // const path = require("path");
@@ -213,191 +409,191 @@
 //   }
 // };
 
-const axios = require("axios");
+// const axios = require("axios");
 
-module.exports.config = {
-  name: "quiz",
-  version: "1.0.0",
-  cooldown: 5,
-  role: 0,
-  hasPrefix: true,
-  aliases: ["game", "system"],
-  description: "Quiz's game earn money in quiz",
-  usage: "{pref}quiz [filipino|english]",
-  credits: "Ainz",
-};
+// module.exports.config = {
+//   name: "quiz",
+//   version: "1.0.0",
+//   cooldown: 5,
+//   role: 0,
+//   hasPrefix: true,
+//   aliases: ["game", "system"],
+//   description: "Quiz's game earn money in quiz",
+//   usage: "{pref}quiz [filipino|english]",
+//   credits: "Ainz",
+// };
 
-let timerId;
-let isAnswered = false;
+// let timerId;
+// let isAnswered = false;
 
-module.exports.run = async function({ api, event, args, Utils }) {
-  const category = args[0] ? args[0].toLowerCase() : "random";
+// module.exports.run = async function({ api, event, args, Utils }) {
+//   const category = args[0] ? args[0].toLowerCase() : "random";
 
-  const apis = {
-    filipino: "https://quiz-6rhj.onrender.com/api/quiz/qz?category=filipino",
-    english: "https://quiz-6rhj.onrender.com/api/quiz/qz?category=english",
-    random: [
-      "https://quiz-6rhj.onrender.com/api/quiz/qz?category=filipino",
-      "https://quiz-6rhj.onrender.com/api/quiz/qz?category=english",
-    ],
-  };
+//   const apis = {
+//     filipino: "https://quiz-6rhj.onrender.com/api/quiz/qz?category=filipino",
+//     english: "https://quiz-6rhj.onrender.com/api/quiz/qz?category=english",
+//     random: [
+//       "https://quiz-6rhj.onrender.com/api/quiz/qz?category=filipino",
+//       "https://quiz-6rhj.onrender.com/api/quiz/qz?category=english",
+//     ],
+//   };
 
-  // Select API based on user's choice or random if not specified
-  const selectedApi = apis[category] || apis["random"];
-  const randomIndex = Array.isArray(selectedApi)
-    ? Math.floor(Math.random() * selectedApi.length)
-    : 0;
-  const randomApi = Array.isArray(selectedApi)
-    ? selectedApi[randomIndex]
-    : selectedApi;
+//   // Select API based on user's choice or random if not specified
+//   const selectedApi = apis[category] || apis["random"];
+//   const randomIndex = Array.isArray(selectedApi)
+//     ? Math.floor(Math.random() * selectedApi.length)
+//     : 0;
+//   const randomApi = Array.isArray(selectedApi)
+//     ? selectedApi[randomIndex]
+//     : selectedApi;
 
-  try {
-    // Make the API call using the selected API
-    const response = await axios.get(randomApi, { timeout: 10000 });
-    const { question, answer } = response.data;
+//   try {
+//     // Make the API call using the selected API
+//     const response = await axios.get(randomApi, { timeout: 10000 });
+//     const { question, answer } = response.data;
 
-    if (!isAnswered) {
-      api.sendMessage(
-        `Please reply to the question to submit your answer!\nNote: You have 1 minute to answer each question.\n\nGet ready for the question.`,
-        event.threadID,
-        event.messageID
-      );
-    } else {
-      setTimeout(() => {
-        api.sendMessage(
-          `Moving on to the next question ➡️`,
-          event.threadID,
-          event.messageID
-        );
-      }, 3000);
-    }
+//     if (!isAnswered) {
+//       api.sendMessage(
+//         `Please reply to the question to submit your answer!\nNote: You have 1 minute to answer each question.\n\nGet ready for the question.`,
+//         event.threadID,
+//         event.messageID
+//       );
+//     } else {
+//       setTimeout(() => {
+//         api.sendMessage(
+//           `Moving on to the next question ➡️`,
+//           event.threadID,
+//           event.messageID
+//         );
+//       }, 3000);
+//     }
 
-    setTimeout(() => {
-      // Send the question to the chat
-      api.sendMessage(question, event.threadID, function(err, info) {
-        Utils.handleReply.push({
-          type: "quiz",
-          author: event.threadID,
-          messageID: info.messageID,
-          answer: answer.toLowerCase(),
-        });
-        console.log(`Correct Answer: ${answer}`);
+//     setTimeout(() => {
+//       // Send the question to the chat
+//       api.sendMessage(question, event.threadID, function(err, info) {
+//         Utils.handleReply.push({
+//           type: "quiz",
+//           author: event.threadID,
+//           messageID: info.messageID,
+//           answer: answer.toLowerCase(),
+//         });
+//         console.log(`Correct Answer: ${answer}`);
 
-        // Set a timer to unsend the question after 1 minute
-        timerId = setTimeout(() => {
-          api.unsendMessage(info.messageID);
-          const replyIndex = Utils.handleReply.findIndex(
-            (reply) => reply.messageID === info.messageID
-          );
-          if (replyIndex !== -1) {
-            Utils.handleReply.splice(replyIndex, 1);
-          }
-          api.sendMessage(
-            `🔴 Time's up! The current question has not been answered in time.\n\nCorrect Answer: ${answer}`,
-            event.threadID,
-            event.messageID
-          );
-        }, 60000); // 1 minute = 60,000 milliseconds
-      });
-    }, 5000);
-  } catch (error) {
-    console.error(`Error fetching data from API: ${error}`);
-    api.sendMessage("Error fetching data from API", event.threadID);
-  }
-};
+//         // Set a timer to unsend the question after 1 minute
+//         timerId = setTimeout(() => {
+//           api.unsendMessage(info.messageID);
+//           const replyIndex = Utils.handleReply.findIndex(
+//             (reply) => reply.messageID === info.messageID
+//           );
+//           if (replyIndex !== -1) {
+//             Utils.handleReply.splice(replyIndex, 1);
+//           }
+//           api.sendMessage(
+//             `🔴 Time's up! The current question has not been answered in time.\n\nCorrect Answer: ${answer}`,
+//             event.threadID,
+//             event.messageID
+//           );
+//         }, 60000); // 1 minute = 60,000 milliseconds
+//       });
+//     }, 5000);
+//   } catch (error) {
+//     console.error(`Error fetching data from API: ${error}`);
+//     api.sendMessage("Error fetching data from API", event.threadID);
+//   }
+// };
 
-module.exports.handleReply = async function({
-  api,
-  event,
-  Utils,
-  Currencies,
-  Experience,
-  args,
-}) {
-  const { threadID, messageID, body, messageReply } = event;
+// module.exports.handleReply = async function({
+//   api,
+//   event,
+//   Utils,
+//   Currencies,
+//   Experience,
+//   args,
+// }) {
+//   const { threadID, messageID, body, messageReply } = event;
 
-  // Check if messageReply is available and not null
-  if (!messageReply || !messageReply.messageID) {
-    api.sendMessage(
-      "Reply to the question to submit your answer!",
-      threadID,
-      messageID
-    );
-    return;
-  }
+//   // Check if messageReply is available and not null
+//   if (!messageReply || !messageReply.messageID) {
+//     api.sendMessage(
+//       "Reply to the question to submit your answer!",
+//       threadID,
+//       messageID
+//     );
+//     return;
+//   }
 
-  const reply = Utils.handleReply.findIndex(
-    (reply) => reply.author === event.threadID
-  );
+//   const reply = Utils.handleReply.findIndex(
+//     (reply) => reply.author === event.threadID
+//   );
 
-  const handleReply = Utils.handleReply[reply];
+//   const handleReply = Utils.handleReply[reply];
 
-  // Check if handleReply is available
-  if (!handleReply) {
-    api.sendMessage(
-      "Reply to the question to submit your answer!",
-      threadID,
-      messageID
-    );
-    return;
-  }
+//   // Check if handleReply is available
+//   if (!handleReply) {
+//     api.sendMessage(
+//       "Reply to the question to submit your answer!",
+//       threadID,
+//       messageID
+//     );
+//     return;
+//   }
 
-  if (handleReply.messageID !== messageReply.messageID) {
-    api.sendMessage(
-      "Reply to the question to submit your answer!",
-      threadID,
-      messageID
-    );
-    return;
-  }
+//   if (handleReply.messageID !== messageReply.messageID) {
+//     api.sendMessage(
+//       "Reply to the question to submit your answer!",
+//       threadID,
+//       messageID
+//     );
+//     return;
+//   }
 
-  switch (handleReply.type) {
-    case "quiz": {
-      const choices = ["a", "b", "c", "d"];
-      if (!choices.includes(body.toLowerCase())) {
-        return api.sendMessage(
-          "Invalid choice. Please select one of the following options: a, b, c, or d.",
-          threadID,
-          messageID
-        );
-      }
-      api.unsendMessage(Utils.handleReply[reply].messageID);
-      if (body?.toLowerCase() === Utils.handleReply[reply].answer) {
-        isAnswered = true;
-        const { levelInfo } = Experience;
-        const rankInfo = await levelInfo(event.senderID);
-        if (!rankInfo || typeof rankInfo !== "object") {
-          return;
-        }
-        const { name, exp, level, money } = rankInfo;
+//   switch (handleReply.type) {
+//     case "quiz": {
+//       const choices = ["a", "b", "c", "d"];
+//       if (!choices.includes(body.toLowerCase())) {
+//         return api.sendMessage(
+//           "Invalid choice. Please select one of the following options: a, b, c, or d.",
+//           threadID,
+//           messageID
+//         );
+//       }
+//       api.unsendMessage(Utils.handleReply[reply].messageID);
+//       if (body?.toLowerCase() === Utils.handleReply[reply].answer) {
+//         isAnswered = true;
+//         const { levelInfo } = Experience;
+//         const rankInfo = await levelInfo(event.senderID);
+//         if (!rankInfo || typeof rankInfo !== "object") {
+//           return;
+//         }
+//         const { name, exp, level, money } = rankInfo;
 
-        await Currencies.increaseMoney(event.senderID, 500);
-        api.sendMessage(
-          `You win and gain 500\n\nName: ${name}\nExp: ${exp}\nLevel: ${level}\nMoney: ${money}`,
-          threadID,
-          messageID
-        );
-        // Clear the existing timeout
-        clearTimeout(timerId);
-        console.log(`${messageID} increased money to 500`);
-        Utils.handleReply.splice(reply, 1);
-        // Call the run function again to start a new quiz
-        module.exports.run({ api, event, args, Utils });
-      } else {
-        // Clear the existing timeout
-        clearTimeout(timerId);
-        api.sendMessage(
-          `You lose, the correct answer is ${Utils.handleReply[reply].answer}`,
-          threadID,
-          messageID
-        );
-        Utils.handleReply.splice(reply, 1);
-        isAnswered = false;
-      }
-      break;
-    }
-  }
-};
+//         await Currencies.increaseMoney(event.senderID, 500);
+//         api.sendMessage(
+//           `You win and gain 500\n\nName: ${name}\nExp: ${exp}\nLevel: ${level}\nMoney: ${money}`,
+//           threadID,
+//           messageID
+//         );
+//         // Clear the existing timeout
+//         clearTimeout(timerId);
+//         console.log(`${messageID} increased money to 500`);
+//         Utils.handleReply.splice(reply, 1);
+//         // Call the run function again to start a new quiz
+//         module.exports.run({ api, event, args, Utils });
+//       } else {
+//         // Clear the existing timeout
+//         clearTimeout(timerId);
+//         api.sendMessage(
+//           `You lose, the correct answer is ${Utils.handleReply[reply].answer}`,
+//           threadID,
+//           messageID
+//         );
+//         Utils.handleReply.splice(reply, 1);
+//         isAnswered = false;
+//       }
+//       break;
+//     }
+//   }
+// };
 
 // TODO ENHANCE THE QUIZ GAME
 
