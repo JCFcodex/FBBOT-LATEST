@@ -164,9 +164,11 @@ module.exports.handleReply = async function({
         if (!rankInfo || typeof rankInfo !== 'object') {
           return;
         }
-        const { name, exp, level, money } = rankInfo;
 
         await Currencies.increaseMoney(event.senderID, 500);
+        
+        const { name, exp, level, money } = rankInfo;
+
         api.sendMessage(
           `🟢 You win and gain 𝟓𝟎𝟎\n\n𝗡𝗮𝗺𝗲: ${name}\n𝗘𝘅𝗽: ${exp}\n𝗟𝗲𝘃𝗲𝗹: ${level}\n𝗠𝗼𝗻𝗲𝘆: ${money}`,
           threadID,

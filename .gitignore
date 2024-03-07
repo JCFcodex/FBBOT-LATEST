@@ -1,9 +1,9 @@
 node_modules
+cron/src/timer.json
 data/session
 data/config.json
 data/history.json
 data/database.json
-cron/src/timer.json
 package-lock.json
 CLIFF-AUTO.txt
 backUpAUTO.txt
