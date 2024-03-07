@@ -152,7 +152,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 334,
+        "exp": 335,
         "level": 1
       },
       {
@@ -207,8 +207,8 @@
       {
         "id": "100076613706558",
         "name": "John Carl Faustino",
-        "money": 0,
-        "exp": 520,
+        "money": 500,
+        "exp": 525,
         "level": 7
       },
       {
@@ -264,7 +264,7 @@
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 182,
+        "exp": 185,
         "level": 6
       },
       {
@@ -277,8 +277,8 @@
       {
         "id": "100006879459800",
         "name": "Francis Fajardo",
-        "money": 0,
-        "exp": 260,
+        "money": 600,
+        "exp": 263,
         "level": 6
       },
       {
