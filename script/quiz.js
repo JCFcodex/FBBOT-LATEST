@@ -4,7 +4,7 @@ const he = require('he');
 module.exports.config = {
   name: 'quiz',
   version: '1.0.0',
-  cooldown: 5,
+  cooldown: 10,
   role: 0,
   hasPrefix: true,
   aliases: ['game', 'system'],
@@ -29,7 +29,7 @@ module.exports.run = async function({ api, event, Utils }) {
   // Get the difficulty at the random index
   const randomDifficulty = difficulties[randomIndex];
 
-  const apiUrl = `https://opentdb.com/api.php?amount=1&category=${selectedCategory}&difficulty=${randomDifficulty}&type=boolean`;
+  const apiUrl = `https://opentdb.com/api.php?amount=1&type=boolean`;
 
   try {
     // Make the API call using the selected API
@@ -53,13 +53,11 @@ module.exports.run = async function({ api, event, Utils }) {
         event.messageID
       );
     } else {
-      setTimeout(() => {
-        api.sendMessage(
-          `Moving on to the next question ➡️\n\n𝗖𝗮𝘁𝗲𝗴𝗼𝗿𝘆: ${decodedCategory}.\n𝗗𝗶𝗳𝗳𝗶𝗰𝘂𝗹𝘁𝘆: ${difficulty}`,
-          event.threadID,
-          event.messageID
-        );
-      }, 3000);
+      api.sendMessage(
+        `Moving on to the next question ➡️\n\n𝗖𝗮𝘁𝗲𝗴𝗼𝗿𝘆: ${decodedCategory}.\n𝗗𝗶𝗳𝗳𝗶𝗰𝘂𝗹𝘁𝘆: ${difficulty}`,
+        event.threadID,
+        event.messageID
+      );
     }
     console.log(question);
     console.log(decodedQuestion);
@@ -94,7 +92,7 @@ module.exports.run = async function({ api, event, Utils }) {
           }, 60000); // 1 minute = 60,000 milliseconds
         }
       );
-    }, 5000);
+    }, 7000);
   } catch (error) {
     console.error(`Error fetching data from API: ${error}`);
     api.sendMessage('Error fetching data from API', event.threadID);
@@ -166,11 +164,15 @@ module.exports.handleReply = async function({
         }
 
         await Currencies.increaseMoney(event.senderID, 500);
-        
+        const userData = await Currencies.getData(event.senderID);
+
         const { name, exp, level, money } = rankInfo;
 
+        console.log(`user data: ${userData.money}`);
+
         api.sendMessage(
-          `🟢 You win and gain 𝟓𝟎𝟎\n\n𝗡𝗮𝗺𝗲: ${name}\n𝗘𝘅𝗽: ${exp}\n𝗟𝗲𝘃𝗲𝗹: ${level}\n𝗠𝗼𝗻𝗲𝘆: ${money}`,
+          `🟢 You win and gain 𝟓𝟎𝟎\n\n𝗡𝗮𝗺𝗲: ${name}\n𝗘𝘅𝗽: ${exp}\n𝗟𝗲𝘃𝗲𝗹: ${level}\n𝗠𝗼𝗻𝗲𝘆: ${money +
+            500}`,
           threadID,
           messageID
         );
@@ -179,7 +181,9 @@ module.exports.handleReply = async function({
         console.log(`${messageID} increased money to 𝟓𝟎𝟎`);
         Utils.handleReply.splice(reply, 1);
         // Call the run function again to start a new quiz
-        module.exports.run({ api, event, args, Utils });
+        setTimeout(() => {
+          module.exports.run({ api, event, args, Utils });
+        }, 5000);
       } else {
         // Clear the existing timeout
         clearTimeout(timerId);
