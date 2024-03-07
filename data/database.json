@@ -152,7 +152,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 330,
+        "exp": 331,
         "level": 1
       },
       {
@@ -208,7 +208,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 0,
-        "exp": 457,
+        "exp": 458,
         "level": 7
       },
       {
@@ -313,8 +313,8 @@
         "id": "100041507925422",
         "name": "Albert Cruz",
         "money": 0,
-        "exp": 39,
-        "level": 3
+        "exp": 40,
+        "level": 4
       },
       {
         "id": "100050618333804",
