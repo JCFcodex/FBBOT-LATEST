@@ -1,15 +1,15 @@
-const path = require("path");
-const fs = require("fs");
-const pathFile = path.join("script", "cache", "restart.txt");
-const global = require("../config.json");
+const path = require('path');
+const fs = require('fs');
+const pathFile = path.join('script', 'cache', 'restart.txt');
+const global = require('../config.json');
 
 module.exports = async ({ api }) => {
-  const threadsToSendGreeting = ["7133477510012986"]; //7133477510012986 and 5776059305779745
+  const threadsToSendGreeting = ['7133477510012986']; //7133477510012986 and 5776059305779745
 
-  if (!fs.existsSync(pathFile)) fs.writeFileSync(pathFile, "true");
-  const isEnable = fs.readFileSync(pathFile, "utf-8");
+  if (!fs.existsSync(pathFile)) fs.writeFileSync(pathFile, 'true');
+  const isEnable = fs.readFileSync(pathFile, 'utf-8');
 
-  if (isEnable == "true") {
+  if (isEnable == 'true') {
     try {
       const promises = threadsToSendGreeting.map(async (threadID) => {
         const restartMsg = await api.sendMessage(
@@ -20,12 +20,12 @@ module.exports = async ({ api }) => {
         // Delay before unsending the message (adjust the delay time as needed)
         setTimeout(async () => {
           await api.unsendMessage(restartMsg.messageID);
-        }, 300000); // 5mins
+        }, 1800000); // 30mins
       });
 
       await Promise.all(promises);
     } catch (error) {
-      console.error("Error sending or unsending messages:", error.message);
+      console.error('Error sending or unsending messages:', error.message);
     }
 
     // fs.writeFileSync(pathFile, "false");  // Uncomment this line if needed

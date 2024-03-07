@@ -1,20 +1,20 @@
-const fs = require("fs");
-const path = require("path");
-const axios = require("axios");
-const login = require("./fb-chat-api/index");
-const express = require("express");
+const fs = require('fs');
+const path = require('path');
+const axios = require('axios');
+const login = require('./fb-chat-api/index');
+const express = require('express');
 const app = express();
-const chalk = require("chalk");
-const bodyParser = require("body-parser");
-const script = path.join(__dirname, "script");
-const cron = require("node-cron");
-const { Octokit } = require("@octokit/rest");
-const chokidar = require("chokidar"); // Install this package
-let token = fs.readFileSync("token.txt", "utf8").trim();
+const chalk = require('chalk');
+const bodyParser = require('body-parser');
+const script = path.join(__dirname, 'script');
+const cron = require('node-cron');
+const { Octokit } = require('@octokit/rest');
+const chokidar = require('chokidar'); // Install this package
+let token = fs.readFileSync('token.txt', 'utf8').trim();
 const getToken = () => token;
 const setToken = (newToken) => {
   token = newToken;
-  fs.writeFileSync("token.txt", newToken, "utf8");
+  fs.writeFileSync('token.txt', newToken, 'utf8');
 };
 
 module.exports = {
@@ -22,8 +22,8 @@ module.exports = {
   setToken,
 };
 const config =
-  fs.existsSync("./data") && fs.existsSync("./data/config.json")
-    ? JSON.parse(fs.readFileSync("./data/config.json", "utf8"))
+  fs.existsSync('./data') && fs.existsSync('./data/config.json')
+    ? JSON.parse(fs.readFileSync('./data/config.json', 'utf8'))
     : createConfig();
 const Utils = new Object({
   commands: new Map(),
@@ -46,14 +46,14 @@ fs.readdirSync(script).forEach((file) => {
         if (config) {
           const {
             name = [],
-            role = "0",
-            version = "1.0.0",
+            role = '0',
+            version = '1.0.0',
             hasPrefix = true,
             aliases = [],
-            description = "",
-            usage = "",
-            credits = "",
-            cooldown = "5",
+            description = '',
+            usage = '',
+            credits = '',
+            cooldown = '5',
           } = Object.fromEntries(
             Object.entries(config).map(([key, value]) => [
               key.toLowerCase(),
@@ -109,14 +109,14 @@ fs.readdirSync(script).forEach((file) => {
       if (config) {
         const {
           name = [],
-          role = "0",
-          version = "1.0.0",
+          role = '0',
+          version = '1.0.0',
           hasPrefix = true,
           aliases = [],
-          description = "",
-          usage = "",
-          credits = "",
-          cooldown = "5",
+          description = '',
+          usage = '',
+          credits = '',
+          cooldown = '5',
         } = Object.fromEntries(
           Object.entries(config).map(([key, value]) => [
             key.toLowerCase(),
@@ -167,29 +167,29 @@ fs.readdirSync(script).forEach((file) => {
     }
   }
 });
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(express.json());
 const routes = [
   {
-    path: "/",
-    file: "index.html",
+    path: '/',
+    file: 'index.html',
   },
   {
-    path: "/step_by_step_guide",
-    file: "guide.html",
+    path: '/step_by_step_guide',
+    file: 'guide.html',
   },
   {
-    path: "/online_user",
-    file: "online.html",
+    path: '/online_user',
+    file: 'online.html',
   },
 ];
 routes.forEach((route) => {
   app.get(route.path, (req, res) => {
-    res.sendFile(path.join(__dirname, "public", route.file));
+    res.sendFile(path.join(__dirname, 'public', route.file));
   });
 });
-app.get("/info", (req, res) => {
+app.get('/info', (req, res) => {
   const data = Array.from(Utils.account.values()).map((account) => ({
     name: account.name,
     profileUrl: account.profileUrl,
@@ -198,7 +198,7 @@ app.get("/info", (req, res) => {
   }));
   res.json(JSON.parse(JSON.stringify(data, null, 2)));
 });
-app.get("/commands", (req, res) => {
+app.get('/commands', (req, res) => {
   const command = new Set();
   const commands = [...Utils.commands.values()].map(
     ({ name }) => (command.add(name), name)
@@ -227,20 +227,20 @@ app.get("/commands", (req, res) => {
     )
   );
 });
-app.post("/login", async (req, res) => {
+app.post('/login', async (req, res) => {
   const { state, commands, prefix, admin } = req.body;
   try {
     if (!state) {
-      throw new Error("Missing app state data");
+      throw new Error('Missing app state data');
     }
-    const cUser = state.find((item) => item.key === "c_user");
+    const cUser = state.find((item) => item.key === 'c_user');
     if (cUser) {
       const existingUser = Utils.account.get(cUser.value);
       if (existingUser) {
         console.log(`User ${cUser.value} is already logged in`);
         return res.status(400).json({
           error: false,
-          message: "Active user session detected; already logged in",
+          message: 'Active user session detected; already logged in',
           user: existingUser,
         });
       } else {
@@ -249,7 +249,7 @@ app.post("/login", async (req, res) => {
           res.status(200).json({
             success: true,
             message:
-              "Authentication process completed successfully; login achieved.",
+              'Authentication process completed successfully; login achieved.',
           });
         } catch (error) {
           console.error(error);
@@ -275,12 +275,12 @@ app.post("/login", async (req, res) => {
 app.listen(3000, () => {
   console.log(`Server is running at http://localhost:3000`);
 });
-process.on("uncaughtException", (error) => {
-  console.error("Uncaught Exception:", error.message);
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error.message);
   // Respond to the user with an error message if applicable
 });
-process.on("unhandledRejection", (reason) => {
-  console.error("Unhandled Promise Rejection:", reason);
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Promise Rejection:', reason);
 });
 async function accountLogin(state, enableCommands = [], prefix, admin = []) {
   return new Promise((resolve, reject) => {
@@ -304,12 +304,12 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
             !userInfo[userid]?.thumbSrc
           )
             throw new Error(
-              "Unable to locate the account; it appears to be in a suspended or locked state."
+              'Unable to locate the account; it appears to be in a suspended or locked state.'
             );
           const { name, profileUrl, thumbSrc } = userInfo[userid];
           let time =
             (
-              JSON.parse(fs.readFileSync("./data/history.json", "utf-8")).find(
+              JSON.parse(fs.readFileSync('./data/history.json', 'utf-8')).find(
                 (user) => user.userid === userid
               ) || {}
             ).time || 0;
@@ -322,7 +322,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
           const intervalId = setInterval(() => {
             try {
               const account = Utils.account.get(userid);
-              if (!account) throw new Error("Account not found");
+              if (!account) throw new Error('Account not found');
               Utils.account.set(userid, {
                 ...account,
                 time: account.time + 1,
@@ -346,34 +346,35 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
           autoMarkDelivery: config[0].fcaOption.autoMarkDelivery,
           autoMarkRead: config[0].fcaOption.autoMarkRead,
         });
-        global.custom = require("./cron/morningGreet")({ api: api });
-        global.custom = require("./cron/eveningGreet")({ api: api });
-        global.custom = require("./cron/reminderNoti")({ api: api });
-        global.custom = require("./cron/startedNoti")({ api: api });
-        global.custom = require("./cron/restartNoti")({ api: api });
+        global.custom = require('./cron/morningGreet')({ api: api });
+        global.custom = require('./cron/eveningGreet')({ api: api });
+        global.custom = require('./cron/reminderNoti')({ api: api });
+        global.custom = require('./cron/startedNoti')({ api: api });
+        global.custom = require('./cron/restartNoti')({ api: api });
+        global.custom = require('./cron/timer')({ api: api });
         // global.custom = require("./index")({ api: api });
         try {
           let database;
 
           function readDatabase() {
             try {
-              if (fs.existsSync("./data/database.json")) {
-                const content = fs.readFileSync("./data/database.json", "utf8");
-                if (content.trim() !== "") {
+              if (fs.existsSync('./data/database.json')) {
+                const content = fs.readFileSync('./data/database.json', 'utf8');
+                if (content.trim() !== '') {
                   // Only parse if the content is not empty
                   database = JSON.parse(content);
                 } else {
-                  console.error("Error parsing database.json: Empty file");
+                  console.error('Error parsing database.json: Empty file');
                   database = createDatabase();
                 }
               } else {
                 console.error(
-                  "Error parsing database.json: File does not exist"
+                  'Error parsing database.json: File does not exist'
                 );
                 database = createDatabase();
               }
             } catch (error) {
-              console.error("Error parsing database.json:", error);
+              console.error('Error parsing database.json:', error);
               database = createDatabase();
             }
           }
@@ -382,11 +383,11 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
           readDatabase();
 
           // Watch for changes in the database.json file
-          chokidar.watch("./data/database.json").on("change", () => {
+          chokidar.watch('./data/database.json').on('change', () => {
             try {
               readDatabase();
             } catch (error) {
-              console.error("Error handling changes in database.json:", error);
+              console.error('Error handling changes in database.json:', error);
             }
           });
 
@@ -421,21 +422,21 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
 
             if (event.body !== null) {
               // Check if the message type is log:subscribe
-              if (event.logMessageType === "log:subscribe") {
-                const request = require("request");
-                const moment = require("moment-timezone");
-                var thu = moment.tz("Asia/Manila").format("dddd");
-                if (thu == "Sunday") thu = "Sunday";
-                if (thu == "Monday") thu = "Monday";
-                if (thu == "Tuesday") thu = "Tuesday";
-                if (thu == "Wednesday") thu = "Wednesday";
-                if (thu == "Thursday") thu = "Thursday";
-                if (thu == "Friday") thu = "Friday";
-                if (thu == "Saturday") thu = "Saturday";
+              if (event.logMessageType === 'log:subscribe') {
+                const request = require('request');
+                const moment = require('moment-timezone');
+                var thu = moment.tz('Asia/Manila').format('dddd');
+                if (thu == 'Sunday') thu = 'Sunday';
+                if (thu == 'Monday') thu = 'Monday';
+                if (thu == 'Tuesday') thu = 'Tuesday';
+                if (thu == 'Wednesday') thu = 'Wednesday';
+                if (thu == 'Thursday') thu = 'Thursday';
+                if (thu == 'Friday') thu = 'Friday';
+                if (thu == 'Saturday') thu = 'Saturday';
                 const time = moment
-                  .tz("Asia/Manila")
-                  .format("HH:mm:ss - DD/MM/YYYY");
-                const fs = require("fs-extra");
+                  .tz('Asia/Manila')
+                  .format('HH:mm:ss - DD/MM/YYYY');
+                const fs = require('fs-extra');
                 const { threadID } = event;
 
                 if (
@@ -447,11 +448,11 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
                 ) {
                   api.changeNickname(`》 KULUBOT 《`, threadID, userid);
 
-                  let gifUrl = "https://i.imgur.com/gBYZHdw.mp4";
-                  let gifPath = __dirname + "/cache/connected.jpeg";
+                  let gifUrl = 'https://i.imgur.com/gBYZHdw.mp4';
+                  let gifPath = __dirname + '/cache/connected.jpeg';
 
                   axios
-                    .get(gifUrl, { responseType: "arraybuffer" })
+                    .get(gifUrl, { responseType: 'arraybuffer' })
                     .then((response) => {
                       fs.writeFileSync(gifPath, response.data);
                       return api.sendMessage(
@@ -460,11 +461,11 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
                       );
                     })
                     .catch((error) => {
-                      console.error("Error fetching GIF:", error);
+                      console.error('Error fetching GIF:', error);
                     });
                 } else {
                   try {
-                    const fs = require("fs-extra");
+                    const fs = require('fs-extra');
                     let {
                       threadName,
                       participantIDs,
@@ -484,7 +485,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
                           return console.log(err);
                         }
                         var obj = Object.keys(data);
-                        var userName = data[obj].name.replace("@", "");
+                        var userName = data[obj].name.replace('@', '');
                         if (userID !== api.getCurrentUserID()) {
                           nameArray.push(userName);
                           mentions.push({
@@ -496,17 +497,17 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
                           memLength.push(participantIDs.length - i++);
                           memLength.sort((a, b) => a - b);
 
-                          typeof threadID.customJoin == "undefined"
+                          typeof threadID.customJoin == 'undefined'
                             ? (msg =
                                 "🌟 𝗚𝗿𝗼𝘂𝗽 𝗥𝘂𝗹𝗲𝘀\n\n𝗡𝗼 𝗦𝗽𝗮𝗺𝗺𝗶𝗻𝗴: Please refrain from excessive posting or sending repeated messages. Respect others' space in the group.\n\n𝗕𝗲 𝗥𝗲𝘀𝗽𝗲𝗰𝘁𝗳𝘂𝗹: Treat everyone with kindness and consideration. Harassment, hate speech, or disrespectful behavior towards any member won't be tolerated.\n𝖵i𝗈𝗅𝖺𝗍i𝗇𝗀 𝗍𝗁𝖾𝗌𝖾 𝗋𝗎𝗅𝖾𝗌 𝗆𝖺𝗒 𝗋𝖾𝗌𝗎𝗅𝗍 𝗂𝗇 𝗐𝖺𝗋𝗇𝗂𝗇𝗀𝗌 𝗈𝗋 𝗋𝖾𝗆𝗈𝗏𝖺𝗅 𝖿𝗋𝗈𝗆 𝗍𝗁𝖾 𝗀𝗋𝗈𝗎𝗉 𝗐𝖨𝗍𝗁𝗈𝗎𝗍 𝗉𝗋𝗈𝗋𝗇𝗈𝗍𝗂𝖼𝖾. 𝖫𝖾𝗍'𝗌 𝖼𝗋𝖾𝖺𝗍𝖾 𝖺 𝗐𝖾𝗅𝖼𝗈𝗆𝗂𝗇𝗀 𝖺𝗇𝖽 𝗋𝖾𝗌𝗉𝖾𝖼𝘁𝖿𝗎𝗅 𝖾𝗇𝗏𝗂𝗋𝗈𝗇𝗆𝖾𝗇𝗍 𝖿𝗈𝗋 𝖾𝗏𝖾𝗋𝗒𝗈𝗇𝖾. 𝖳𝗁𝖺𝗇𝗄 𝗒𝗈𝗎 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝖼𝗈𝗈𝗉𝖾𝗋𝖺𝗍𝗂𝗈𝗇!\n\n\n\nHELLO!, {uName}\n┌────── ～●～ ──────┐\n----- Welcome to {threadName} -----\n└────── ～●～ ──────┘\nYou're the {soThanhVien} member of this group, please enjoy! 🥳♥")
                             : (msg = threadID.customJoin);
                           msg = msg
-                            .replace(/\{uName}/g, nameArray.join(", "))
+                            .replace(/\{uName}/g, nameArray.join(', '))
                             .replace(
                               /\{type}/g,
-                              memLength.length > 1 ? "you" : "Friend"
+                              memLength.length > 1 ? 'you' : 'Friend'
                             )
-                            .replace(/\{soThanhVien}/g, memLength.join(", "))
+                            .replace(/\{soThanhVien}/g, memLength.join(', '))
                             .replace(/\{threadName}/g, threadName);
 
                           let callback = function() {
@@ -523,15 +524,15 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
                             );
                           };
                           const avatarImg = [
-                            "https://imgur.com/cQr1H9K.png",
-                            "https://imgur.com/AM2GcVW.png",
-                            "https://imgur.com/mzLlNRU.png",
-                            "https://imgur.com/At9Ue26.png",
-                            "https://imgur.com/oFobpnX.png",
-                            "https://imgur.com/nNF2cIC.png",
-                            "https://imgur.com/c8Wg0c5.png",
-                            "https://imgur.com/Gu57rQc.png",
-                            "https://imgur.com/i7Sdmde.png",
+                            'https://imgur.com/cQr1H9K.png',
+                            'https://imgur.com/AM2GcVW.png',
+                            'https://imgur.com/mzLlNRU.png',
+                            'https://imgur.com/At9Ue26.png',
+                            'https://imgur.com/oFobpnX.png',
+                            'https://imgur.com/nNF2cIC.png',
+                            'https://imgur.com/c8Wg0c5.png',
+                            'https://imgur.com/Gu57rQc.png',
+                            'https://imgur.com/i7Sdmde.png',
                           ];
 
                           // Generate a random index
@@ -553,29 +554,29 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
                                 __dirname + `/cache/come.jpg`
                               )
                             )
-                            .on("close", callback);
+                            .on('close', callback);
                         }
                       });
                     }
                   } catch (err) {
-                    return console.log("ERROR: " + err);
+                    return console.log('ERROR: ' + err);
                   }
                 }
               }
             }
             if (event.body !== null) {
-              if (event.logMessageType === "log:unsubscribe") {
+              if (event.logMessageType === 'log:unsubscribe') {
                 api.getThreadInfo(event.threadID).then(({ participantIDs }) => {
                   let leaverID = event.logMessageData.leftParticipantFbId;
                   api.getUserInfo(leaverID, (err, userInfo) => {
                     if (err) {
-                      return console.error("Failed to get user info:", err);
+                      return console.error('Failed to get user info:', err);
                     }
                     const name = userInfo[leaverID].name;
                     const type =
                       event.author == event.logMessageData.leftParticipantFbId
-                        ? "left the group."
-                        : "kicked by Admin of the group";
+                        ? 'left the group.'
+                        : 'kicked by Admin of the group';
                     api.sendMessage(
                       `${name} has ${type} the group.`,
                       event.threadID
@@ -652,13 +653,13 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
 
             // CUSTOM
             if (error) {
-              if (error === "Connection closed.") {
+              if (error === 'Connection closed.') {
               }
             }
             if (event?.senderID === userid) return;
             //here
-            let history = (await fs.existsSync("./data/history.json"))
-              ? JSON.parse(fs.readFileSync("./data/history.json"))
+            let history = (await fs.existsSync('./data/history.json'))
+              ? JSON.parse(fs.readFileSync('./data/history.json'))
               : {};
             if (
               !userid === event.senderID ||
@@ -675,19 +676,19 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
             let hasPrefix =
               event.body &&
               aliases(
-                (event.body || "")
+                (event.body || '')
                   ?.trim()
                   .toLowerCase()
                   .split(/ +/)
                   .shift()
               )?.hasPrefix == false
-                ? ""
+                ? ''
                 : prefix;
-            let [command, ...args] = (event.body || "")
+            let [command, ...args] = (event.body || '')
               .trim()
               .toLowerCase()
               .startsWith(hasPrefix?.toLowerCase())
-              ? (event.body || "")
+              ? (event.body || '')
                   .trim()
                   .substring(hasPrefix?.length)
                   .trim()
@@ -819,11 +820,11 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
               }
             }
             switch (event.type) {
-              case "message":
-              case "message_unsend":
-              case "message_reaction":
-              case "message_reply":
-              case "message_reply":
+              case 'message':
+              case 'message_unsend':
+              case 'message_reaction':
+              case 'message_reply':
+              case 'message_reply':
                 if (
                   enableCommands[0].commands.includes(
                     aliases(command?.toLowerCase())?.name
@@ -886,7 +887,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
           });
           watchDatabaseChanges();
         } catch (error) {
-          console.error("Error during API listen, outside of listen", userid);
+          console.error('Error during API listen, outside of listen', userid);
           Utils.account.delete(userid);
           deleteThisUser(userid);
           return;
@@ -897,9 +898,9 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
   });
 }
 async function deleteThisUser(userid) {
-  const configFile = "./data/history.json";
-  let config = JSON.parse(fs.readFileSync(configFile, "utf-8"));
-  const sessionFile = path.join("./data/session", `${userid}.json`);
+  const configFile = './data/history.json';
+  let config = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
+  const sessionFile = path.join('./data/session', `${userid}.json`);
   const index = config.findIndex((item) => item.userid === userid);
   if (index !== -1) config.splice(index, 1);
   fs.writeFileSync(configFile, JSON.stringify(config, null, 2));
@@ -917,14 +918,14 @@ async function addThisUser(
   admin,
   blacklist
 ) {
-  const configFile = "./data/history.json";
-  const sessionFolder = "./data/session";
+  const configFile = './data/history.json';
+  const sessionFolder = './data/session';
   const sessionFile = path.join(sessionFolder, `${userid}.json`);
   if (fs.existsSync(sessionFile)) return;
-  const config = JSON.parse(fs.readFileSync(configFile, "utf-8"));
+  const config = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
   config.push({
     userid,
-    prefix: prefix || "",
+    prefix: prefix || '',
     admin: admin || [],
     blacklist: blacklist || [],
     enableCommands,
@@ -944,26 +945,26 @@ function aliases(command) {
   return null;
 }
 async function main() {
-  const empty = require("fs-extra");
-  const cacheFile = "./script/cache";
+  const empty = require('fs-extra');
+  const cacheFile = './script/cache';
   if (!fs.existsSync(cacheFile)) fs.mkdirSync(cacheFile);
-  const configFile = "./data/history.json";
-  if (!fs.existsSync(configFile)) fs.writeFileSync(configFile, "[]", "utf-8");
-  const config = JSON.parse(fs.readFileSync(configFile, "utf-8"));
-  const sessionFolder = path.join("./data/session");
+  const configFile = './data/history.json';
+  if (!fs.existsSync(configFile)) fs.writeFileSync(configFile, '[]', 'utf-8');
+  const config = JSON.parse(fs.readFileSync(configFile, 'utf-8'));
+  const sessionFolder = path.join('./data/session');
   if (!fs.existsSync(sessionFolder)) fs.mkdirSync(sessionFolder);
   const adminOfConfig =
-    fs.existsSync("./data") && fs.existsSync("./data/config.json")
-      ? JSON.parse(fs.readFileSync("./data/config.json", "utf8"))
+    fs.existsSync('./data') && fs.existsSync('./data/config.json')
+      ? JSON.parse(fs.readFileSync('./data/config.json', 'utf8'))
       : createConfig();
   cron.schedule(
     `*/${adminOfConfig[0].masterKey.restartTime} * * * *`,
     async () => {
       const history = JSON.parse(
-        fs.readFileSync("./data/history.json", "utf-8")
+        fs.readFileSync('./data/history.json', 'utf-8')
       );
       history.forEach((user) => {
-        !user || typeof user !== "object" ? process.exit(1) : null;
+        !user || typeof user !== 'object' ? process.exit(1) : null;
         user.time === undefined || user.time === null || isNaN(user.time)
           ? process.exit(1)
           : null;
@@ -972,7 +973,7 @@ async function main() {
       });
       await empty.emptyDir(cacheFile);
       await fs.writeFileSync(
-        "./data/history.json",
+        './data/history.json',
         JSON.stringify(history, null, 2)
       );
       //api.sendMessage("restarting", "5776059305779745");
@@ -985,7 +986,7 @@ async function main() {
       try {
         const { enableCommands, prefix, admin, blacklist } =
           config.find((item) => item.userid === path.parse(file).name) || {};
-        const state = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+        const state = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
         if (enableCommands)
           await accountLogin(state, enableCommands, prefix, admin, blacklist);
       } catch (error) {
@@ -1001,7 +1002,7 @@ function createConfig() {
   const config = [
     {
       masterKey: {
-        admin: ["100076613706558"],
+        admin: ['100076613706558'],
         devMode: false,
         database: false,
         restartTime: 99999999,
@@ -1009,25 +1010,25 @@ function createConfig() {
       fcaOption: {
         forceLogin: true,
         listenEvents: true,
-        logLevel: "silent",
+        logLevel: 'silent',
         updatePresence: true,
         selfListen: false,
-        userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64",
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64',
         online: true,
         autoMarkDelivery: false,
         autoMarkRead: false,
       },
     },
   ];
-  const dataFolder = "./data";
+  const dataFolder = './data';
   if (!fs.existsSync(dataFolder)) fs.mkdirSync(dataFolder);
-  fs.writeFileSync("./data/config.json", JSON.stringify(config, null, 2));
+  fs.writeFileSync('./data/config.json', JSON.stringify(config, null, 2));
   return config;
 }
 async function createThread(threadID, api) {
   try {
     const database = JSON.parse(
-      fs.readFileSync("./data/database.json", "utf8")
+      fs.readFileSync('./data/database.json', 'utf8')
     );
     const threadInfo = await api.getThreadInfo(threadID);
     const Threads = database.findIndex((Thread) => Thread.Threads);
@@ -1084,9 +1085,9 @@ async function createThread(threadID, api) {
       });
     }
     await fs.writeFileSync(
-      "./data/database.json",
+      './data/database.json',
       JSON.stringify(database, null, 2),
-      "utf-8"
+      'utf-8'
     );
     return database;
   } catch (error) {
@@ -1094,8 +1095,8 @@ async function createThread(threadID, api) {
   }
 }
 async function createDatabase() {
-  const data = "./data";
-  const database = "./data/database.json";
+  const data = './data';
+  const database = './data/database.json';
 
   if (!fs.existsSync(data)) {
     fs.mkdirSync(data, {
@@ -1105,16 +1106,16 @@ async function createDatabase() {
 
   if (
     !fs.existsSync(database) ||
-    fs.readFileSync(database, "utf-8").trim() === ""
+    fs.readFileSync(database, 'utf-8').trim() === ''
   ) {
     // If database.json doesn't exist or is empty, fetch it from GitHub and write to local file
     try {
       const githubURL =
-        "https://raw.githubusercontent.com/JCFcodex/FBBOT-LATEST/main/data/database.json";
+        'https://raw.githubusercontent.com/JCFcodex/FBBOT-LATEST/main/data/database.json';
       const response = await axios.get(githubURL, {
         headers: {
           Authorization: `Bearer ${fs
-            .readFileSync("token.txt", "utf8")
+            .readFileSync('token.txt', 'utf8')
             .trim()}`,
         },
       });
@@ -1122,41 +1123,41 @@ async function createDatabase() {
       const jsonData = JSON.stringify(response.data); // Convert to JSON string
 
       fs.writeFileSync(database, jsonData);
-      console.log("Database.json created and populated with GitHub data.");
+      console.log('Database.json created and populated with GitHub data.');
     } catch (error) {
-      console.error("Error fetching or writing GitHub data:", error.message);
+      console.error('Error fetching or writing GitHub data:', error.message);
     }
   } else {
     try {
       // Attempt to parse the existing database.json
-      JSON.parse(fs.readFileSync(database, "utf-8"));
+      JSON.parse(fs.readFileSync(database, 'utf-8'));
     } catch (error) {
-      console.error("Error parsing database.json:", error);
-      console.log("Attempting to create a new valid database.json.");
+      console.error('Error parsing database.json:', error);
+      console.log('Attempting to create a new valid database.json.');
 
       // Handle the error appropriately, e.g., by initializing the database with a default value
       fs.writeFileSync(database, JSON.stringify([]));
     }
   }
-  console.error("Creating a new database.");
+  console.error('Creating a new database.');
   return;
 }
 async function updateThread(id) {
-  const database = JSON.parse(fs.readFileSync("./data/database.json", "utf8"));
+  const database = JSON.parse(fs.readFileSync('./data/database.json', 'utf8'));
   const user = database[1]?.Users.find((user) => user.id === id);
   if (!user) {
     return;
   }
   user.exp += 1;
   await fs.writeFileSync(
-    "./data/database.json",
+    './data/database.json',
     JSON.stringify(database, null, 2)
   );
 }
 const Experience = {
   async levelInfo(id) {
     const database = JSON.parse(
-      fs.readFileSync("./data/database.json", "utf8")
+      fs.readFileSync('./data/database.json', 'utf8')
     );
     const data = database[1].Users.find((user) => user.id === id);
     if (!data) {
@@ -1166,7 +1167,7 @@ const Experience = {
   },
   async levelUp(id) {
     const database = JSON.parse(
-      fs.readFileSync("./data/database.json", "utf8")
+      fs.readFileSync('./data/database.json', 'utf8')
     );
     const data = database[1].Users.find((user) => user.id === id);
     if (!data) {
@@ -1174,9 +1175,9 @@ const Experience = {
     }
     data.level += 1;
     await fs.writeFileSync(
-      "./data/database.json",
+      './data/database.json',
       JSON.stringify(database, null, 2),
-      "utf-8"
+      'utf-8'
     );
     return data;
   },
@@ -1185,7 +1186,7 @@ const Currencies = {
   async update(id, money) {
     try {
       const database = JSON.parse(
-        fs.readFileSync("./data/database.json", "utf8")
+        fs.readFileSync('./data/database.json', 'utf8')
       );
       const data = database[1].Users.find((user) => user.id === id);
       if (!data || !money) {
@@ -1193,63 +1194,63 @@ const Currencies = {
       }
       data.money += money;
       await fs.writeFileSync(
-        "./data/database.json",
+        './data/database.json',
         JSON.stringify(database, null, 2),
-        "utf-8"
+        'utf-8'
       );
       return data;
     } catch (error) {
-      console.error("Error updating Currencies:", error);
+      console.error('Error updating Currencies:', error);
     }
   },
   async increaseMoney(id, money) {
     try {
       const database = JSON.parse(
-        fs.readFileSync("./data/database.json", "utf8")
+        fs.readFileSync('./data/database.json', 'utf8')
       );
       const data = database[1].Users.find((user) => user.id === id);
       if (!data) {
         return;
       }
-      if (data && typeof data.money === "number" && typeof money === "number") {
+      if (data && typeof data.money === 'number' && typeof money === 'number') {
         data.money += money;
       }
       await fs.writeFileSync(
-        "./data/database.json",
+        './data/database.json',
         JSON.stringify(database, null, 2),
-        "utf-8"
+        'utf-8'
       );
       return data;
     } catch (error) {
-      console.error("Error checking Currencies:", error);
+      console.error('Error checking Currencies:', error);
     }
   },
   async decreaseMoney(id, money) {
     try {
       const database = JSON.parse(
-        fs.readFileSync("./data/database.json", "utf8")
+        fs.readFileSync('./data/database.json', 'utf8')
       );
       const data = database[1].Users.find((user) => user.id === id);
       if (!data) {
         return;
       }
-      if (data && typeof data.money === "number" && typeof money === "number") {
+      if (data && typeof data.money === 'number' && typeof money === 'number') {
         data.money -= money;
       }
       await fs.writeFileSync(
-        "./data/database.json",
+        './data/database.json',
         JSON.stringify(database, null, 2),
-        "utf-8"
+        'utf-8'
       );
       return data;
     } catch (error) {
-      console.error("Error checking Currencies:", error);
+      console.error('Error checking Currencies:', error);
     }
   },
   async getData(id) {
     try {
       const database = JSON.parse(
-        fs.readFileSync("./data/database.json", "utf8")
+        fs.readFileSync('./data/database.json', 'utf8')
       );
       const data = database[1].Users.find((user) => user.id === id);
       if (!data) {
@@ -1257,7 +1258,7 @@ const Currencies = {
       }
       return data;
     } catch (error) {
-      console.error("Error checking Currencies:", error);
+      console.error('Error checking Currencies:', error);
     }
   },
 };
@@ -1274,52 +1275,52 @@ const Currencies = {
 //
 
 const octokit = new Octokit({
-  auth: fs.readFileSync("token.txt", "utf8").trim(), // Replace with your GitHub token
+  auth: fs.readFileSync('token.txt', 'utf8').trim(), // Replace with your GitHub token
 });
 
 async function commitChanges(database) {
   try {
     await fs.promises.writeFile(
-      "./data/database.json",
+      './data/database.json',
       JSON.stringify(database, null, 2),
-      "utf-8"
+      'utf-8'
     );
 
     const repoContent = await octokit.repos.getContent({
-      owner: "JCFcodex",
-      repo: "FBBOT-LATEST",
-      path: "data/database.json",
+      owner: 'JCFcodex',
+      repo: 'FBBOT-LATEST',
+      path: 'data/database.json',
     });
 
     await octokit.repos.createOrUpdateFileContents({
-      owner: "JCFcodex",
-      repo: "FBBOT-LATEST",
-      path: "data/database.json",
-      message: "Update database.json",
+      owner: 'JCFcodex',
+      repo: 'FBBOT-LATEST',
+      path: 'data/database.json',
+      message: 'Update database.json',
       content: Buffer.from(JSON.stringify(database, null, 2)).toString(
-        "base64"
+        'base64'
       ),
       sha: repoContent.data.sha,
     });
 
-    console.log("Changes committed to GitHub.");
+    console.log('Changes committed to GitHub.');
   } catch (error) {
-    console.error("Error:", error.message);
+    console.error('Error:', error.message);
   }
 }
 
 function watchDatabaseChanges() {
   let changesDetected = false;
 
-  chokidar.watch("./data/database.json").on("change", () => {
+  chokidar.watch('./data/database.json').on('change', () => {
     changesDetected = true;
   });
 
-  cron.schedule("0,10,20,30,40,50 * * * *", async () => {
+  cron.schedule('0,10,20,30,40,50 * * * *', async () => {
     if (changesDetected) {
       const existingData = await fs.promises.readFile(
-        "./data/database.json",
-        "utf-8"
+        './data/database.json',
+        'utf-8'
       );
       const database = JSON.parse(existingData);
 

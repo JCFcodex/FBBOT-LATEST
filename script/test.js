@@ -1,33 +1,34 @@
-// const axios = require("axios");
-// const fs = require("fs-extra");
-// const path = require("path");
-
+// // Define the command properties
 // module.exports.config = {
-//   name: "test",
-//   version: "1.1.0",
-//   role: 2,
-//   description:
-//     "Sends a message to all groups and can only be done by the admin.",
+//   name: 'test',
+//   version: '1.0.0',
+//   aliases: ['example'],
 //   hasPrefix: false,
-//   aliases: ["noti"],
-//   usages: "[Text]",
-//   cooldown: 0,
+//   role: 0,
+//   credits: 'Your Name',
+//   description: 'Description of your command',
+//   usages: 'example <parameter>',
+//   cooldown: 5,
 // };
 
+// // Main function to execute when the command is called
 // module.exports.run = async function({ api, event, args }) {
+//   try {
+//     // Start typing indicator
+//     const stopTyping = api.sendTypingIndicator(event.threadID);
 
+//     // Your command logic goes here
+//     api.sendMessage('this is test of typingIndicator!', event.threadID);
+
+//     // Stop typing indicator after a short delay
+//     setTimeout(() => {
+//       stopTyping();
+//     }, 2000); // Adjust the duration as needed
+//   } catch (error) {
+//     console.error(`Error in the ${module.exports.config.name} command:`, error);
+//   }
 // };
 
-// async function downloadFile(url, filePath) {
-//   const writer = fs.createWriteStream(filePath);
-//   const response = await axios({
-//     url,
-//     method: "GET",
-//     responseType: "stream",
-//   });
-//   response.data.pipe(writer);
-//   return new Promise((resolve, reject) => {
-//     writer.on("finish", resolve);
-//     writer.on("error", reject);
-//   });
-// }
+// // module.exports.handleReply = async function({ api, event, handleReply }) {
+// //   // If there's a need to handle the reply
+// // };
