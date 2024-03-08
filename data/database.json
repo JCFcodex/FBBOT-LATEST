@@ -152,7 +152,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 343,
+        "exp": 344,
         "level": 1
       },
       {
@@ -278,7 +278,7 @@
         "id": "100006879459800",
         "name": "Francis Fajardo",
         "money": 600,
-        "exp": 267,
+        "exp": 268,
         "level": 6
       },
       {
@@ -292,7 +292,7 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 0,
-        "exp": 199,
+        "exp": 200,
         "level": 5
       },
       {
@@ -306,8 +306,8 @@
         "id": "100029104783468",
         "name": "Rei Andrew Bariata",
         "money": 0,
-        "exp": 39,
-        "level": 3
+        "exp": 41,
+        "level": 4
       },
       {
         "id": "100041507925422",
