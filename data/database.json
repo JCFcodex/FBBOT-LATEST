@@ -152,7 +152,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 349,
+        "exp": 350,
         "level": 1
       },
       {
@@ -263,16 +263,16 @@
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
-        "money": 0,
-        "exp": 204,
+        "money": 550,
+        "exp": 208,
         "level": 6
       },
       {
         "id": "100006147737169",
         "name": "John Michael Aguilar",
-        "money": 2000,
-        "exp": 79,
-        "level": 4
+        "money": 2550,
+        "exp": 88,
+        "level": 5
       },
       {
         "id": "100006879459800",
