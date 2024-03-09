@@ -152,7 +152,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 365,
+        "exp": 366,
         "level": 1
       },
       {
@@ -313,8 +313,8 @@
         "id": "100041507925422",
         "name": "Albert Cruz",
         "money": 0,
-        "exp": 39,
-        "level": 3
+        "exp": 40,
+        "level": 4
       },
       {
         "id": "100050618333804",
