@@ -1,4 +1,4 @@
-/cron/src/timer.json
+cron/src/timer.json
 node_modules
 data/session
 data/config.json
@@ -13,3 +13,4 @@ backup.js
 tikdlresponse.json
 account
 template
+timer.json
