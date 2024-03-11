@@ -152,7 +152,7 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
-        "exp": 369,
+        "exp": 335,
         "level": 1
       },
       {
@@ -207,8 +207,8 @@
       {
         "id": "100076613706558",
         "name": "John Carl Faustino",
-        "money": 1550,
-        "exp": 549,
+        "money": 0,
+        "exp": 520,
         "level": 7
       },
       {
@@ -243,7 +243,7 @@
         "id": "61554657360115",
         "name": "Marc Crisostomo",
         "money": 0,
-        "exp": 105,
+        "exp": 104,
         "level": 5
       },
       {
@@ -263,22 +263,22 @@
       {
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
-        "money": 550,
-        "exp": 229,
+        "money": 0,
+        "exp": 182,
         "level": 6
       },
       {
         "id": "100006147737169",
         "name": "John Michael Aguilar",
-        "money": 2550,
-        "exp": 88,
-        "level": 5
+        "money": 2000,
+        "exp": 79,
+        "level": 4
       },
       {
         "id": "100006879459800",
         "name": "Francis Fajardo",
-        "money": 600,
-        "exp": 276,
+        "money": 0,
+        "exp": 260,
         "level": 6
       },
       {
@@ -292,7 +292,7 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 0,
-        "exp": 205,
+        "exp": 198,
         "level": 5
       },
       {
@@ -306,21 +306,21 @@
         "id": "100029104783468",
         "name": "Rei Andrew Bariata",
         "money": 0,
-        "exp": 49,
-        "level": 4
+        "exp": 39,
+        "level": 3
       },
       {
         "id": "100041507925422",
         "name": "Albert Cruz",
         "money": 0,
-        "exp": 40,
-        "level": 4
+        "exp": 38,
+        "level": 3
       },
       {
         "id": "100050618333804",
         "name": "Yuan Ortega",
         "money": 0,
-        "exp": 48,
+        "exp": 47,
         "level": 4
       },
       {
