@@ -152,6 +152,13 @@
         "id": "61554632045320",
         "name": "Facebook user",
         "money": 0,
+        "exp": 338,
+        "level": 1
+      },
+      {
+        "id": "61555500735152",
+        "name": "Facebook user",
+        "money": 0,
         "exp": 336,
         "level": 1
       },
@@ -208,7 +215,7 @@
         "id": "100076613706558",
         "name": "John Carl Faustino",
         "money": 0,
-        "exp": 521,
+        "exp": 565,
         "level": 7
       },
       {
@@ -264,7 +271,7 @@
         "id": "100003882298392",
         "name": "Kimi Brent Mendoza",
         "money": 0,
-        "exp": 182,
+        "exp": 189,
         "level": 6
       },
       {
@@ -292,7 +299,7 @@
         "id": "100012152731893",
         "name": "William Sabino",
         "money": 0,
-        "exp": 198,
+        "exp": 202,
         "level": 5
       },
       {
@@ -321,55 +328,6 @@
         "name": "Yuan Ortega",
         "money": 0,
         "exp": 47,
-        "level": 4
-      },
-      {
-        "id": "100004255542788",
-        "name": "Jerome Macabenta",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "100004565676382",
-        "name": "Rodel Baisa Santos",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "100070850685696",
-        "name": "Lenard Macabenta",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "100091253614305",
-        "name": "Khian Ivan Faustino",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "100090506487692",
-        "name": "Alysa Hshsh",
-        "money": 0,
-        "exp": 116,
-        "level": 2
-      },
-      {
-        "id": "61555875827657",
-        "name": "Sakura Sinuntok",
-        "money": 0,
-        "exp": 0,
-        "level": 1
-      },
-      {
-        "id": "61556187938659",
-        "name": "Cevasa Fbbot",
-        "money": 0,
-        "exp": 0,
         "level": 1
       },
       {

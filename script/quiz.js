@@ -80,7 +80,7 @@ module.exports.run = async function({ api, event, Utils }) {
       }
     } else {
       api.sendMessage(
-        `Moving on to the next question ➡️\n\n𝗖𝗮𝘁𝗲𝗴𝗼𝗿𝘆: ${decodedCategory}.\n𝗗𝗶𝗳𝗳𝗶𝗰𝘂𝗹𝘁𝘆: ${difficulty}`,
+        `Moving on to the next question ➡️\n\n𝗧𝘆𝗽𝗲: ${typeOfQuestion}\n𝗖𝗮𝘁𝗲𝗴𝗼𝗿𝘆: ${decodedCategory}.\n𝗗𝗶𝗳𝗳𝗶𝗰𝘂𝗹𝘁𝘆: ${difficulty}`,
         event.threadID,
         event.messageID
       );
