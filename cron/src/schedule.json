@@ -2,14 +2,9 @@
   "monday": {
     "10:00am": "System Integration and Architecture",
     "2:00pm": "Life and Works of Rizal",
-    "4:00pm": "System Integration and Architecture",
-    "9:00pm": "MOBILE LEGENDS",
-    "10:00pm": "MOBILE LEGENDS"
+    "4:00pm": "System Integration and Architecture"
   },
-  "tuesday": {
-    "9:00pm": "MOBILE LEGENDS",
-    "10:00pm": "MOBILE LEGENDS"
-  },
+  "tuesday": {},
   "wednesday": {
     "9:00am": "Elective 4",
     "11:00am": "Web System and Technologies 2",
@@ -18,24 +13,15 @@
   },
   "thursday": {
     "7:00am": "Elective 3",
-    "10:00am": "Elective 4",
-    "9:00pm": "MOBILE LEGENDS",
-    "10:00pm": "MOBILE LEGENDS"
+    "10:00am": "Elective 4"
   },
   "friday": {
     "7:00am": "Web System and Technologies 2",
-    "4:00pm": "Capstone Project and Research 1",
-    "9:00pm": "MOBILE LEGENDS",
-    "10:00pm": "MOBILE LEGENDS"
+    "4:00pm": "Capstone Project and Research 1"
   },
   "saturday": {
     "7:00am": "Information Assurance and Security",
-    "1:00pm": "Foreign Language 2",
-    "9:00pm": "MOBILE LEGENDS",
-    "10:00pm": "MOBILE LEGENDS"
+    "1:00pm": "Foreign Language 2"
   },
-  "sunday": {
-    "9:00pm": "MOBILE LEGENDS",
-    "10:00pm": "MOBILE LEGENDS"
-  }
+  "sunday": {}
 }

@@ -456,7 +456,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
                     .then((response) => {
                       fs.writeFileSync(gifPath, response.data);
                       return api.sendMessage(
-                        `🔴🟢🟡\n\n✅ 𝗚𝗥𝗢𝗨𝗣 𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗢𝗡 𝗦𝗨𝗖𝗖𝗘𝗦! \n➭ Bot Prefix: ${prefix}\n➭ Admin: ‹${admin}›\n➭ Facebook: ‹https://www.facebook.com/${admin}›\n➭ Use ${prefix}help to view command details\n➭ Added bot at: ⟨ ${time} ⟩〈 ${thu} 〉`,
+                        `🔴🟢🟡\n\n✅ 𝗚𝗥𝗢𝗨𝗣 𝗖𝗢𝗡𝗡𝗘𝗖𝗧𝗜𝗢𝗡 𝗦𝗨𝗖𝗖𝗘𝗦𝗦!\n\n➭ Bot Prefix: ${prefix}\n➭ Admin: ‹JC FAUSTINO›\n➭ Facebook: ‹https://www.facebook.com/${admin}›\n➭ Use ${prefix}help to view command details\n➭ Added bot at: ⟨ ${time} ⟩〈 ${thu} 〉`,
                         event.threadID
                       );
                     })
@@ -750,6 +750,7 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
               }
             }
             if (event.body && aliases(command)?.name) {
+              console.log(`${event.senderID} use ${event.body} command`);
               const now = Date.now();
               const name = aliases(command)?.name;
               const sender = Utils.cooldowns.get(

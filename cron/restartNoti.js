@@ -4,7 +4,7 @@ const pathFile = path.join('script', 'cache', 'restart.txt');
 const global = require('../config.json');
 
 module.exports = async ({ api }) => {
-  const threadsToSendGreeting = ['7133477510012986']; //THREADS:    7133477510012986 and 5776059305779745
+  const threadsToSendGreeting = ['5776059305779745']; //THREADS:    7133477510012986 and 5776059305779745
 
   if (!fs.existsSync(pathFile)) fs.writeFileSync(pathFile, 'true');
   const isEnable = fs.readFileSync(pathFile, 'utf-8');

@@ -66,12 +66,12 @@ module.exports.run = async function({ api, event, args }) {
     if (Object.keys(subjects).length === 0) {
       // If there are no subjects, send a message saying there are no classes
       api.sendMessage(
-        `✨ There are no classes for ${day}. Enjoy your day! 😊\n\n\nML NAAAAAA!!!!!!`,
+        `✨ There are no classes for ${day}. Enjoy your day! 😊\n\nGrind na....`,
         event.threadID
       );
     } else {
       // If there are subjects, create a message with the subjects
-      let message = `✨ Schedules for ${day}:\n\n\n\n`;
+      let message = `✨ Schedule for ${day}:\n\n\n\n`;
       for (const time in subjects) {
         message += `-Time:   ${time}\n-Subject:   ${subjects[time]}\n\n`;
       }

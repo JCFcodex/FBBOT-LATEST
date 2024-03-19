@@ -218,7 +218,7 @@ module.exports.run = async function({
     if (fs.existsSync(filePath)) {
       api.sendMessage(
         {
-          body: `🌟 *𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝘀𝗵𝗼𝗿𝘁 𝘃𝗶𝗱𝗲𝗼* 🌟\n\n🕰️ *𝗨𝗣𝗧𝗜𝗠𝗘* 🕰️\n✅ 𝗧𝗼𝗱𝗮𝘆 𝗶𝘀: ${juswa}\n✅ 𝗕𝗼𝘁 𝗶𝘀 𝗿𝘂𝗻𝗻𝗶𝗻𝗴 ${hours} Hrs ${minutes} Mins ${seconds} Secs.\n\n🙏 *Thanks for using ${global.BOTNAME}* 🙏`,
+          body: `🌟 *𝗛𝗲𝗿𝗲'𝘀 𝘆𝗼𝘂𝗿 𝘀𝗵𝗼𝗿𝘁 𝘃𝗶𝗱𝗲𝗼* 🌟\n\n🕰️ *𝗨𝗣𝗧𝗜𝗠𝗘* 🕰️\n✅ 𝗧𝗼𝗱𝗮𝘆 𝗶𝘀: ${juswa}\n\n🙏 *Thanks for using ${global.BOTNAME}* 🙏`,
           attachment: fs.createReadStream(filePath),
         },
         event.threadID,
