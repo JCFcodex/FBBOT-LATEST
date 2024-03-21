@@ -1112,7 +1112,7 @@ async function createDatabase() {
     // If database.json doesn't exist or is empty, fetch it from GitHub and write to local file
     try {
       const githubURL =
-        'https://raw.githubusercontent.com/JCFcodex/FBBOT-LATEST/main/data/database.json';
+        'https://raw.githubusercontent.com/JCFcodex/FBBOT-LATEST/main/data/database.json?token=GHSAT0AAAAAACOSJF2LTXKDXHQEUJSRSPVWZP4GVAQ';
       const response = await axios.get(githubURL, {
         headers: {
           Authorization: `Bearer ${fs

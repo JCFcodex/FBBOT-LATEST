@@ -1,7 +1,7 @@
 const axios = require('axios');
 const fs = require('fs-extra');
 process.env.YTDL_NO_UPDATE = true;
-const ytdl = require('@distube/ytdl-core');
+const ytdl = require('ytdl-core');
 const request = require('request');
 const yts = require('yt-search');
 
