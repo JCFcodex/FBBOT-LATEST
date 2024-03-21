@@ -1,33 +1,51 @@
-const axios = require("axios");
-const fs = require("fs-extra");
+const axios = require('axios');
+const fs = require('fs-extra');
 process.env.YTDL_NO_UPDATE = true;
-const ytdl = require("@distube/ytdl-core");
-const request = require("request");
-const yts = require("yt-search");
+const ytdl = require('@distube/ytdl-core');
+const request = require('request');
+const yts = require('yt-search');
 
 module.exports.config = {
-  name: "music",
-  version: "2.0.4",
+  name: 'music',
+  version: '2.0.4',
   role: 0,
-  credits: "Grey",
-  description: "Play a song",
-  aliases: ["sing", "play"],
+  credits: 'Grey',
+  description: 'Play a song',
+  aliases: ['sing', 'play'],
   cooldown: 60,
   hasPrefix: false,
-  usage: "",
+  usage: '',
 };
+
+// Define a function to handle retries with exponential backoff
+async function retryWithExponentialBackoff(fn, maxRetries = 3, delay = 1000) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (error.response && error.response.status === 429) {
+        console.warn('Rate limited. Retrying after delay...');
+        await new Promise((resolve) => setTimeout(resolve, delay));
+        delay *= 2; // Exponential backoff
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error('Max retries exceeded');
+}
 
 module.exports.run = async ({ api, event }) => {
   const input = event.body;
   const text = input.substring(12);
-  const data = input.split(" ");
+  const data = input.split(' ');
 
   if (data.length < 2) {
-    return api.sendMessage("Please put a song", event.threadID);
+    return api.sendMessage('Please put a song', event.threadID);
   }
 
   data.shift();
-  const song = data.join(" ");
+  const song = data.join(' ');
 
   try {
     api.sendMessage(
@@ -36,11 +54,11 @@ module.exports.run = async ({ api, event }) => {
       event.messageID
     );
 
-    const searchResults = await yts(song);
-    // console.log(searchResults);
+    const searchResults = await retryWithExponentialBackoff(() => yts(song));
+
     if (!searchResults.videos.length) {
       return api.sendMessage(
-        "Error: Invalid request.",
+        'Error: Invalid request.',
         event.threadID,
         event.messageID
       );
@@ -49,7 +67,7 @@ module.exports.run = async ({ api, event }) => {
     const video = searchResults.videos[0];
     const videoUrl = video.url;
 
-    const stream = ytdl(videoUrl, { filter: "audioonly" });
+    const stream = ytdl(videoUrl, { filter: 'audioonly' });
 
     const fileName = `${event.senderID}.mp3`;
     const filePath = __dirname + `/cache/${fileName}`;
@@ -58,46 +76,41 @@ module.exports.run = async ({ api, event }) => {
 
     stream.pipe(fs.createWriteStream(filePath));
 
-    stream.on("response", () => {
-      console.info("[DOWNLOADER]", "Starting download now!");
+    stream.on('response', () => {
+      console.info('[DOWNLOADER]', 'Starting download now!');
     });
 
-    stream.on("info", (info) => {
+    stream.on('info', (info) => {
       console.info(
-        "[DOWNLOADER]",
+        '[DOWNLOADER]',
         `Downloading ${info.videoDetails.title} by ${info.videoDetails.author.name}`
       );
       subsCount = info.videoDetails.author.subscriber_count;
-      // console.log(info.videoDetails);
     });
 
-    stream.on("end", () => {
-      console.info("[DOWNLOADER] Downloaded");
+    stream.on('end', () => {
+      console.info('[DOWNLOADER] Downloaded');
 
       if (fs.statSync(filePath).size > 26214400) {
         fs.unlinkSync(filePath);
         return api.sendMessage(
-          "[ERR] The file could not be sent because it is larger than 25MB.",
+          '[ERR] The file could not be sent because it is larger than 25MB.',
           event.threadID
         );
       }
 
       function formatViews(views) {
         if (views >= 1e9) {
-          // Views are in the billions
-          return (views / 1e9).toFixed(1) + "B";
+          return (views / 1e9).toFixed(1) + 'B';
         } else if (views >= 1e6) {
-          // Views are in the millions
-          return (views / 1e6).toFixed(1) + "M";
+          return (views / 1e6).toFixed(1) + 'M';
         } else if (views >= 1e3) {
-          // Views are in the thousands
-          return (views / 1e3).toFixed(1) + "K";
+          return (views / 1e3).toFixed(1) + 'K';
         } else {
-          // Views are less than 1 thousand
           return views.toString();
         }
       }
-      // Example usage:
+
       const formattedViews = formatViews(video.views);
       const formattedSubs = formatViews(subsCount);
       const message = {
@@ -110,9 +123,9 @@ module.exports.run = async ({ api, event }) => {
       });
     });
   } catch (error) {
-    console.error("[ERROR]", error);
+    console.error('[ERROR]', error);
     api.sendMessage(
-      "An error occurred while processing the command.",
+      'An error occurred while processing the command.',
       event.threadID
     );
   }
