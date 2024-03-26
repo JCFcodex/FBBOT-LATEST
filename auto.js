@@ -586,39 +586,39 @@ async function accountLogin(state, enableCommands = [], prefix, admin = []) {
               }
             }
 
-            // if (event.body) {
-            //   const emojis = [
-            //     "😀",
-            //     "😳",
-            //     "♥️",
-            //     "😪",
-            //     "🥲",
-            //     "🙀",
-            //     "😘",
-            //     "🥺",
-            //     "🚀",
-            //     "😝",
-            //     "🥴",
-            //     "😐",
-            //     "😆",
-            //     "😊",
-            //     "🤩",
-            //     "😼",
-            //     "😽",
-            //     "🤭",
-            //     "🐱",
-            //     "😹",
-            //   ];
-            //   const randomEmoji =
-            //     emojis[Math.floor(Math.random() * emojis.length)];
+            if (event.body) {
+              const emojis = [
+                '😀',
+                '😳',
+                '♥️',
+                '😪',
+                '🥲',
+                '🙀',
+                '😘',
+                '🥺',
+                '🚀',
+                '😝',
+                '🥴',
+                '😐',
+                '😆',
+                '😊',
+                '🤩',
+                '😼',
+                '😽',
+                '🤭',
+                '🐱',
+                '😹',
+              ];
+              const randomEmoji =
+                emojis[Math.floor(Math.random() * emojis.length)];
 
-            //   api.setMessageReaction(
-            //     randomEmoji,
-            //     event.messageID,
-            //     () => {},
-            //     true
-            //   );
-            // }
+              api.setMessageReaction(
+                randomEmoji,
+                event.messageID,
+                () => {},
+                true
+              );
+            }
 
             // Check the autoseen setting from config and apply accordingly
             if (event.body !== null) {
